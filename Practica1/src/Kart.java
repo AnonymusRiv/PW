@@ -21,7 +21,7 @@ public class Kart {
 		this.status=status;
 	}
 	
-	//
+	//Métodos get y set
 	public int getid() {
 		return id;
 	}
@@ -45,9 +45,10 @@ public class Kart {
 	public void setstatus(status status) {
 		this.status=status;
 	}
-	
+
+	//Método para dar la info de un kart
 	public String toString() {
-		if(this.type) {
+		if(this.type) {	//Si el tipo es true, entonces el kart es de tipo adulto, sino sera de tipo niño
 			String Kartinfo = "El kart con id " + this.id + " que es para adultos tiene el estado " + this.status;
 			return Kartinfo;
 		}
