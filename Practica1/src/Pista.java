@@ -75,5 +75,10 @@ public class Pista {
 		return Pistainfo;
 	}
 	
+	//Método consultarKartsDisponibles
+	
+	
+	//Método asociarKartAPista
+	
 	
 }
