@@ -3,7 +3,6 @@ public class Kart {
 	private int id;				//identificador del kart
 	private boolean type;		//tipo de kart, true para adulto o false para niños
 	private status status;		//estado del kart
-	private String info;		//para imprimir la información del kart
 	public enum status			//posibles valores para el estado del kart
 	{
 		disponible, reservado, mantenimiento
