@@ -4,7 +4,7 @@ public class Usuario {
 	private String name;		//Nombre y apellidos del usuario
 	private Date birthday;		//Fecha de nacimiento del usuario
 	private Date reserve;		//Fecha de la primera serva del usuario
-	private String mail;		//Correo electrónico único del usuario
+	private String mail;		//Correo electrónico único del usuario  ¿es único?
 	
 	//Constructor sin parámetros
 	public Usuario() {
@@ -58,6 +58,6 @@ public class Usuario {
 		return userinfo;
 	}
 	
-	//Método calcularAntig
+	//Método calcularAntiguedad
 
 }
