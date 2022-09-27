@@ -1,8 +1,10 @@
 
 public class Kart {
-	int id;				//identificador del kart
-	boolean type;		//tipo de kart, true para adulto o false para niños
-	public enum status	//estado del kart
+	private int id;				//identificador del kart
+	private boolean type;		//tipo de kart, true para adulto o false para niños
+	private status status;		//estado del kart
+	private String info;		//para imprimir la información del kart
+	public enum status			//posibles valores para el estado del kart
 	{
 		disponible, reservado, mantenimiento
 	}
@@ -13,7 +15,7 @@ public class Kart {
 	}
 	
 	//Constructor con parámetros
-	public Kart(int id, boolean type, public enum status) {
+	public Kart(int id, boolean type, status status) {
 		this.id=id;
 		this.type=type;
 		this.status=status;
@@ -36,15 +38,21 @@ public class Kart {
 		this.type=type;
 	}
 	
-	public enum status getstatus() {
+	public status getstatus() {
 		return status;
 	}
 	
-	public void setstatus(public enum status) {
+	public void setstatus(status status) {
 		this.status=status;
 	}
 	
-	public string tostring() {
-		
+	public String toString() {
+		if(this.type) {
+			String Kartinfo = "El kart con id " + this.id + " que es para adultos tiene el estado " + this.status;
+			return Kartinfo;
+		}
+		String Kartinfo = "El kart con id " + this.id + " que es para niños tiene el estado " + this.status;
+		return Kartinfo;
 	}
+	
 }
