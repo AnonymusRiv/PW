@@ -1,14 +1,16 @@
+import java.util.ArrayList;
 
 public class Pista {
-	private String name;			//Nombre de la pista
-	private boolean status;			//Estado de la pista, true para disponible para reservas y false para no
-	private difficulty difficulty;	//Dificultad de la pista
-	private int number;				//Número de karts autorizados
-	private Kart karts;				//clase Kart
+	private String name;										//Nombre de la pista
+	private boolean status;										//Estado de la pista, true para disponible para reservas y false para no
+	private difficulty difficulty;								//Dificultad de la pista
+	private int number;											//Número de karts autorizados
+	private ArrayList<Kart> karts = new ArrayList<Kart>();		//Lista de karts
 	public enum difficulty
 	{
 		infantil, familiar, adultos
 	}
+	
 	
 	//Constructor sin parámetros
 	public Pista() {
@@ -57,11 +59,11 @@ public class Pista {
 		this.number=number;
 	}
 	
-	public Kart getkarts() {
+	public ArrayList<Kart> getkarts() {
 		return karts;
 	}
 	
-	public void setkarts(Kart karts) {
+	public void setkarts(ArrayList<Kart> karts) {
 		this.karts=karts;
 	}
 	
@@ -76,6 +78,17 @@ public class Pista {
 	}
 	
 	//Método consultarKartsDisponibles
+	public ArrayList<Kart> freekarts() {
+		ArrayList<Kart> freekarts = new ArrayList<Kart>();		//array de coches disponibles
+		for(int i=0; i<karts.size(); i++) {
+			if(karts.get(i).getstatus() == ){
+				freekarts.add(karts.get(i));
+			}
+		}
+		return freekarts;
+	}
+	
+	//karts en estado disponible
 	
 	
 	//Método asociarKartAPista
