@@ -6,7 +6,7 @@ public class Kart {
 	public enum status			//posibles valores para el estado del kart
 	{
 		disponible, reservado, mantenimiento
-	}
+	};
 	
 	//Constructor sin parámetros
 	public Kart() {
@@ -45,14 +45,10 @@ public class Kart {
 		this.status=status;
 	}
 
-	//Método para dar la info de un kart
+	//Mñetodo toString
+	@Override
 	public String toString() {
-		if(this.type) {	//Si el tipo es true, entonces el kart es de tipo adulto, sino sera de tipo niño
-			String Kartinfo = "El kart con id " + this.id + " que es para adultos tiene el estado " + this.status;
-			return Kartinfo;
-		}
-		String Kartinfo = "El kart con id " + this.id + " que es para niños tiene el estado " + this.status;
-		return Kartinfo;
+		return "Kart [id=" + id + ", type=" + type + ", status=" + status + "]";
 	}
 	
 }
