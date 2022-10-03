@@ -14,7 +14,7 @@ public class Pista {
 	
 	//Constructor sin parámetros
 	public Pista() {
-		
+		super();
 	}
 	
 	//Constructor con parámetros

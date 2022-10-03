@@ -10,7 +10,7 @@ public class Kart {
 	
 	//Constructor sin parámetros
 	public Kart() {
-		
+		super();
 	}
 	
 	//Constructor con parámetros

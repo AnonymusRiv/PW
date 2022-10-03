@@ -11,7 +11,7 @@ public class Usuario {
 	
 	//Constructor sin parámetros
 	public Usuario() {
-			
+			super();
 	}
 		
 	//Constructor con parámetros
