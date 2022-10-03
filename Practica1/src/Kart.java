@@ -42,6 +42,7 @@ public class Kart {
 	/**
 	 * Método público para obtener el id 
 	 * @param none
+	 * @return id
 	 */
 	
 	public int getid() {
@@ -51,6 +52,7 @@ public class Kart {
 	/**
 	 * Método público para establecer el id 
 	 * @param id
+	 * @return none
 	 */
 	
 	public void setid(int id) {
@@ -60,6 +62,7 @@ public class Kart {
 	/**
 	 * Método público para obtener el tipo 
 	 * @param none
+	 * @return type
 	 */
 	
 	public boolean gettype() {
@@ -69,6 +72,7 @@ public class Kart {
 	/**
 	 * Método público para establecer el tipo 
 	 * @param type
+	 * @return none
 	 */
 	
 	public void settype(boolean type) {
@@ -78,6 +82,7 @@ public class Kart {
 	/**
 	 * Método público para obtener el estado 
 	 * @param none
+	 * @return status
 	 */
 	
 	public status getstatus() {
@@ -87,6 +92,7 @@ public class Kart {
 	/**
 	 * Método público para establecer el estado 
 	 * @param status
+	 * @return none
 	 */
 	
 	public void setstatus(status status) {
@@ -96,6 +102,7 @@ public class Kart {
 	/**
 	 * Método público para  imprimir la información
 	 * @param none
+	 * @return kart info del kart
 	 */
 	
 	@Override
