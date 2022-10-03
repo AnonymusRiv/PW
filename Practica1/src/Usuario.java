@@ -1,10 +1,13 @@
 import java.util.Date;
+import java.time.LocalDate;
+import java.time.Period;
+
 
 public class Usuario {
-	private String name;		//Nombre y apellidos del usuario
-	private Date birthday;		//Fecha de nacimiento del usuario
-	private Date reserve;		//Fecha de la primera serva del usuario
-	private String mail;		//Correo electrónico único del usuario  ¿es único?
+	private String name;				//Nombre y apellidos del usuario
+	private Date birthday;				//Fecha de nacimiento del usuario
+	private LocalDate reserve;			//Fecha de la primera reserva del usuario
+	private String mail;				//Correo electrónico único del usuario
 	
 	//Constructor sin parámetros
 	public Usuario() {
@@ -12,11 +15,12 @@ public class Usuario {
 	}
 		
 	//Constructor con parámetros
-	public Usuario(String name, Date birthday, Date reserve, String mail) {
+	public Usuario(String name, Date birthday, String mail) {
 		this.name=name;
 		this.birthday=birthday;
-		this.reserve=reserve;
 		this.mail=mail;
+		this.reserve=LocalDate.now();
+		
 	}
 		
 	//Métodos get y set
@@ -36,11 +40,11 @@ public class Usuario {
 		this.birthday=birthday;
 	}
 	
-	public Date getreserve() {
+	public LocalDate getreserve() {
 		return reserve;
 	}
 		
-	public void setreserve(Date reserve) {
+	public void setreserve(LocalDate reserve) {
 		this.reserve=reserve;
 	}
 	
@@ -53,11 +57,14 @@ public class Usuario {
 	}
 	
 	//Método toString
+	@Override
 	public String toString() {
-		String userinfo= "El nombre del usuario es " + this.name + " cuya fecha de nacimiento es el " + this.birthday + ", su fecha de inscripción es del " + this.reserve + " y su correo es " + this.mail;
-		return userinfo;
+		return "Usuario [name=" + name + ", birthday=" + birthday + ", reserve=" + reserve + ", mail=" + mail + "]";
 	}
 	
 	//Método calcularAntiguedad
-
+	public int antiquity() {
+		Period period=Period.between(this.getreserve(), LocalDate.now());
+		return period.getYears();
+	}
 }
