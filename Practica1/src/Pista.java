@@ -3,13 +3,13 @@ import java.util.ArrayList;
 public class Pista {
 	private String name;										//Nombre de la pista
 	private boolean status;										//Estado de la pista, true para disponible para reservas y false para no
-	private difficulty difficulty;								//Dificultad de la pista
+	private difficult difficulty;								//Dificultad de la pista
 	private int number;											//Número de karts autorizados
 	private ArrayList<Kart> karts = new ArrayList<Kart>();		//Lista de karts
-	public enum difficulty
+	public enum difficult
 	{
 		infantil, familiar, adultos
-	}
+	};
 	
 	
 	//Constructor sin parámetros
@@ -18,7 +18,7 @@ public class Pista {
 	}
 	
 	//Constructor con parámetros
-	public Pista(String name, boolean status, difficulty difficulty, int number) {
+	public Pista(String name, boolean status, difficult difficulty, int number) {
 		this.name=name;
 		this.status=status;
 		this.difficulty=difficulty;
@@ -43,11 +43,11 @@ public class Pista {
 		this.status=status;
 	}
 	
-	public difficulty getdifficulty() {
+	public difficult getdifficulty() {
 		return difficulty;
 	}
 	
-	public void setdifficult(difficulty difficulty) {
+	public void setdifficult(difficult difficulty) {
 		this.difficulty=difficulty;
 	}
 	
@@ -68,30 +68,36 @@ public class Pista {
 	}
 	
 	//Método toString
+	@Override
 	public String toString() {
-		if(this.status) {
-			String Pistainfo = "La pista con nombre " + this.name + " esta disponible para reservas, tiene una dificultad  " + this.difficulty + ". Esta autorizado para " + this.number + " karts y la lista de karts asociados es " + this.karts;
-			return Pistainfo;
-		}
-		String Pistainfo = "La pista con nombre " + this.name + " no esta disponible para reservas, tiene una dificultad  " + this.difficulty + ". Esta autorizado para " + this.number + " karts y la lista de karts asociados es " + this.karts;
-		return Pistainfo;
+		return "Pista [name=" + name + ", status=" + status + ", difficulty=" + difficulty + ", number=" + number
+				+ ", karts=" + karts + "]";
 	}
 	
 	//Método consultarKartsDisponibles
 	public ArrayList<Kart> freekarts() {
-		ArrayList<Kart> freekarts = new ArrayList<Kart>();		//array de coches disponibles
+		ArrayList<Kart> freekarts = new ArrayList<Kart>();		//array de karts disponibles
 		for(int i=0; i<karts.size(); i++) {
-			if(karts.get(i).getstatus() == ){
+			if(karts.get(i).getstatus().equals(Kart.status.disponible) == true){
 				freekarts.add(karts.get(i));
 			}
 		}
 		return freekarts;
 	}
 	
-	//karts en estado disponible
-	
 	
 	//Método asociarKartAPista
+	public void associateKart(Kart kart) {
+		if((this.getdifficulty().equals(Pista.difficult.infantil) == true) && (kart.gettype() == false)) {
+			karts.add(kart);
+		}
+		if(this.getdifficulty().equals(Pista.difficult.familiar) == true) {
+			karts.add(kart);
+		}
+		if((this.getdifficulty().equals(Pista.difficult.adultos) == true) && (kart.gettype() == true)) {
+			karts.add(kart);
+		}
+	}
 	
 	
 }
