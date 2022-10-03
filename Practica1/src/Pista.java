@@ -75,7 +75,7 @@ public class Pista {
 	}
 	
 	//Método consultarKartsDisponibles
-	public ArrayList<Kart> freekarts() {
+	public ArrayList<Kart> consultarKartsDisponibles() {
 		ArrayList<Kart> freekarts = new ArrayList<Kart>();		//array de karts disponibles
 		for(int i=0; i<karts.size(); i++) {
 			if(karts.get(i).getstatus().equals(Kart.status.disponible) == true){
@@ -87,7 +87,7 @@ public class Pista {
 	
 	
 	//Método asociarKartAPista
-	public void associateKart(Kart kart) {
+	public void asociarKartAPista(Kart kart) {
 		if((this.getdifficulty().equals(Pista.difficult.infantil) == true) && (kart.gettype() == false)) {
 			karts.add(kart);
 		}
