@@ -6,6 +6,7 @@ public class Reserva {
 	private int duration;
 	private int pistaid;
 	private float price;
+	private int discount;
 	
 	//Constructor sin parámetros
 	public Reserva() {
@@ -62,11 +63,22 @@ public class Reserva {
 		this.price = price;
 	}
 
+	
+	public int getDiscount() {
+		return discount;
+	}
+
+	
+	public void setDiscount(int discount) {
+		this.discount = discount;
+	}
+
+	
 	//Método toString
 	@Override
 	public String toString() {
 		return "Reserva [userid=" + userid + ", reserve=" + reserve + ", duration=" + duration + ", pistaid=" + pistaid
-				+ ", price=" + price + "]";
+				+ ", price=" + price + ", discount=" + discount + "]";
 	}
 	
 	
