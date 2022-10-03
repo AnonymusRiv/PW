@@ -100,7 +100,7 @@ public class Kart {
 	}
 
 	/**
-	 * Método público para  imprimir la información
+	 * Método público para imprimir la información
 	 * @param none
 	 * @return kart info del kart
 	 */

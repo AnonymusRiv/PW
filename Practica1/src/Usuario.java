@@ -63,7 +63,7 @@ public class Usuario {
 	}
 	
 	//Método calcularAntiguedad
-	public int antiquity() {
+	public int calcularAntiguedad() {
 		Period period=Period.between(this.getreserve(), LocalDate.now());
 		return period.getYears();
 	}
