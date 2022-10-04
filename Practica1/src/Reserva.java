@@ -1,5 +1,14 @@
 import java.util.Date;
 
+/**
+ * Clase Reserva
+ * @author Moisés Moyano Cejudo
+ * @author Alba Palomino Jiménez
+ * @author Carlos Rivero Talavera
+ * @author Silvia Roldan Flores
+ * @version 1.0
+ */
+
 public class Reserva {
 	private int userid;
 	private Date reserve;
@@ -8,7 +17,11 @@ public class Reserva {
 	private float price;
 	private int discount;
 	
-	//Constructor sin parámetros
+	/**
+	 * Constructor sin parámetros
+	 * @param none
+	 */
+	
 	public Reserva() {
 		super();
 	}
