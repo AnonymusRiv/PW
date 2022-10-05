@@ -12,11 +12,11 @@ import java.util.ArrayList;
  */
 
 public class Pista {
-	private String name;										//Nombre de la pista
-	private boolean status;										//Estado de la pista, true para disponible para reservas y false para no
-	private difficult difficulty;								//Dificultad de la pista
-	private int number;											//Número de karts autorizados
-	private ArrayList<Kart> karts = new ArrayList<Kart>();		//Lista de karts
+	private String name;
+	private boolean status;
+	private difficult difficulty;
+	private int number;
+	private ArrayList<Kart> karts = new ArrayList<Kart>();
 	public enum difficult
 	{
 		infantil, familiar, adultos

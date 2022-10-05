@@ -11,10 +11,10 @@ package es.uco.pw.classes;
 
 public class Kart {
 
-	private int id;				//identificador del kart
-	private boolean type;		//tipo de kart, true para adulto o false para niños
-	private status status;		//estado del kart
-	public enum status			//posibles valores para el estado del kart
+	private int id;
+	private boolean type;
+	private status status;
+	public enum status
 	{
 		disponible, reservado, mantenimiento
 	};

@@ -1,6 +1,5 @@
 package es.uco.pw.classes;
 
-import java.util.Date;
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -15,10 +14,11 @@ import java.time.Period;
 
 public class Usuario {
 
-	private String name;				//Nombre y apellidos del usuario
-	private Date birthday;				//Fecha de nacimiento del usuario
-	private LocalDate reserve;			//Fecha de la primera reserva del usuario
-	private String mail;				//Correo electrónico único del usuario
+	private String name;
+	private LocalDate birthday;
+	private LocalDate reserve;
+	private String mail;
+	private int id;
 	
 	/**
 	 * Constructor sin parámetros
@@ -36,12 +36,12 @@ public class Usuario {
 	 * @param mail
 	 */
 	
-	public Usuario(String name, Date birthday, String mail) {
+	public Usuario(String name, LocalDate birthday, String mail, int id) {
 		this.name=name;
 		this.birthday=birthday;
 		this.mail=mail;
 		this.reserve=LocalDate.now();
-		
+		this.id=id;
 	}
 		
 	/**
@@ -70,7 +70,7 @@ public class Usuario {
 	 * @return birthday
 	 */
 	
-	public Date getbirthday() {
+	public LocalDate getbirthday() {
 		return birthday;
 	}
 		
@@ -80,7 +80,7 @@ public class Usuario {
 	 * @return none
 	 */
 	
-	public void setbirthday(Date birthday) {
+	public void setbirthday(LocalDate birthday) {
 		this.birthday=birthday;
 	}
 	
@@ -125,6 +125,27 @@ public class Usuario {
 	}
 	
 	/**
+	 * Método público para obtener el id 
+	 * @param none
+	 * @return id
+	 */
+	
+	public int getid() {
+		return id;
+	}
+	
+	/**
+	 * Método público para establecer el mail 
+	 * @param id
+	 * @return none
+	 */
+	
+	public void setid(int  id) {
+		this.id=id;
+	}
+	
+	
+	/**
 	 * Método público para imprimir la información
 	 * @param none
 	 * @return Usuario info del usuario
@@ -132,7 +153,8 @@ public class Usuario {
 	
 	@Override
 	public String toString() {
-		return "Usuario [name=" + name + ", birthday=" + birthday + ", reserve=" + reserve + ", mail=" + mail + "]";
+		return "Usuario [name=" + name + ", birthday=" + birthday + ", reserve=" + reserve + ", mail=" + mail + ", id="
+				+ id + "]";
 	}
 	
 	/**
