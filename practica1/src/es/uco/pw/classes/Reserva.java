@@ -10,7 +10,7 @@ import java.util.Date;
  * @version 1.0
  */
 
-public class Reserva {
+public abstract class Reserva {
 
 	private int userid;
 	private Date reserve;
@@ -161,7 +161,7 @@ public class Reserva {
 				+ ", price=" + price + ", discount=" + discount + "]";
 	}
 	
-	public ReservaIndividual crearReservaIndividual();
+	public abstract ReservaIndividual crearReservaIndividual();
 	
-	public ReservaBono crearReservaBono();
+	public abstract ReservaBono crearReservaBono();
 }

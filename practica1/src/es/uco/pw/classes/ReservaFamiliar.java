@@ -43,5 +43,17 @@ private int number;
 	public String toString() {
 		return "ReservaFamiliar [number=" + number + "]";
 	}
+	
+	@Override
+	public ReservaIndividual crearReservaIndividual() {
+		ReservaIndividual reserva = new ReservaIndividual();
+		return reserva;
+	}
+	
+	@Override
+	public ReservaBono crearReservaBono() {
+		ReservaBono reserva = new ReservaBono();
+		return reserva;
+	}
 
 }

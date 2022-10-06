@@ -1,16 +1,7 @@
 package es.uco.pw.classes;
 
-public class crearReserva extends Reserva{
+public abstract class crearReserva{
 
-	@Override
-	public ReservaIndividual crearReservaIndividual() {
-		ReservaIndividual reserva = new ReservaIndividual();
-		return reserva;
-	}
+	protected int userid;
 	
-	@Override
-	public ReservaBono crearReservaBono() {
-		ReservaBono reserva = new ReservaBono();
-		return reserva;
-	}
 }
