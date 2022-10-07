@@ -26,38 +26,33 @@ public class GestorUsuarios{
         this.usuarios=usuarios;
     }
 
-    public boolean addUsuario(Usuario usuario){
+    public boolean addUsuario(Usuario usuario, ArrayList<Usuario> usuarios){
+    	for(int i=0;i<usuarios.size();i++){
+            if(usuarios.get(i).getid()==usuario.getid()){
+                return false;
+            }
+        }
         usuarios.add(usuario);
         return true;
     }
 
-    public boolean registrarUsuario(Usuario usuario){ //Queda comprobar que no exista previamente
-        usuarios.add(usuario);
-        id+=1;
-        return true;
-    }
-
-    public boolean modificarUsuario(usuario usuario){
+    public void modificarUsuario(Usuario usuario){
         for(int i=0;i<usuarios.size();i++){
-            if(usuarios.get(i).getId()==usuario.getId()){
+            if(usuarios.get(i).getid()==usuario.getid()){
                 usuarios.get(i).setname(usuario.getname());
-                usuario.get(i).setbirthday(usuario.getbirthday());
-                usuario.get(i).setreserve(usuario.getreserve());
-                usuario.get(i).setmail(usuario.getmail());
+                usuarios.get(i).setbirthday(usuario.getbirthday());
+                usuarios.get(i).setreserve(usuario.getreserve());
+                usuarios.get(i).setmail(usuario.getmail());
             }
         }
     }
 
-    public Usuario buscarUsuario(int id){
-        for(int i=0;i<usuarios.size();i++){
-            if(usuarios.get(i).getId()==id){
-                Usuario usuario=usuarios.get(i);
-                return usuario;
-            }
-        }
-        return null;
+    public void listarusuarios (ArrayList<Usuario> usuarios) {
+    	for(int i=0; i<usuarios.size(); i++) {
+    		System.out.println(usuarios.get(i).toString());
+    	}
     }
-
+    
     public int getId(){
         return id;
     }

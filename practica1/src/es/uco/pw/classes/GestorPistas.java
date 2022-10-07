@@ -1,13 +1,12 @@
 package es.uco.pw.classes;
 
 import java.util.ArrayList;
-import Pista.Pista;
 
 public class GestorPistas{
     private static GestorPistas instance=null;
-    private ArrayList<Pista> pistas=new ArrayList<Pista>();
+    private ArrayList<Pista> pistas = new ArrayList<Pista>();
     private int id;
-    private ArrayList<Kart> karts=new ArrayList<Kart>();
+    private ArrayList<Kart> karts = new ArrayList<Kart>();
 
     private GestorPistas(){
         id=0;
@@ -21,36 +20,21 @@ public class GestorPistas{
     }
 
     public ArrayList<Pista> getPistas(){
-        return pista;
+        return pistas;
     }
 
-    public void setPistas(ArrayList<Pista> pista){
-        this.pista=pista;
+    public void setPistas(ArrayList<Pista> pistas){
+        this.pistas=pistas;
     }
 
     public boolean addPista(Pista pista){
-        pista.add(pista);
+        pistas.add(pista);
         return true;
     }
-
-    public boolean registrarPista(Pista pista){ //Queda comprobar que no exista previamente
-        pista.add(pista);
-        id+=1;
-        return true;
-    }
-
-    public Pista buscarPista(int id){
-        for(int i=0; i<pistas.size(); i++){
-            if(pistas.get(i).getId()==id){
-                Pista pista=pistas.get(i);
-                return null;
-            }
-            else
-            {
-            	asociarPista(Pista pista, Karts karts);
-            }
-        }
-        return null;
+    
+    public boolean addKart(Kart kart) {
+    	karts.add(kart);
+    	return true;
     }
 
     public int getId(){
@@ -61,18 +45,32 @@ public class GestorPistas{
         this.id=id;
     }
 
-    public void listarPistas(ArrayList<Pista> pista){
-    	for(int i = 0; i< pista.size(); i++)
+    public void asociarKartAPistaDisponibles(Kart kart, Pista pista) {
+        if((pista.getdifficulty().equals(Pista.difficult.infantil) == true) && (kart.gettype() == false) && (pista.getstatus() == true) && ((pista.getkarts().size()+1) < pista.getnumber())) {
+            karts.add(kart);
+        }
+        if((pista.getdifficulty().equals(Pista.difficult.familiar) == true) && (pista.getstatus() == true) && ((pista.getkarts().size()+1) < pista.getnumber())) {
+            karts.add(kart);
+        }
+        if((pista.getdifficulty().equals(Pista.difficult.adultos) == true) && (kart.gettype() == true) && (pista.getstatus() == true) && ((pista.getkarts().size()+1) < pista.getnumber())) {
+            karts.add(kart);
+        }
+    }
+
+    public void listarPistas(){
+    	for(int i = 0; i< pistas.size(); i++)
     	{
-    		System.out.println(pista[i]);
+    		System.out.println(pistas.get(i).toString());
     	}
     }
 
-    public int pistasLibres(Pista pista){
-    	int libres=0;
-    	if(pista != registradas || pista != mantenimiento){
-    		libres++;
-    	}
-    	return libres;
+    public ArrayList <Pista> pistasLibres(Pista pista, int numKart){
+        ArrayList<Pista> pistasLibres = new ArrayList<Pista>();
+        for(int i = 0; i < pistas.size(); i++){
+            if((pistas.get(i).getnumber() >= numKart) && (pistas.get(i).getstatus() == true)){
+                pistasLibres.add(pistas.get(i));
+            }
+        }
+    	return pistasLibres;
     }
 }
