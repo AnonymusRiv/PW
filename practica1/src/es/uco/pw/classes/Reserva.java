@@ -12,12 +12,17 @@ import java.util.Date;
 
 public abstract class Reserva {
 
-	private int userid;
+	private String userid;
 	private Date reserve;
 	private int duration;
-	private int pistaid;
+	private String pistaid;
 	private float price;
 	private int discount;
+	private type typeRes;
+	
+	public enum type{
+		infantil, familiar, adultos;
+	};
 	
 	/**
 	 * Constructor sin parámetros
@@ -34,7 +39,7 @@ public abstract class Reserva {
 	 * @return userid
 	 */
 	
-	public int getUserid() {
+	public String getUserid() {
 		return userid;
 	}
 
@@ -44,7 +49,7 @@ public abstract class Reserva {
 	 * @return none
 	 */
 	
-	public void setUserid(int userid) {
+	public void setUserid(String userid) {
 		this.userid = userid;
 	}
 
@@ -94,7 +99,7 @@ public abstract class Reserva {
 	 * @return pistaid
 	 */
 	
-	public int getPistaid() {
+	public String getPistaid() {
 		return pistaid;
 	}
 
@@ -104,7 +109,7 @@ public abstract class Reserva {
 	 * @return none
 	 */
 	
-	public void setPistaid(int pistaid) {
+	public void setPistaid(String pistaid) {
 		this.pistaid = pistaid;
 	}
 
@@ -146,6 +151,26 @@ public abstract class Reserva {
 	
 	public void setDiscount(int discount) {
 		this.discount = discount;
+	}
+	
+	/**
+	 * Método público para obtener el tipo de reserva 
+	 * @param none
+	 * @return typeRes
+	 */
+	
+	public type getType() {
+		return typeRes;
+	}
+
+	/**
+	 * Método público para establecer el tipo de reserva 
+	 * @param typeRes
+	 * @return none
+	 */
+	
+	public void setType(type typeRes) {
+		this.typeRes = typeRes;
 	}
 
 	

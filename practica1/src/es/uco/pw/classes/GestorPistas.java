@@ -5,12 +5,7 @@ import java.util.ArrayList;
 public class GestorPistas{
     private static GestorPistas instance=null;
     private ArrayList<Pista> pistas = new ArrayList<Pista>();
-    private int id;
     private ArrayList<Kart> karts = new ArrayList<Kart>();
-
-    private GestorPistas(){
-        id=0;
-    }
 
     public static GestorPistas getInstance(){
         if(instance==null){
@@ -35,14 +30,6 @@ public class GestorPistas{
     public boolean addKart(Kart kart) {
     	karts.add(kart);
     	return true;
-    }
-
-    public int getId(){
-        return id;
-    }
-
-    public void setId(int id){
-        this.id=id;
     }
 
     public void asociarKartAPistaDisponibles(Kart kart, Pista pista) {

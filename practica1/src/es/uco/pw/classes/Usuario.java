@@ -18,7 +18,6 @@ public class Usuario {
 	private LocalDate birthday;
 	private LocalDate reserve;
 	private String mail;
-	private int id;
 	
 	/**
 	 * Constructor sin parámetros
@@ -41,7 +40,6 @@ public class Usuario {
 		this.birthday=birthday;
 		this.mail=mail;
 		this.reserve=LocalDate.now();
-		this.id=id;
 	}
 		
 	/**
@@ -122,28 +120,7 @@ public class Usuario {
 	
 	public void setmail(String mail) {
 		this.mail=mail;
-	}
-	
-	/**
-	 * Método público para obtener el id 
-	 * @param none
-	 * @return id
-	 */
-	
-	public int getid() {
-		return id;
-	}
-	
-	/**
-	 * Método público para establecer el mail 
-	 * @param id
-	 * @return none
-	 */
-	
-	public void setid(int  id) {
-		this.id=id;
-	}
-	
+	}	
 	
 	/**
 	 * Método público para imprimir la información
@@ -153,8 +130,7 @@ public class Usuario {
 	
 	@Override
 	public String toString() {
-		return "Usuario [name=" + name + ", birthday=" + birthday + ", reserve=" + reserve + ", mail=" + mail + ", id="
-				+ id + "]";
+		return "Usuario [name=" + name + ", birthday=" + birthday + ", reserve=" + reserve + ", mail=" + mail + "]";
 	}
 	
 	/**

@@ -19,7 +19,7 @@ public class Pista {
 	private ArrayList<Kart> karts = new ArrayList<Kart>();
 	public enum difficult
 	{
-		infantil, familiar, adultos
+		infantil, familiar, adultos;
 	};
 	
 	
