@@ -13,9 +13,20 @@ import es.uco.pw.manage.GestorUsuarios;
 public final class Functions {
 	private static Scanner scanner;
 	
+	/**
+	 * Constructor que lanza una excepción ya que esta clase no se puede instanciar
+	 * @param none
+	 */
+	
 	public Functions() {
 	    throw new UnsupportedOperationException();
 	}
+	
+	/**
+	 * Imprime el menú de incio
+	 * @param none
+	 * @return int Elección del usuario
+	 */
 	
 	public static int printUserLoginScreen() {
 	    Functions.clearConsole();
@@ -27,6 +38,12 @@ public final class Functions {
 	    System.out.print("Escoja una opción y pulse enter: ");
 	    return scanner.nextInt();
 	}
+	
+	/**
+	 * Imprime el menú de reservas
+	 * @param none
+	 * @return int Elección del usuario
+	 */
 	
 	public static int printReservaMenuScreen() {
 	    Functions.clearConsole();
@@ -43,9 +60,21 @@ public final class Functions {
 	    return scanner.nextInt();
 	}
 	
+	/**
+	 * Imprime la salida del sistema
+	 * @param none
+	 * @return none
+	 */
+	
 	public static void printExitScreen() {
 	    System.out.println("Apagando el sistema, por favor espere...");
 	}
+	
+	/**
+	 * Imprime el menú de login
+	 * @param none
+	 * @return boolean True si se ha podido completar el login
+	 */
 	
 	public static Boolean loginUser() {
 	    Functions.clearConsole();
@@ -65,6 +94,12 @@ public final class Functions {
 	    return false;
 	}
 	
+	/**
+	 * Imprime el menú de registro de usuarios
+	 * @param none
+	 * @return boolean True si se ha podido registrar
+	 */
+	
 	public static Boolean registerUser(String type) throws ParseException {
 	    Functions.clearConsole();
 	    Usuario usuario =new Usuario();
@@ -83,6 +118,12 @@ public final class Functions {
 	    return true;
 	}
 	
+	/**
+	 * Lista los usuarios del sistema
+	 * @param none
+	 * @return none
+	 */
+	
 	public void listarUsuarios() {
 	    Functions.clearConsole();
 	    GestorUsuarios usuario = GestorUsuarios.getInstance();
@@ -93,6 +134,12 @@ public final class Functions {
 	      System.out.println("   " + users.get(i).getEmail());
 	    }
 	}
+	
+	/**
+	 * Imprime el menú de registro de pistas
+	 * @param none
+	 * @return boolean True si se ha podido registrar
+	 */
 	
 	public static Boolean registerPista(String type) throws ParseException {
 	    Functions.clearConsole();
@@ -112,6 +159,12 @@ public final class Functions {
 	    return true;
 	}
 	
+	/**
+	 * Lista las pistas del sistema
+	 * @param none
+	 * @return none
+	 */
+	
 	public void listarPistas() {
 		Functions.clearConsole();
 		GestorPistas pista=GestorPistas.getInstance();
@@ -122,6 +175,13 @@ public final class Functions {
 			System.out.println("  "+pistas.get(i).getName());
 		}
 	}
+	
+	/**
+	 * Imprime el menú de registro de reservas
+	 * @param none
+	 * @return boolean True si se ha podido registrar
+	 */
+	
 	
 	public static Boolean registrarReserva() throws ParseException{
 		Functions.clearConsole();
@@ -150,6 +210,12 @@ public final class Functions {
 	      }
 	      return false;
 	}
+	
+	/**
+	 * Crea una reserva infantil
+	 * @param none
+	 * @return boolean True si se ha podido registrar
+	 */
 
 	private static Boolean createRInfantil() throws ParseException{
 		Functions.clearConsole();
@@ -167,6 +233,12 @@ public final class Functions {
 		//reserva.setTypeRes(infantil);
 		return true;
 	}
+	
+	/**
+	 * Crea una reserva familiar
+	 * @param none
+	 * @return boolean True si se ha podido registrar
+	 */
 	
 	private static Boolean createRFamiliar() throws ParseException{
 		Functions.clearConsole();
@@ -187,6 +259,12 @@ public final class Functions {
 		return true;
 	}
 	
+	/**
+	 * Crea una reserva adultos
+	 * @param none
+	 * @return boolean True si se ha podido registrar
+	 */
+	
 	private static Boolean createRAdultos() throws ParseException{
 		Functions.clearConsole();
 		scanner = new Scanner(System.in);
@@ -206,11 +284,23 @@ public final class Functions {
 		return true;
 	}
 	
+	/**
+	 * Función que modifica una reserva del sistema
+	 * @param none
+	 * @return none
+	 */
+	
 	public void modificarReserva() {
 		Functions.clearConsole();
 		scanner = new Scanner(System.in);
 		//Necesita del gestor de reservas
 	}
+	
+	/**
+	 * Función que limpia la pantalla
+	 * @param none
+	 * @return none
+	 */
 		
 	public static final void clearConsole() {
 	    try {

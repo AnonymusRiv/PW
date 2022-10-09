@@ -14,6 +14,15 @@ import java.util.Date;
 
 public class GestorReservas {
 
+	/**
+	 * Método público para hacer una reserva individual
+	 * @param usuario
+	 * @param usuarios
+	 * @param pista
+	 * @param reserva
+	 * @return none
+	 */
+	
 	public void hacerReservaIndividual(es.uco.pw.classes.Usuario usuario, ArrayList<es.uco.pw.classes.Usuario> usuarios, es.uco.pw.classes.Pista pista, es.uco.pw.factory.Reserva reserva){
 		for(int i=0;i<usuarios.size();i++){
 			if(usuarios.get(i).getEmail()==usuario.getEmail()){
@@ -25,10 +34,35 @@ public class GestorReservas {
 			}
 		}
 	}
-
-	public void hacerReservaBono(es.uco.pw.factory.Reserva reserva, es.uco.pw.classes.Usuario usuario){
-		
+	
+	/**
+	 * Método público para hacer una reserva bono
+	 * @param reserva
+	 * @param usuario
+	 * @param usuarios
+	 * @return none
+	 */
+	public void hacerReservaBono(es.uco.pw.factory.Reserva reserva, es.uco.pw.classes.Usuario usuario, ArrayList<es.uco.pw.classes.Usuario> usuarios){
+		for(int i=0;i<usuarios.size();i++){
+			if(usuarios.get(i).getEmail()==usuario.getEmail()){
+				if(reserva.getDuration() == 60){
+					reserva.setDiscount(5);
+				}
+				if(reserva.getDuration() == 90){
+					reserva.setDiscount(5);
+				}
+				if(reserva.getDuration() == 120){
+					reserva.setDiscount(5);
+				}
+			}
+		}
 	}
+	
+	/**
+	 * Método público para establecer el precio
+	 * @param reserva
+	 * @return none
+	 */
 	
 	public void establecerprecio(es.uco.pw.factory.Reserva reserva){
 		if(reserva.getDuration() == 60){
@@ -42,15 +76,30 @@ public class GestorReservas {
 		}
 	}
 
+	/**
+	 * Método público para modificar la reserva
+	 * @param reserva
+	 * @param usuario
+	 * @return none
+	 */
+	
 	public void modificarReserva(es.uco.pw.factory.Reserva reserva, es.uco.pw.classes.Usuario usuario){
-		if(reserva.getUserId() == "") {
-			
-		}
-		else if(reserva.getUserId() == usuario.getEmail()) {
-			
+		if(reserva.getDate().before(new Date())) {
+			reserva.setDate(reserva.getDate());
+			reserva.setDuration(reserva.getDuration());
+			reserva.setPistId(reserva.getPistId());
+			reserva.setPrice(reserva.getPrice());
+			reserva.setDiscount(reserva.getDiscount());
+			reserva.setTypeRes(reserva.getTypeRes());
 		}
 	}
 
+	/**
+	 * Método público para ver el número de reservas futuras
+	 * @param reserva
+	 * @return nreservas
+	 */
+	
 	public int reservasFuturas(ArrayList<es.uco.pw.factory.Reserva> reservas){
 		int nreservas = 0;
 		for(int i=0; i<reservas.size(); i++) {
@@ -61,6 +110,13 @@ public class GestorReservas {
 		return nreservas;
 	}
 
+	/**
+	 * Método público para ver las reservas de un dia concreto
+	 * @param reserva
+	 * @param fecha
+	 * @return reservasfecha
+	 */
+	
 	public ArrayList<es.uco.pw.factory.Reserva> reservasDiaConcreto(ArrayList<es.uco.pw.factory.Reserva> reservas, Date fecha){
 		ArrayList <es.uco.pw.factory.Reserva> reservasfecha = new ArrayList<es.uco.pw.factory.Reserva>();
 		for(int i=0; i<reservas.size(); i++) {
