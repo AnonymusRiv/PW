@@ -13,7 +13,21 @@ import java.util.Date;
  */
 
 public class GestorReservas {
-
+	private static GestorReservas instance=null;
+	
+	/**
+	 * Método público para obtener una instancia
+	 * @param none
+	 * @return instance
+	 */
+	
+	public static GestorReservas getInstance() {
+		if(instance==null) {
+			instance=new GestorReservas();
+		}
+		return instance;
+	}
+	
 	/**
 	 * Método público para hacer una reserva individual
 	 * @param usuario
@@ -42,6 +56,7 @@ public class GestorReservas {
 	 * @param usuarios
 	 * @return none
 	 */
+	
 	public void hacerReservaBono(es.uco.pw.factory.Reserva reserva, es.uco.pw.classes.Usuario usuario, ArrayList<es.uco.pw.classes.Usuario> usuarios){
 		for(int i=0;i<usuarios.size();i++){
 			if(usuarios.get(i).getEmail()==usuario.getEmail()){

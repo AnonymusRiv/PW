@@ -12,7 +12,26 @@ import es.uco.pw.classes.Pista.dificulty;
 import es.uco.pw.factory.Reserva;
 import es.uco.pw.manage.*;
 
+/**
+ * Implementación de la interfaz repository para trabajar con ficheros
+ * @author Moisés Moyano Cejudo
+ * @author Alba Palomino Jiménez
+ * @author Carlos Rivero Talavera
+ * @authos Silvia Roldán Flores
+ * @version 1.0
+ */
+
 public abstract class FileReader implements IRepository{
+	
+	
+	/**
+	 * Función encargada de cargar el sistema
+	 * @param none
+	 * @return none
+	 * @throws IOException
+	 * @throws ParseException
+	 */
+	
 	@Override
 	  public boolean loadSystem() throws IOException, ParseException {
 	    File usuarios= new File("usuarios.txt");
@@ -101,6 +120,13 @@ public abstract class FileReader implements IRepository{
 	    return true;
 	}
 	
+	/**
+	 * Función encargada de guardar el estado del sistema en almacenamiento
+	 * @param none
+	 * @return none
+	 * @throws IOException
+	 */
+	
 	public boolean saveSystem() throws IOException{
 		FileWriter usuarios= new FileWriter("usuarios.txt");
 	    FileWriter pistas = new FileWriter("pistas.txt");
@@ -123,8 +149,7 @@ public abstract class FileReader implements IRepository{
 	    //TODO: Gestor de reservas
 	    //GestorReservas resManager=GestorReservas.getInstance();
 	    //ArrayList<Reserva> resList=resManager.getReservas();
-	    
+	    return true;
 	}
 }
-
 

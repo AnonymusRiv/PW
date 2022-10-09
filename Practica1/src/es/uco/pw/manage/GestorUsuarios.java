@@ -18,6 +18,12 @@ public class GestorUsuarios {
 	private ArrayList<Usuario> usuarios=new ArrayList<Usuario>();
 	private Usuario usuarioActivo;
 	
+	/**
+	 * Método público para obtener una instancia
+	 * @param none
+	 * @return instance
+	 */
+	
 	public static GestorUsuarios getInstance() {
 		if(instance==null) {
 			instance=new GestorUsuarios();
@@ -25,18 +31,42 @@ public class GestorUsuarios {
 		return instance;
 	}
 
+	/**
+	 * Método público para obtener los usuarios
+	 * @param none
+	 * @return usuarios
+	 */
+	
 	public ArrayList<Usuario> getUsuarios() {
 		return usuarios;
 	}
 
+	/**
+	 * Método público para asignar los usuarios
+	 * @param usuarios
+	 * @return none
+	 */
+	
 	public void setUsuarios(ArrayList<Usuario> usuarios) {
 		this.usuarios = usuarios;
 	}
+	
+	/**
+	 * Método público para añadir un usuario
+	 * @param user
+	 * @return none
+	 */
 	
 	public boolean addUsuario(Usuario user){
         usuarios.add(user);
         return true;
     }
+	
+	/**
+	 * Método público para modificar un usuario
+	 * @param user
+	 * @return none
+	 */
 	
 	public void modificarUsuario(Usuario user) {
 		for(int i=0;i<usuarios.size();i++) {
@@ -49,15 +79,33 @@ public class GestorUsuarios {
 		}
 	}
 	
+	/**
+	 * Método público para listar los usuarios
+	 * @param usuarios
+	 * @return none
+	 */
+	
 	public void listarUsuarios(ArrayList<Usuario> usuarios) {
 		for(int i=0;i<usuarios.size();i++) {
 			System.out.println(usuarios.get(i).toString());
 		}
 	}
 	
+	/**
+	 * Método público para obtener un usuario activo
+	 * @param none
+	 * @return usuarioActivo
+	 */
+	
 	public Usuario getUsuarioActivo(){
 		return usuarioActivo;
 	}
+	
+	/**
+	 * Método público para asignar un usuarioActivo
+	 * @param usuario
+	 * @return none
+	 */
 	
 	public void setUsuarioActivo(Usuario usuario) {
 	    this.usuarioActivo = usuario;

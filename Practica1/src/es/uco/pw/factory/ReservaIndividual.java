@@ -11,16 +11,34 @@ package es.uco.pw.factory;
 
 public abstract class ReservaIndividual extends CrearReserva {
 	
+	/**
+	 * Método público para crear una reserva infantil
+	 * @param none
+	 * @return reserva
+	 */
+	
 	public ReservaInfantil createReservaInfantil() {
 		ReservaInfantil reserva= new ReservaInfantil();
 		return reserva;
 	}
+	
+	/**
+	 * Método público para crear una reserva familiar
+	 * @param none
+	 * @return reserva
+	 */
 	
 	public ReservaFamiliar createReservaFamiliar() {
 		ReservaFamiliar reserva=new ReservaFamiliar();
 		return reserva;
 		
 	}
+	
+	/**
+	 * Método público para crear una reserva adultos
+	 * @param none
+	 * @return reserva
+	 */
 	
 	public ReservaAdultos createReservaAdultos() {
 		ReservaAdultos reserva=new ReservaAdultos();
