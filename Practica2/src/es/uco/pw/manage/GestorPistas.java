@@ -78,7 +78,12 @@ public class GestorPistas {
 	 * @return true
 	 */
 	
-	public boolean addPista(Pista pista) {
+	public boolean addPista(ArrayList<Pista> pistas, Pista pista) {
+		for(int i=0; i<pistas.size(); i++){
+			if(pistas.get(i).getName() == pista.getName()){
+				return false;
+			}
+		}
 		pistas.add(pista);
 		return true;
 	}
@@ -89,7 +94,12 @@ public class GestorPistas {
 	 * @return true
 	 */
 	
-	public boolean addKart(Kart kart) {
+	public boolean addKart(ArrayList<Kart> karts, Kart kart) {
+		for(int i=0; i<karts.size(); i++){
+			if(karts.get(i).getId() == kart.getId()){
+				return false;
+			}
+		}
 		karts.add(kart);
 		return true;
 	}
@@ -101,15 +111,23 @@ public class GestorPistas {
 	 * @return none
 	 */
 	
-	public void asociarKartsAPista(Kart kart, Pista pista) {
-		if((pista.getDificulty().equals(Pista.dificulty.infantil)==true) && (kart.isType()==false) && (pista.isStatus()==true) && ((pista.getKarts().size()+1)<pista.getMax())) {
-			karts.add(kart);
-		}
-		if((pista.getDificulty().equals(Pista.dificulty.familiar)==true) && (pista.isStatus()==true) && ((pista.getKarts().size()+1)<pista.getMax())) {
-			karts.add(kart);
-		}
-		if((pista.getDificulty().equals(Pista.dificulty.adultos)==true) && (kart.isType()==true) && (pista.isStatus()==true) && ((pista.getKarts().size()+1)<pista.getMax())) {
-			karts.add(kart);
+	public void asociarKartsAPista(ArrayList<Kart> karts, ArrayList<Pista> pistas, Kart kart, Pista pista) {
+		for(int i=0; i<karts.size(); i++){
+			if(karts.get(i).getId() == kart.getId()){
+				for(int j=0; j<pistas.size(); j++){
+					if(pistas.get(j).getName() == pista.getName()){
+						if((pista.getDificulty().equals(Pista.dificulty.infantil)==true) && (kart.isType()==false) && (pista.isStatus()==true) && ((pista.getKarts().size()+1)<pista.getMax())) {
+							karts.add(kart);
+						}
+						if((pista.getDificulty().equals(Pista.dificulty.familiar)==true) && (pista.isStatus()==true) && ((pista.getKarts().size()+1)<pista.getMax())) {
+							karts.add(kart);
+						}
+						if((pista.getDificulty().equals(Pista.dificulty.adultos)==true) && (kart.isType()==true) && (pista.isStatus()==true) && ((pista.getKarts().size()+1)<pista.getMax())) {
+							karts.add(kart);
+						}
+					}
+				}
+			}
 		}
 	}
 	

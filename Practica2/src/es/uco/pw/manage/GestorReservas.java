@@ -79,15 +79,19 @@ public class GestorReservas {
 	 * @return none
 	 */
 	
-	public void establecerprecio(es.uco.pw.factory.Reserva reserva){
-		if(reserva.getDuration() == 60){
-			reserva.setPrice(20);
-		}
-		if(reserva.getDuration() == 90){
-			reserva.setPrice(30);
-		}
-		if(reserva.getDuration() == 120){
-			reserva.setPrice(40);
+	public void establecerprecio(ArrayList <es.uco.pw.factory.Reserva> reservas, es.uco.pw.factory.Reserva reserva){
+		for(int i=0; i<reservas.size(); i++){
+			if(reservas.get(i).getUserId() == reserva.getUserId()){
+				if(reserva.getDuration() == 60){
+					reserva.setPrice(20);
+				}
+				if(reserva.getDuration() == 90){
+					reserva.setPrice(30);
+				}
+				if(reserva.getDuration() == 120){
+					reserva.setPrice(40);
+				}
+			}
 		}
 	}
 
@@ -98,14 +102,22 @@ public class GestorReservas {
 	 * @return none
 	 */
 	
-	public void modificarReserva(es.uco.pw.factory.Reserva reserva, es.uco.pw.classes.Usuario usuario){
-		if(reserva.getDate().before(new Date())) {
-			reserva.setDate(reserva.getDate());
-			reserva.setDuration(reserva.getDuration());
-			reserva.setPistId(reserva.getPistId());
-			reserva.setPrice(reserva.getPrice());
-			reserva.setDiscount(reserva.getDiscount());
-			reserva.setTypeRes(reserva.getTypeRes());
+	public void modificarReserva(ArrayList <es.uco.pw.factory.Reserva> reservas, ArrayList <es.uco.pw.classes.Usuario> usuarios, es.uco.pw.factory.Reserva reserva, es.uco.pw.classes.Usuario usuario){
+		for(int i=0; i<reservas.size(); i++){
+			if(reservas.get(i).getUserId() == reserva.getUserId()){
+				for(int j=0;j<usuarios.size();j++){
+					if(usuarios.get(j).getEmail()==usuario.getEmail()){
+						if(reserva.getDate().before(new Date())) {
+							reserva.setDate(reserva.getDate());
+							reserva.setDuration(reserva.getDuration());
+							reserva.setPistId(reserva.getPistId());
+							reserva.setPrice(reserva.getPrice());
+							reserva.setDiscount(reserva.getDiscount());
+							reserva.setTypeRes(reserva.getTypeRes());
+						}
+					}
+				}
+			}
 		}
 	}
 

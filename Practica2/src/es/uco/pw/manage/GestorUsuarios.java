@@ -57,8 +57,13 @@ public class GestorUsuarios {
 	 * @return none
 	 */
 	
-	public boolean addUsuario(Usuario user){
-        usuarios.add(user);
+	public boolean addUsuario(ArrayList<Usuario> usuarios, Usuario user){
+        for(int i=0; i<usuarios.size(); i++){
+			if(usuarios.get(i).getName() == user.getName()){
+				return false;
+			}
+		}
+		usuarios.add(user);
         return true;
     }
 	

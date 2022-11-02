@@ -155,7 +155,7 @@ public final class Functions {
 	    System.out.print(" - Dificultad: ");
 	    //pista.setDificulty(scanner.nextLine());
 
-	    pistas.addPista(pista);
+	    pistas.addPista(pistas, pista);
 	    return true;
 	}
 	
