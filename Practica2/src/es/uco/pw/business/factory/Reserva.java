@@ -1,5 +1,7 @@
 package es.uco.pw.business.factory;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -94,6 +96,17 @@ public abstract class Reserva {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+	
+	/**
+     * Método público para establecer la fecha de reserva 
+     * @param dat
+     * @return none
+     */
+    
+    public void setDate(String dat) throws ParseException {
+        Date d=new SimpleDateFormat("dd/MM/yyyy").parse(dat);
+        date=d;
+    }
 	
 	/**
 	 * Método público para obtener la duracion 

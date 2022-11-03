@@ -17,7 +17,7 @@ public class Usuario {
 	private String name;
 	private Date dateOfBirth;
 	private java.util.Date inscription;
-	private String email;
+	private String email;                  //único
 
 	/**
 	 * Constructor sin parámetros
@@ -113,6 +113,17 @@ public class Usuario {
 	public void setInscription(java.util.Date inscription) {
 		this.inscription = inscription;
 	}
+	
+	/**
+     * Método público para establecer la fecha de reserva 
+     * @param date
+     * @return none
+     */
+    
+    public void setInscription(String date) throws ParseException {
+        Date ins=new SimpleDateFormat("dd/MM/yyyy").parse(date);
+        inscription=ins;
+    }
 
 	/**
 	 * Método público para obtener el mail 

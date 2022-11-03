@@ -3,6 +3,10 @@ package es.uco.pw.business.managers;
 import java.util.ArrayList;
 import java.util.Date;
 
+import es.uco.pw.business.classes.Pista;
+import es.uco.pw.business.classes.Usuario;
+import es.uco.pw.business.factory.Reserva;
+
 /**
  * Clase GestorReservas
  * @author Moisés Moyano Cejudo
@@ -14,6 +18,7 @@ import java.util.Date;
 
 public class GestorReservas {
 	private static GestorReservas instance=null;
+	private ArrayList<Reserva> reservas=new ArrayList<Reserva>();
 	
 	/**
 	 * Método público para obtener una instancia
@@ -153,4 +158,54 @@ public class GestorReservas {
 		}
 		return reservasfecha;
 	}
+
+	/**
+     * Método público para ver eliminar una reserva
+     * @param reservas
+     * @param reserva
+     * @return boolean
+     */
+	
+    public Boolean deleteReserva(ArrayList <Reserva> reservas, String iduser) {
+        for(int i=0; i<reservas.size(); i++) {
+            if(reservas.get(i).getUserId() == iduser) {
+                reservas.remove(i);
+                return true;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Método público para ver añadir una reserva
+     * @param reservas
+     * @param usuarios
+     * @param pistas
+     * @param reserva
+     * @return boolean
+     */
+    
+    public Boolean addReserva(ArrayList <Reserva> reservas, ArrayList <Usuario> usuarios, ArrayList <Pista> pistas, Reserva reserva) {
+        for(int i=0; i<usuarios.size(); i++) {
+            if(usuarios.get(i).getEmail() == reserva.getUserId()) {
+                for(int j=0; j<pistas.size(); j++) {
+                    if(pistas.get(j).getName() == reserva.getPistId()) {
+                        reservas.add(reserva);
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Método público para ver obtener las reservas
+     * @param none
+     * @return reservas
+     */
+    
+    public ArrayList<Reserva> getReservas() {
+        return reservas;
+    }
 }

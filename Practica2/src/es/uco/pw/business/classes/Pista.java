@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 
 public class Pista {
-	private String name;
+	private String name;       //único
 	private boolean status;
 	private dificulty dif;
 	public enum dificulty{
@@ -107,6 +107,24 @@ public class Pista {
 	public void setDificulty(dificulty dificulty) {
 		this.dif = dificulty;
 	}
+
+	/**
+     * Método público para establecer la dificultad 
+     * @param difficulty
+     * @return none
+     */
+    
+    public void setDificulty(String dificulty) {
+        if(dificulty == "infantil") {
+            dif = es.uco.pw.business.classes.Pista.dificulty.infantil;
+        }
+        if(dificulty == "familiar") {
+            dif = es.uco.pw.business.classes.Pista.dificulty.familiar;
+        }
+        if(dificulty == "adultos") {
+            dif = es.uco.pw.business.classes.Pista.dificulty.adultos;
+        }
+    }
 
 	/**
 	 * Método público para obtener el número de karts máximo 

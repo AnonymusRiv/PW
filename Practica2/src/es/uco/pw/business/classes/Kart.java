@@ -10,7 +10,7 @@ package es.uco.pw.business.classes;
  */
 
 public class Kart {
-	private int id;
+	private int id;       //único
 	private boolean type; //false=niño  true=adulto
 	private status stat;
 	public enum status{
