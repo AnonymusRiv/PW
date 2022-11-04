@@ -1,7 +1,8 @@
 package es.uco.pw.display;
 
     import java.text.ParseException;
-    import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
     import java.util.Scanner;
 
     import es.uco.pw.business.classes.*;
@@ -110,8 +111,10 @@ package es.uco.pw.display;
             usuario.setName(scanner.nextLine());
             System.out.print(" - Email: ");
             usuario.setEmail(scanner.nextLine());
-            System.out.print(" - Fecha de nacimiento: ");
-            usuario.setDateOfBirth(scanner.nextLine());
+            SimpleDateFormat formatter6 = new SimpleDateFormat("dd/MM/yyyy");
+            System.out.print(" - Fecha de nacimiento con el formato \"dd/MM/yyyy\" : ");
+            String date = scanner.nextLine();
+            usuario.setDateOfBirth(formatter6.parse(date));
 
             user.addUsuario(usuarios, usuario);
             return true;

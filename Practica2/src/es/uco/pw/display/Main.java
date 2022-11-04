@@ -11,6 +11,9 @@ public class Main {
         choice = Functions.printUserLoginScreen();
 
         while(choice != 0){
+            if(choice <0 && choice>2){
+                System.out.println("Seleccione una opción válida.");
+            }
             if(choice == 1){
                Functions.registerUser();
             }
@@ -83,9 +86,6 @@ public class Main {
                         }
                     }
                 }
-            }
-            else{
-                System.out.println("Error");
             }
             choice = Functions.printUserLoginScreen();
         }
