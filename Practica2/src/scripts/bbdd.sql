@@ -6,7 +6,7 @@
 -- Version del servidor: 5.1.73
 -- Version de PHP: 5.3.3
 --
--- Base de datos: `i72raqua`
+-- Base de datos: `p02ritac`
 --
 
 -- --------------------------------------------------------

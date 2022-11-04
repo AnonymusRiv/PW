@@ -15,6 +15,7 @@ import java.sql.SQLException;
 
 public class DBConnection {
 	protected Connection connection = null;
+	private static DBConnection instance = null;
 
 	// Important: This configuration is hard-coded here for illustrative purposes only
 	
@@ -54,4 +55,11 @@ public class DBConnection {
 			e.printStackTrace();
 		}
 	}
+
+    public static DBConnection getInstance() {
+        if (instance == null) {
+            instance = new DBConnection();
+          }
+          return instance;
+    }
 }

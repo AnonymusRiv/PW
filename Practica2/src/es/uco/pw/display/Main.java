@@ -2,10 +2,15 @@ package es.uco.pw.display;
 
 import java.text.ParseException;
 
+import es.uco.pw.data.common.DBConnection;
+
 public class Main {
     public static void main(String args[]) throws ParseException
     {
 
+        DBConnection BaseManager = DBConnection.getInstance();
+        BaseManager.getConnection();
+        
         int choice, choice1, choice2, choice3;
 
         choice = Functions.printUserLoginScreen();
