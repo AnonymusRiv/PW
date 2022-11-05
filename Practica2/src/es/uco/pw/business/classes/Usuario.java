@@ -80,7 +80,7 @@ public class Usuario {
 	 */
 	
 	public void setDateOfBirth(String date) throws ParseException {
-		Date dob=new SimpleDateFormat("dd/MM/yyyy").parse(date);
+		Date dob=new SimpleDateFormat("yyyy-MM-dd").parse(date);
 		dateOfBirth=dob;
 	}
 

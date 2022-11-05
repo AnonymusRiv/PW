@@ -11,7 +11,7 @@ public class Main {
 
         DBConnection BaseConnection = DBConnection.getInstance();
         BaseConnection.getConnection();
-        //DBmanager BaseManager = DBmanager.getInstance();
+        DBmanager BaseManager = DBmanager.getInstance();
         
         int choice, choice1, choice2, choice3;
 

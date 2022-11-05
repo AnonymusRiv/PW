@@ -111,8 +111,8 @@ import java.util.ArrayList;
             usuario.setName(scanner.nextLine());
             System.out.print(" - Email: ");
             usuario.setEmail(scanner.nextLine());
-            SimpleDateFormat formatter6 = new SimpleDateFormat("dd/MM/yyyy");
-            System.out.print(" - Fecha de nacimiento con el formato \"dd/MM/yyyy\" : ");
+            SimpleDateFormat formatter6 = new SimpleDateFormat("yyyy-MM-dd");
+            System.out.print(" - Fecha de nacimiento con el formato \"yyyy-MM-dd\" : ");
             String date = scanner.nextLine();
             usuario.setDateOfBirth(formatter6.parse(date));
 

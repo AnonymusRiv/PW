@@ -63,10 +63,10 @@ CREATE TABLE IF NOT EXISTS `bono` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-INSERT INTO `usuario` VALUES ('Carlos', 'p02ritac@uco.es','15/08/2002', '05/11/2022');
-INSERT INTO `usuario` VALUES ('Silvia', 'i02rofls@uco.es','02/09/2002', '05/11/2022');
-INSERT INTO `usuario` VALUES ('Alba', 'i02pajia@uco.es','23/12/2002', '05/11/2022');
-INSERT INTO `usuario` VALUES ('Moises', 'i92mocem@uco.es','05/04/2001', '05/11/2022');
+INSERT INTO `usuario` VALUES ('Carlos', 'p02ritac@uco.es','2002-08-15', '2022-11-05');
+INSERT INTO `usuario` VALUES ('Silvia', 'i02rofls@uco.es','2002-09-02', '2022-11-05');
+INSERT INTO `usuario` VALUES ('Alba', 'i02pajia@uco.es','2002-12-23', '2022-11-05');
+INSERT INTO `usuario` VALUES ('Moises', 'i92mocem@uco.es','2001-04-05', '2022-11-05');
 
 INSERT INTO `kart` VALUES (NULL,0 ,'disponible');
 INSERT INTO `kart` VALUES (NULL,0 ,'reservado');
@@ -78,10 +78,10 @@ INSERT INTO `pista` VALUES ('sevilla', 0, 'familiar', 4, NULL);
 INSERT INTO `pista` VALUES ('madrid', 1, 'adultos', 2, NULL);
 INSERT INTO `pista` VALUES ('barcelona', 0, 'adultos', 10, NULL);
 
-INSERT INTO `reserva` VALUES ('p02ritac@uco.es', '04/11/2022', 120, 'cordoba', 20, 10, 'infantil');
-INSERT INTO `reserva` VALUES ('i02rofls@uco.es', '13/08/2022', 120, 'sevilla', 20, 5, 'familiar');
-INSERT INTO `reserva` VALUES ('i02pajia@uco.es', '01/01/2022', 120, 'barcelona', 20, 10, 'adultos');
-INSERT INTO `reserva` VALUES ('i92mocem@uco.es', '23/12/2020', 120, 'madrid', 20, 5, 'adultos');
+INSERT INTO `reserva` VALUES ('p02ritac@uco.es', '2022-11-04', 120, 'cordoba', 20, 10, 'infantil');
+INSERT INTO `reserva` VALUES ('i02rofls@uco.es', '2022-08-13', 120, 'sevilla', 20, 5, 'familiar');
+INSERT INTO `reserva` VALUES ('i02pajia@uco.es', '2022-01-01', 120, 'barcelona', 20, 10, 'adultos');
+INSERT INTO `reserva` VALUES ('i92mocem@uco.es', '2020-12-23', 120, 'madrid', 20, 5, 'adultos');
 
 INSERT INTO `bono` VALUES (1, 4);
 INSERT INTO `bono` VALUES (2, 2);

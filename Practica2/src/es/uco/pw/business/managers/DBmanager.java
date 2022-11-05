@@ -33,10 +33,20 @@ public class DBmanager {
     private String deleteReservasFromUsuarioQuery;
     private String modificarUsuarioQuery;
     
-    private String getReservasQuery;
-    private String modifyReservasQuery;
-    private String deleteReservasQuery;
-    private String addReservasQuery;
+    private String getReservaAdultosQuery;
+    private String registrarReservaAdultosQuery;
+    private String modificarReservaAdultosQuery;
+    private String deleteReservaAdultosQuery;
+
+    private String getReservaFamiliarQuery;
+    private String registrarReservaFamiliarQuery;
+    private String modificarReservaFamiliarQuery;
+    private String deleteReservaFamiliarQuery;
+
+    private String getReservaInfantilQuery;
+    private String registrarReservaInfantilQuery;
+    private String modificarReservaInfantilQuery;
+    private String deleteReservaInfantilQuery;
     
 
     protected Connection connection = null;
@@ -79,10 +89,20 @@ public class DBmanager {
         modificarUsuarioQuery=prop.getProperty("modificarUsuario");
         
         
-        getReservasQuery = prop.getProperty("getReservas");
-        modifyReservasQuery = prop.getProperty("modifyReservas");
-        deleteReservasQuery = prop.getProperty("deleteReservas");
-        addReservasQuery = prop.getProperty("addReservas");
+        getReservaAdultosQuery = prop.getProperty("getReservaAdultos");
+        registrarReservaAdultosQuery = prop.getProperty("registrarReservaAdultos");
+        modificarReservaAdultosQuery = prop.getProperty("modificarReservaAdultos");
+        deleteReservaAdultosQuery = prop.getProperty("deleteReservaAdultos");
+
+        getReservaFamiliarQuery = prop.getProperty("getReservaFamiliar");
+        registrarReservaFamiliarQuery = prop.getProperty("registrarReservaFamiliar");
+        modificarReservaFamiliarQuery = prop.getProperty("modificarReservaFamiliar");
+        deleteReservaFamiliarQuery = prop.getProperty("deleteReservaFamiliar");
+
+        getReservaInfantilQuery = prop.getProperty("getReservaInfantil");
+        registrarReservaInfantilQuery = prop.getProperty("registrarReservaInfantil");
+        modificarReservaInfantilQuery = prop.getProperty("modificarReservaInfantil");
+        deleteReservaInfantilQuery = prop.getProperty("deleteReservaInfantil");
         
       } catch (FileNotFoundException e) {
           e.printStackTrace();
@@ -235,83 +255,245 @@ public class DBmanager {
     }
     
     /**
+    * Método público para obtener una query
+    * @param none
+    * @return String Query buscada
+    */
+
+   public String getReservaAdultosQuery() {
+     return getReservaAdultosQuery;
+   }
+
+   /**
+    * Método público para modificar una query
+    * @param String Query a modificar
+    * @return none
+    */
+
+   public void setReservaAdultosQuery(String getReservaAdultosQuery) {
+     this.getReservaAdultosQuery = getReservaAdultosQuery;
+   }
+     
+   /**
+   * Método público para obtener una query
+   * @param none
+   * @return String Query buscada
+   */
+ 
+   public String getRegistrarReservaAdultosQuery() {
+       return registrarReservaAdultosQuery;
+   }
+
+   /**
+    * Método público para modificar una query
+    * @param String Query a modificar
+    * @return none
+    */
+
+   public void setRegistrarReservaAdultosQuery(String registrarReservaAdultosQuery) {
+       this.registrarReservaAdultosQuery = registrarReservaAdultosQuery;
+     }
+
+   /**
+   * Método público para obtener una query
+   * @param none
+   * @return String Query buscada
+   */
+
+   public String getModificarReservaAdultosQuery() {
+     return modificarReservaAdultosQuery;
+   }
+
+   /**
+   * Método público para modificar una query
+   * @param String Query a modificar
+   * @return none
+   */
+
+   public void setModificarReservaAdultosQuery(String modificarReservaAdultosQuery) {
+     this.modificarReservaAdultosQuery = modificarReservaAdultosQuery;
+   }
+
+   /**
+   * Método público para obtener una query
+   * @param none
+   * @return String Query buscada
+   */
+
+   public String getDeleteReservaAdultosQuery() {
+     return deleteReservaAdultosQuery;
+   }
+
+   /**
+   * Método público para modificar una query
+   * @param String Query a modificar
+   * @return none
+   */
+
+   public void setDeleteReservaAdultosQuery(String deleteReservaAdultosQuery) {
+     this.deleteReservaAdultosQuery = deleteReservaAdultosQuery;
+   }
+
+   /**
+    * Método público para obtener una query
+    * @param none
+    * @return String Query buscada
+    */
+
+   public String getReservaFamiliarQuery() {
+       return getReservaFamiliarQuery;
+     }
+ 
+     /**
+      * Método público para modificar una query
+      * @param String Query a modificar
+      * @return none
+      */
+ 
+     public void setReservaFamiliarQuery(String getReservaFamiliarQuery) {
+       this.getReservaFamiliarQuery = getReservaFamiliarQuery;
+     }
+       
+     /**
      * Método público para obtener una query
      * @param none
      * @return String Query buscada
      */
-
-    public String getReservasQuery() {
-      return getReservasQuery;
-    }
-
-    /**
+   
+     public String getRegistrarReservaFamiliarQuery() {
+         return registrarReservaFamiliarQuery;
+     }
+ 
+     /**
+      * Método público para modificar una query
+      * @param String Query a modificar
+      * @return none
+      */
+ 
+     public void setRegistrarReservaFamiliarQuery(String registrarReservaFamiliarQuery) {
+         this.registrarReservaFamiliarQuery = registrarReservaFamiliarQuery;
+       }
+ 
+     /**
+     * Método público para obtener una query
+     * @param none
+     * @return String Query buscada
+     */
+ 
+     public String getModificarReservaFamiliarQuery() {
+       return modificarReservaFamiliarQuery;
+     }
+ 
+     /**
      * Método público para modificar una query
      * @param String Query a modificar
      * @return none
      */
+ 
+     public void setModificarReservaFamiliarQuery(String modificarReservaFamiliarQuery) {
+       this.modificarReservaFamiliarQuery = modificarReservaFamiliarQuery;
+     }
+ 
+     /**
+     * Método público para obtener una query
+     * @param none
+     * @return String Query buscada
+     */
+ 
+     public String getDeleteReservaFamiliarQuery() {
+       return deleteReservaFamiliarQuery;
+     }
+ 
+     /**
+     * Método público para modificar una query
+     * @param String Query a modificar
+     * @return none
+     */
+ 
+     public void setDeleteReservaFamiliarQuery(String deleteReservaFamiliarQuery) {
+       this.deleteReservaFamiliarQuery = deleteReservaFamiliarQuery;
+     }
 
-    public void setReservasQuery(String getReservasQuery) {
-      this.getReservasQuery = getReservasQuery;
-    }
 
-    /**
+     /**
     * Método público para obtener una query
     * @param none
     * @return String Query buscada
     */
 
-    public String getModifyReservasQuery() {
-      return modifyReservasQuery;
-    }
+   public String getReservaInfantilQuery() {
+       return getReservaInfantilQuery;
+     }
+ 
+     /**
+      * Método público para modificar una query
+      * @param String Query a modificar
+      * @return none
+      */
+ 
+     public void setReservaInfantilQuery(String getReservaInfantilQuery) {
+       this.getReservaInfantilQuery = getReservaInfantilQuery;
+     }
+       
+     /**
+     * Método público para obtener una query
+     * @param none
+     * @return String Query buscada
+     */
+   
+     public String getRegistrarReservaInfantilQuery() {
+         return registrarReservaInfantilQuery;
+     }
+ 
+     /**
+      * Método público para modificar una query
+      * @param String Query a modificar
+      * @return none
+      */
+ 
+     public void setRegistrarReservaInfantilQuery(String registrarReservaInfantilQuery) {
+         this.registrarReservaInfantilQuery = registrarReservaInfantilQuery;
+       }
+ 
+     /**
+     * Método público para obtener una query
+     * @param none
+     * @return String Query buscada
+     */
+ 
+     public String getModificarReservaInfantilQuery() {
+       return modificarReservaInfantilQuery;
+     }
+ 
+     /**
+     * Método público para modificar una query
+     * @param String Query a modificar
+     * @return none
+     */
+ 
+     public void setModificarReservaInfantilQuery(String modificarReservaInfantilQuery) {
+       this.modificarReservaInfantilQuery = modificarReservaInfantilQuery;
+     }
+ 
+     /**
+     * Método público para obtener una query
+     * @param none
+     * @return String Query buscada
+     */
+ 
+     public String getDeleteReservaInfantilQuery() {
+       return deleteReservaInfantilQuery;
+     }
+ 
+     /**
+     * Método público para modificar una query
+     * @param String Query a modificar
+     * @return none
+     */
+ 
+     public void setDeleteReservaInfantilQuery(String deleteReservaInfantilQuery) {
+       this.deleteReservaInfantilQuery = deleteReservaInfantilQuery;
+     }
 
-    /**
-    * Método público para modificar una query
-    * @param String Query a modificar
-    * @return none
-    */
-
-    public void setModifyReservasQuery(String modifyReservasQuery) {
-      this.modifyReservasQuery = modifyReservasQuery;
-    }
-
-    /**
-    * Método público para obtener una query
-    * @param none
-    * @return String Query buscada
-    */
-
-    public String getDeleteReservasQuery() {
-      return deleteReservasQuery;
-    }
-
-    /**
-    * Método público para modificar una query
-    * @param String Query a modificar
-    * @return none
-    */
-
-    public void setDeleteReservasQuery(String deleteReservasQuery) {
-      this.deleteReservasQuery = deleteReservasQuery;
-    }
-
-    /**
-    * Método público para obtener una query
-    * @param none
-    * @return String Query buscada
-    */
-
-    public String getAddReservasQuery() {
-      return addReservasQuery;
-    }
-
-    /**
-    * Método público para modificar una query
-    * @param String Query a modificar
-    * @return none
-    */
-
-    public void setAddReservasQuery(String addReservasQuery) {
-      this.addReservasQuery = addReservasQuery;
-    }
 
 }
