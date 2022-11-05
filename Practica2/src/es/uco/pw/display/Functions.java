@@ -5,7 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
     import java.util.Scanner;
 
-    import es.uco.pw.business.classes.*;
+import es.uco.pw.business.DTO.UsuarioDTO;
+import es.uco.pw.business.classes.*;
     import es.uco.pw.business.factory.*;
     import es.uco.pw.business.managers.*;
 
@@ -78,19 +79,12 @@ import java.util.ArrayList;
         public static Boolean loginUser() {
             Functions.clearConsole();
             GestorUsuarios usuario = GestorUsuarios.getInstance();
-            ArrayList<Usuario> usuarios = usuario.getUsuarios();
             scanner = new Scanner(System.in);
 
             System.out.print(" - Email: ");
             String email = scanner.nextLine();
-
-            for (int i = 0; i < usuarios.size(); i++) {
-              if (usuarios.get(i).getEmail().equals(email)){
-                usuario.setUsuarioActivo(usuarios.get(i));
-                return true;
-              }
-            }
-            return false;
+            
+            return usuario.loginUser(email);
         }
         
         /**
@@ -101,10 +95,9 @@ import java.util.ArrayList;
         
         public static Boolean registerUser() throws ParseException {
             Functions.clearConsole();
-            Usuario usuario =new Usuario();
+            UsuarioDTO usuario =new UsuarioDTO();
             scanner = new Scanner(System.in);
             GestorUsuarios user = GestorUsuarios.getInstance();
-            ArrayList<Usuario> usuarios = user.getUsuarios();
 
             System.out.println("Introduzca los siguientes datos: ");
             System.out.print(" - Nombre: ");
@@ -114,10 +107,14 @@ import java.util.ArrayList;
             SimpleDateFormat formatter6 = new SimpleDateFormat("yyyy-MM-dd");
             System.out.print(" - Fecha de nacimiento con el formato \"yyyy-MM-dd\" : ");
             String date = scanner.nextLine();
-            usuario.setDateOfBirth(formatter6.parse(date));
-
-            user.addUsuario(usuarios, usuario);
-            return true;
+            usuario.setDateOfBirth(date);
+            
+            if(user.registerUser(usuario)) {
+                System.out.println("Registro correcto");
+                return true;
+            }
+            System.out.println("Error al registrarse");
+            return false;
         }
         
         /**
@@ -129,7 +126,7 @@ import java.util.ArrayList;
         public static void listarUsuarios() {
             Functions.clearConsole();
             GestorUsuarios usuario = GestorUsuarios.getInstance();
-            ArrayList<Usuario> users = usuario.getUsuarios();
+            ArrayList<UsuarioDTO> users = usuario.getUsuarios();
             System.out.println("Email ");
             System.out.println("-------");
             for (int i = 0; i < users.size(); i++) {
@@ -339,35 +336,28 @@ import java.util.ArrayList;
             Functions.clearConsole();
             scanner = new Scanner(System.in);
             GestorUsuarios usuario = GestorUsuarios.getInstance();
-            ArrayList <Usuario> usuarios = usuario.getUsuarios();
         
-            String mail;
+            Functions.listarUsuarios();
         
             System.out.println(
               "Introduzca el correo del usuario que desea modificar: "
             );
+            String mail = scanner.nextLine();
             
-            mail = scanner.next();
-            Usuario user = null;
-        
-            for(int i=0; i<usuarios.size(); i++) {
-                if(usuarios.get(i).getEmail() == mail) {
-                    user = usuarios.get(i);
-                }
-            }
-        
+            UsuarioDTO user = usuario.findUser(mail);
+            
             if (user != null) {
               System.out.println("Introduzca los siguientes datos: ");
               System.out.print(" - Nombre: ");
               user.setName(scanner.nextLine());
-              System.out.print(" - Fecha de cumpleaños: ");
-              user.setDateOfBirth(scanner.nextLine());
-              System.out.print(" - Fecha de reserva: ");
-              user.setInscription(scanner.nextLine());
+              SimpleDateFormat formatter6 = new SimpleDateFormat("yyyy-MM-dd");
+              System.out.print(" - Fecha de nacimiento con el formato \"yyyy-MM-dd\" : ");
+              String date = scanner.nextLine();
+              user.setDateOfBirth(date);
               System.out.print(" - Email: ");
               user.setEmail(scanner.nextLine());
         
-              return true;
+              return usuario.modificarUsuario(user);
             }
         
             return false;

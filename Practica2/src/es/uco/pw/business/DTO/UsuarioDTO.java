@@ -15,7 +15,7 @@ import java.util.Date;
 
 public class UsuarioDTO {
     private String name;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private java.util.Date inscription;
     private String email;
     
@@ -35,7 +35,7 @@ public class UsuarioDTO {
      * @param mail
      */
 
-    public UsuarioDTO(String name, Date dateOfBirth, Date inscription, String email) {
+    public UsuarioDTO(String name, String dateOfBirth, Date inscription, String email) {
         super();
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -69,7 +69,7 @@ public class UsuarioDTO {
      * @return dateOfBirth
      */
 
-    public Date getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
     
@@ -79,7 +79,7 @@ public class UsuarioDTO {
      * @return none
      */
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
     
@@ -89,10 +89,10 @@ public class UsuarioDTO {
      * @return none
      */
     
-    public void setDateOfBirth(String date) throws ParseException {
-        Date dob=new SimpleDateFormat("dd/MM/yyyy").parse(date);
+    /*public void setDateOfBirth(String date) throws ParseException {
+        Date dob=new SimpleDateFormat("yyyy-MM-dd").parse(date);
         dateOfBirth=dob;
-    }
+    }*/
     
     /**
      * Método público para obtener la fecha de reserva 

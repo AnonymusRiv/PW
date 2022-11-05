@@ -39,8 +39,9 @@ public class UsuarioDAO {
 
             while (rs.next()) {
                 String name = rs.getString("name");
-                java.sql.Timestamp timetamp = rs.getTimestamp("dateOfBirth"); // O/P: DD:MM:YYYY HH:mm:ss
-                java.util.Date dateOfBirth = new java.util.Date(timetamp.getTime());
+                /*java.sql.Timestamp timetamp = rs.getTimestamp("dateOfBirth"); // O/P: DD:MM:YYYY HH:mm:ss
+                java.util.Date dateOfBirth = new java.util.Date(timetamp.getTime());*/
+                String dateOfBirth = rs.getString("dateOfBirth");
                 java.sql.Timestamp timetamp2 = rs.getTimestamp("inscription"); // O/P: DD:MM:YYYY HH:mm:ss
                 java.util.Date inscription = new java.util.Date(timetamp2.getTime());
                 String email = rs.getString("email");
@@ -63,18 +64,24 @@ public class UsuarioDAO {
      * Registra un usuario en el sistema
      * @param name
      * @param dateOfBirth
-     * @param inscription
+     * @param registerDate
      * @param email
      * @return none
      */
     
-    public void registrarUsuario(String name, Date dateOfBirth, Date inscription, String email) {
+    public void registrarUsuario(String name, String dateOfBirth, String registerDate, String email) {
         try{
             DBmanager DBm = DBmanager.getInstance();
             Connection connection = DBm.getConnection();
         
-            String query= MessageFormat.format(DBm.getRegistrarUsuarioQuery(), "'",name,"'","'",dateOfBirth,"'","'",inscription,"'","'",email,"'");
-        
+            String query= MessageFormat.format(DBm.getRegistrarUsuarioQuery(), "'", name,"'","'", email,"'","'", dateOfBirth,"'","'",registerDate,"'");
+
+            System.out.print(name);
+            System.out.print(email);
+            System.out.print(dateOfBirth);
+            System.out.print(registerDate);
+            System.out.print(query);
+            
             Statement stmt = connection.createStatement();
             stmt.executeUpdate(query);
             if (stmt != null) {

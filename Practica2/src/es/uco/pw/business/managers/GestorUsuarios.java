@@ -1,8 +1,14 @@
 package es.uco.pw.business.managers;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import es.uco.pw.business.DTO.UsuarioDTO;
 import es.uco.pw.business.classes.*;
+import es.uco.pw.data.DAO.UsuarioDAO;
 
 /**
  * Clase GestorUsuarios
@@ -15,8 +21,8 @@ import es.uco.pw.business.classes.*;
 
 public class GestorUsuarios {
 	private static GestorUsuarios instance=null;
-	private ArrayList<Usuario> usuarios=new ArrayList<Usuario>();
-	private Usuario usuarioActivo;
+	private ArrayList<UsuarioDTO> usuarios=new ArrayList<UsuarioDTO>();
+	private UsuarioDTO usuarioActivo;
 	
 	/**
 	 * Método público para obtener una instancia
@@ -36,10 +42,11 @@ public class GestorUsuarios {
 	 * @param none
 	 * @return usuarios
 	 */
-	
-	public ArrayList<Usuario> getUsuarios() {
-		return usuarios;
-	}
+
+	public ArrayList<UsuarioDTO> getUsuarios(){
+	        UsuarioDAO usuarios = new UsuarioDAO();
+	        return usuarios.getUsuarios();
+	    }
 
 	/**
 	 * Método público para asignar los usuarios
@@ -47,7 +54,7 @@ public class GestorUsuarios {
 	 * @return none
 	 */
 	
-	public void setUsuarios(ArrayList<Usuario> usuarios) {
+	public void setUsuarios(ArrayList<UsuarioDTO> usuarios) {
 		this.usuarios = usuarios;
 	}
 	
@@ -57,7 +64,7 @@ public class GestorUsuarios {
 	 * @return none
 	 */
 	
-	public boolean addUsuario(ArrayList<Usuario> usuarios, Usuario user){
+	public boolean addUsuario(ArrayList<UsuarioDTO> usuarios, UsuarioDTO user){
         for(int i=0; i<usuarios.size(); i++){
 			if(usuarios.get(i).getEmail() == user.getEmail()){
 				return false;
@@ -73,15 +80,13 @@ public class GestorUsuarios {
 	 * @return none
 	 */
 	
-	public void modificarUsuario(Usuario user) {
-		for(int i=0;i<usuarios.size();i++) {
-			if(usuarios.get(i).getEmail()==user.getEmail()) {
-				usuarios.get(i).setName(user.getName());
-				usuarios.get(i).setDateOfBirth(user.getDateOfBirth());
-				usuarios.get(i).setInscription(user.getInscription());
-				usuarios.get(i).setEmail(user.getEmail());
-			}
+	public Boolean modificarUsuario(UsuarioDTO user) {
+		UsuarioDAO usuario = new UsuarioDAO();
+		usuario.modificarUsuario(user);
+		if(usuarioActivo.getEmail().equals(user.getEmail())) {
+		    setUsuarioActivo(user);
 		}
+		return true;
 	}
 	
 	/**
@@ -102,7 +107,7 @@ public class GestorUsuarios {
 	 * @return usuarioActivo
 	 */
 	
-	public Usuario getUsuarioActivo(){
+	public UsuarioDTO getUsuarioActivo(){
 		return usuarioActivo;
 	}
 	
@@ -112,7 +117,50 @@ public class GestorUsuarios {
 	 * @return none
 	 */
 	
-	public void setUsuarioActivo(Usuario usuario) {
+	public void setUsuarioActivo(UsuarioDTO usuario) {
 	    this.usuarioActivo = usuario;
 	}
+	
+    public Boolean loginUser(String email) {
+        ArrayList<UsuarioDTO> usuarios = getUsuarios();
+        for(int i=0; i<usuarios.size(); i++) {
+            if(usuarios.get(i).getEmail().equals(email)) {
+               setUsuarioActivo(usuarios.get(i));
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public UsuarioDTO findUser(String mail) {
+        ArrayList<UsuarioDTO> usuarios = getUsuarios();
+        for(int i=0; i<usuarios.size(); i++) {
+            if(usuarios.get(i).getEmail().equals(mail)) {
+                return usuarios.get(i);
+            }
+        }
+        return null;
+    }
+    
+    public boolean registerUser(UsuarioDTO user) {
+        GestorUsuarios gestor = new GestorUsuarios();
+        ArrayList<UsuarioDTO> users = gestor.getUsuarios();
+        for (int i = 0; i < users.size(); i++) {
+          if (users.get(i).getEmail().equals(user.getEmail())) {
+            return false;
+          }
+        }
+        UsuarioDAO userDAO = new UsuarioDAO();
+        new SimpleDateFormat("yyyy-MM-dd");
+        //DateTimeFormatter registerDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        //registerDate.format(LocalDateTime.now());
+        String registerDate = "2022-05-11";
+        userDAO.registrarUsuario(
+          user.getName(),
+          user.getDateOfBirth(),
+          registerDate,
+          user.getEmail()
+        );
+        return true;
+      }
 }
