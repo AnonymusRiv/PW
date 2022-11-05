@@ -23,12 +23,20 @@ public class DBmanager {
     
     private static DBmanager instance = null;
     
-    private String serverName;
-    private String port;
-    private String user;
-    private String password;
+    private String url="jdbc:mysql://oraclepr.uco.es:3306/p02ritac";
+    private String user="p02ritac";
+    private String password="PracticaPW";
     
-    private static String getUsuarioQuery;
+    private String getUsuarioQuery;
+    private String registrarUsuarioQuery;
+    private String deleteUsuarioQuery;
+    private String deleteReservasFromUsuarioQuery;
+    private String modificarUsuarioQuery;
+    
+    private String getReservasQuery;
+    private String modifyReservasQuery;
+    private String deleteReservasQuery;
+    private String addReservasQuery;
     
 
     protected Connection connection = null;
@@ -47,8 +55,7 @@ public class DBmanager {
         );
         prop.load(reader);
 
-        serverName = prop.getProperty("serverName");
-        port = prop.getProperty("port");
+        url = prop.getProperty("url");
         user = prop.getProperty("user");
         password = prop.getProperty("password");
       } catch (FileNotFoundException e) {
@@ -66,12 +73,51 @@ public class DBmanager {
         prop.load(reader);
         
         getUsuarioQuery = prop.getProperty("getUsuarios");
+        registrarUsuarioQuery=prop.getProperty("registrarUsuario");
+        deleteUsuarioQuery=prop.getProperty("deleteUsuario");
+        deleteReservasFromUsuarioQuery=prop.getProperty("deleteReservasFromUsuario");
+        modificarUsuarioQuery=prop.getProperty("modificarUsuario");
+        
+        
+        getReservasQuery = prop.getProperty("getReservas");
+        modifyReservasQuery = prop.getProperty("modifyReservas");
+        deleteReservasQuery = prop.getProperty("deleteReservas");
+        addReservasQuery = prop.getProperty("addReservas");
         
       } catch (FileNotFoundException e) {
           e.printStackTrace();
       } catch (IOException e) {
           e.printStackTrace();
       }
+    }
+
+    public Connection getConnection(){
+
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            this.connection = (Connection) DriverManager.getConnection(url, user, password);
+            System.out.println("Database connection successfully opened!");
+        } 
+        catch (SQLException e) {
+            System.err.println("Connection to MySQL has failed!");
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            System.err.println("JDBC Driver not found.");
+            e.printStackTrace();
+        }
+        return this.connection;
+    }
+
+    public void closeConnection() {
+        try {
+            if(this.connection != null && !this.connection.isClosed()) {
+                this.connection.close();
+                System.out.println("Database connection successfully closed!");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error while trying to close the connection.");
+            e.printStackTrace();
+        }
     }
     
     /**
@@ -94,7 +140,7 @@ public class DBmanager {
      * @return String Query buscada
      */
 
-    public static String getUsuarioQuery() {
+    public String getUsuarioQuery() {
       return getUsuarioQuery;
     }
 
@@ -105,7 +151,167 @@ public class DBmanager {
      */
 
     public void setUsuarioQuery(String getUserQuery) {
-      DBmanager.getUsuarioQuery = getUserQuery;
+      this.getUsuarioQuery = getUserQuery;
+    }
+    
+    /**
+     * Método público para obtener una query
+     * @param none
+     * @return String Query buscada
+     */
+
+    public String getRegistrarUsuarioQuery() {
+      return registrarUsuarioQuery;
+    }
+
+    /**
+     * Método público para modificar una query
+     * @param String Query a modificar
+     * @return none
+     */
+
+    public void setRegistrarUsuarioQuery(String registrarUsuarioQuery) {
+      this.registrarUsuarioQuery = registrarUsuarioQuery;
+    }
+
+    /**
+     * Método público para obtener una query
+     * @param none
+     * @return String Query buscada
+     */
+
+    public String getDeleteUsuarioQuery() {
+      return deleteUsuarioQuery;
+    }
+
+    /**
+     * Método público para modificar una query
+     * @param String Query a modificar
+     * @return none
+     */
+
+    public void setDeleteUsuarioQuery(String deleteUsuario) {
+      this.deleteUsuarioQuery = deleteUsuario;
+    }
+    
+    /**
+     * Método público para obtener una query
+     * @param none
+     * @return String Query buscada
+     */
+
+    public String getDeleteReservasFromUsuarioQuery() {
+        return deleteReservasFromUsuarioQuery;
+    }
+    
+    /**
+     * Método público para modificar una query
+     * @param String Query a modificar
+     * @return none
+     */
+
+    public void setDeleteReservasFromUsuarioQuery(String deleteReservasFromUsuario) {
+        this.deleteReservasFromUsuarioQuery = deleteReservasFromUsuario;
+    }
+    
+    /**
+     * Método público para obtener una query
+     * @param none
+     * @return String Query buscada
+     */
+    
+    public String getModificarUsuarioQuery() {
+        return modificarUsuarioQuery;
+    }
+    
+    /**
+     * Método público para modificar una query
+     * @param String Query a modificar
+     * @return none
+     */
+    
+    public void setModificarUsuarioQuery(String modificarUsuarioQuery) {
+        this.modificarUsuarioQuery = modificarUsuarioQuery;
+    }
+    
+    /**
+     * Método público para obtener una query
+     * @param none
+     * @return String Query buscada
+     */
+
+    public String getReservasQuery() {
+      return getReservasQuery;
+    }
+
+    /**
+     * Método público para modificar una query
+     * @param String Query a modificar
+     * @return none
+     */
+
+    public void setReservasQuery(String getReservasQuery) {
+      this.getReservasQuery = getReservasQuery;
+    }
+
+    /**
+    * Método público para obtener una query
+    * @param none
+    * @return String Query buscada
+    */
+
+    public String getModifyReservasQuery() {
+      return modifyReservasQuery;
+    }
+
+    /**
+    * Método público para modificar una query
+    * @param String Query a modificar
+    * @return none
+    */
+
+    public void setModifyReservasQuery(String modifyReservasQuery) {
+      this.modifyReservasQuery = modifyReservasQuery;
+    }
+
+    /**
+    * Método público para obtener una query
+    * @param none
+    * @return String Query buscada
+    */
+
+    public String getDeleteReservasQuery() {
+      return deleteReservasQuery;
+    }
+
+    /**
+    * Método público para modificar una query
+    * @param String Query a modificar
+    * @return none
+    */
+
+    public void setDeleteReservasQuery(String deleteReservasQuery) {
+      this.deleteReservasQuery = deleteReservasQuery;
+    }
+
+    /**
+    * Método público para obtener una query
+    * @param none
+    * @return String Query buscada
+    */
+
+    public String getAddReservasQuery() {
+      return addReservasQuery;
+    }
+
+    /**
+    * Método público para modificar una query
+    * @param String Query a modificar
+    * @return none
+    */
+
+    public void setAddReservasQuery(String addReservasQuery) {
+      this.addReservasQuery = addReservasQuery;
     }
 
 }

@@ -1,13 +1,13 @@
 package es.uco.pw.data.DAO;
 
 import java.sql.*;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 //import com.mysql.jdbc.ResultSet;
 import es.uco.pw.business.DTO.UsuarioDTO;
 import es.uco.pw.business.managers.DBmanager;
-import es.uco.pw.data.common.DBConnection;
 
 /**
  * DAO para usuarios que hace uso de la base de datos con una conexión via JDBC
@@ -23,16 +23,16 @@ public class UsuarioDAO {
     /**
      * Devuelve todos los usuarios de la base de datos
      * @param none
-     * @return ArrayList<UserDTO> Vector con los usuarios de la base de datos
+     * @return Lista de usuarios
      */
     
     public ArrayList<UsuarioDTO> getUsuarios() {
         ArrayList<UsuarioDTO> usuarios = new ArrayList<UsuarioDTO>();
         try {
-            DBConnection dbConnection = new DBConnection();
-            Connection connection = dbConnection.getConnection();
+            DBmanager DBm = DBmanager.getInstance();
+            Connection connection = DBm.getConnection();
             
-            String query = DBmanager.getUsuarioQuery();
+            String query = DBm.getUsuarioQuery();
             
             Statement stmt = connection.createStatement();
             ResultSet rs = (ResultSet) stmt.executeQuery(query);
@@ -51,11 +51,90 @@ public class UsuarioDAO {
             if (stmt != null){ 
                 stmt.close(); 
             }
-            dbConnection.closeConnection();
+            DBm.closeConnection();
         } catch (Exception e){
             System.err.println(e);
             e.printStackTrace();
         }
         return usuarios;
     }
+    
+    /**
+     * Registra un usuario en el sistema
+     * @param name
+     * @param dateOfBirth
+     * @param inscription
+     * @param email
+     * @return none
+     */
+    
+    public void registrarUsuario(String name, Date dateOfBirth, Date inscription, String email) {
+        try{
+            DBmanager DBm = DBmanager.getInstance();
+            Connection connection = DBm.getConnection();
+        
+            String query= MessageFormat.format(DBm.getRegistrarUsuarioQuery(), "'",name,"'","'",dateOfBirth,"'","'",inscription,"'","'",email,"'");
+        
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate(query);
+            if (stmt != null) {
+                stmt.close();
+            }
+        
+        }catch (Exception e) {
+        System.err.println(e);
+        e.printStackTrace();
+      }
+    }
+    
+    /**
+     * Borra un usuario del sistema
+     * @param email
+     * @return none
+     */
+    
+    public void deleteUsuario(String email) {
+        try {
+            DBmanager DBm = DBmanager.getInstance();
+            Connection connection = DBm.getConnection();
+        
+            Statement stmt = connection.createStatement();
+            String query= MessageFormat.format(DBm.getDeleteUsuarioQuery(), "'",email,"'");
+            
+            stmt.executeUpdate(query);
+            query=MessageFormat.format(DBm.getDeleteReservasFromUsuarioQuery(), "'",email,"'");
+            stmt.executeUpdate(query);
+            if (stmt != null) {
+                stmt.close();
+            }
+          } catch (Exception e) {
+          System.err.println(e);
+          e.printStackTrace();
+        }
+    }
+    
+    /**
+     * Modifica un usuario del sistema
+     * @param email
+     * @return none
+     */
+    
+    public void modificarUsuario(UsuarioDTO usuario) {
+        try {
+            DBmanager DBm = DBmanager.getInstance();
+            Connection connection = DBm.getConnection();
+        
+            String query= MessageFormat.format(DBm.getModificarUsuarioQuery(),"'",usuario.getName(),"'","'",usuario.getDateOfBirth(),"'","'",usuario.getInscription(),"'","'",usuario.getEmail(),"'");
+            
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate(query);
+            if (stmt != null) {
+                stmt.close();
+            }
+          } catch (Exception e) {
+          System.err.println(e);
+          e.printStackTrace();
+        }
+    }
+    
 }

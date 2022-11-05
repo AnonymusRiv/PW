@@ -18,13 +18,13 @@ public class DBConnection {
 	private static DBConnection instance = null;
 
 	// Important: This configuration is hard-coded here for illustrative purposes only
-	
+
 	protected String url = "jdbc:mysql://oraclepr.uco.es:3306/p02ritac";
 
-	protected String user = "p02ritac";
+    protected String user = "p02ritac";
 
-	protected String password = "PracticaPW";
-
+    protected String password = "PracticaPW";
+    
 	public Connection getConnection(){
 
 		try{
