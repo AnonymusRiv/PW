@@ -80,9 +80,9 @@ public class GestorUsuarios {
 	 * @return none
 	 */
 	
-	public Boolean modificarUsuario(UsuarioDTO user) {
+	public Boolean modificarUsuario(UsuarioDTO user, String mail) {
 		UsuarioDAO usuario = new UsuarioDAO();
-		usuario.modificarUsuario(user);
+		usuario.modificarUsuario(user, mail);
 		if(usuarioActivo.getEmail().equals(user.getEmail())) {
 		    setUsuarioActivo(user);
 		}
@@ -121,6 +121,12 @@ public class GestorUsuarios {
 	    this.usuarioActivo = usuario;
 	}
 	
+	/**
+     * Método público para loguear un usuario
+     * @param email
+     * @return true o false
+     */
+	
     public Boolean loginUser(String email) {
         ArrayList<UsuarioDTO> usuarios = getUsuarios();
         for(int i=0; i<usuarios.size(); i++) {
@@ -132,6 +138,12 @@ public class GestorUsuarios {
         return false;
     }
     
+    /**
+     * Método público para buscar un usuario
+     * @param mail
+     * @return true o false
+     */
+    
     public UsuarioDTO findUser(String mail) {
         ArrayList<UsuarioDTO> usuarios = getUsuarios();
         for(int i=0; i<usuarios.size(); i++) {
@@ -141,6 +153,12 @@ public class GestorUsuarios {
         }
         return null;
     }
+    
+    /**
+     * Método público para registrar un usuario
+     * @param user
+     * @return true o false
+     */
     
     public boolean registerUser(UsuarioDTO user) {
         GestorUsuarios gestor = new GestorUsuarios();
@@ -163,6 +181,12 @@ public class GestorUsuarios {
         );
         return true;
       }
+    
+    /**
+     * Método público para eliminar un usuario
+     * @param mail
+     * @return true o false
+     */
     
     public Boolean deleteUsuario(String mail) {
         if(usuarioActivo.getEmail().equals(mail)) {

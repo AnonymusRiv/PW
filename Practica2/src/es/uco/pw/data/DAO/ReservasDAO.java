@@ -38,7 +38,7 @@ public class ReservasDAO {
             DBmanager DBm = DBmanager.getInstance();
             Connection connection = DBm.getConnection();
           
-            String query = DBm.getReservaAdultosQuery();
+            String query = DBm.getReservasAdultosQuery();
           
             Statement stmt = connection.createStatement();
             ResultSet rs = (ResultSet) stmt.executeQuery(query);

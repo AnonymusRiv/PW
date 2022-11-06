@@ -88,9 +88,11 @@ public class Main {
                                             if(choice3 == 2){
                                                 Functions.registerPista();
                                             }
+                                            choice3 = Functions.printPistaMenuScreen();
                                         }
                                     }
                                 }
+                                choice2 = Functions.registrarReserva();
                             }
                         }
                         if(choice1 == 2){
@@ -105,6 +107,7 @@ public class Main {
                         if(choice1 == 5){ 
                             Functions.deleteUsuario();
                         }
+                        choice1 = Functions.printReservaMenuScreen();
                     }
                 }
             }

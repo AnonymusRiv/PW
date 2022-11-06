@@ -1,1 +1,7 @@
+es.uco.pw.business.classes
+es.uco.pw.business.DTO
+es.uco.pw.business.factory
+es.uco.pw.business.managers
+es.uco.pw.data.common
+es.uco.pw.data.DAO
 es.uco.pw.display

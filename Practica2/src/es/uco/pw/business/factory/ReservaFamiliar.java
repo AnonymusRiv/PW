@@ -1,4 +1,4 @@
-package es.uco.pw.business.factory;
+    package es.uco.pw.business.factory;
 
 import java.util.Date;
 
@@ -69,18 +69,42 @@ public class ReservaFamiliar extends Reserva {
         this.nSession=nSession;
     }
 
+    /**
+     * Método público para obtener el id del bono
+     * @param none
+     * @return bonoId
+     */
+    
     public int getBondId() {
         return bondId;
     }
 
+    /**
+     * Método público para establecer el id del bono
+     * @param bonoId
+     * @return none
+     */
+    
     public void setBondId(int bondId) {
         this.bondId = bondId;
     }
 
+    /**
+     * Método público para obtener el número de sesiones
+     * @param none
+     * @return nSession
+     */
+    
     public int getnSession() {
         return nSession;
     }
 
+    /**
+     * Método público para establecer el número de sesiones 
+     * @param nSession
+     * @return none
+     */
+    
     public void setnSession(int nSession) {
         this.nSession = nSession;
     }

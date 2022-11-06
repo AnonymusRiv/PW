@@ -327,6 +327,12 @@ import es.uco.pw.business.classes.*;
            }
         }
         
+        /**
+         * Función que elimina una reserva
+         * @param none
+         * @return none
+         */
+        
         public static Boolean deleteReserva(){
             Functions.clearConsole();
             scanner = new Scanner(System.in);
@@ -341,6 +347,12 @@ import es.uco.pw.business.classes.*;
 
         }
         
+        /**
+         * Función que lista las reservas
+         * @param none
+         * @return none
+         */
+        
         public static void listarReservas(){
             Functions.clearConsole();
             GestorReservas reserva = GestorReservas.getInstance();
@@ -351,6 +363,12 @@ import es.uco.pw.business.classes.*;
                 System.out.println(" " + reservas.get(i).getUserId());
             }
         }
+        
+        /**
+         * Función que modifica un usuario
+         * @param none
+         * @return none
+         */
         
         public static Boolean modificarUsuario() throws ParseException {
             Functions.clearConsole();
@@ -377,11 +395,17 @@ import es.uco.pw.business.classes.*;
               System.out.print(" - Email: ");
               user.setEmail(scanner.nextLine());
         
-              return usuario.modificarUsuario(user);
+              return usuario.modificarUsuario(user, mail);
             }
         
             return false;
         }
+        
+        /**
+         * Función que imprime el menu de pista
+         * @param none
+         * @return none
+         */
         
         public static int printPistaMenuScreen() { 
             Functions.clearConsole();

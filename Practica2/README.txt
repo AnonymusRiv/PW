@@ -9,3 +9,5 @@ Práctica 2 realizada por:
  	java -jar practica2.jar
    	
   Asimismo, es posible registrarse si no está previamente en el sistema. En caso de estarlo, basta con iniciar sesión con el email de usuario con el que se registró.
+
+  El sistema permite listar a los usuarios del mismo, así como añadir, modificar y eliminar usuarios del propio sistema.

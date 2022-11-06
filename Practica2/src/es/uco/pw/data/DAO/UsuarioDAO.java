@@ -113,9 +113,9 @@ public class UsuarioDAO {
             ps.setString(1, email);
             
             
-            ps.executeUpdate(query);
-            query=MessageFormat.format(DBm.getDeleteReservasFromUsuarioQuery(), "'",email,"'");
-            stmt.executeUpdate(query);
+            ps.executeUpdate();
+            //query=MessageFormat.format(DBm.getDeleteReservasFromUsuarioQuery(), "'",email,"'");
+            //stmt.executeUpdate(query);
             if (stmt != null) {
                 stmt.close();
             }
@@ -131,21 +131,21 @@ public class UsuarioDAO {
      * @return none
      */
     
-    public void modificarUsuario(UsuarioDTO usuario) {
+    public void modificarUsuario(UsuarioDTO usuario, String mail) {
         try {
             DBmanager DBm = DBmanager.getInstance();
             Connection connection = DBm.getConnection();
             PreparedStatement ps = null;
         
             Statement stmt = connection.createStatement();
-            String query= MessageFormat.format(DBm.getModificarUsuarioQuery(),"'",usuario.getName(),"'","'",usuario.getDateOfBirth(),"'","'",usuario.getInscription(),"'","'",usuario.getEmail(),"'");
+            String query= MessageFormat.format(DBm.getModificarUsuarioQuery(),"'",usuario.getName(),"'","'",usuario.getDateOfBirth(),"'","'",usuario.getEmail(),"'","'",usuario.getEmail(),"'");
             ps = connection.prepareStatement(query);
             ps.setString(1, usuario.getName());
-            ps.setString(1, usuario.getDateOfBirth());
-            ps.setString(1, usuario.getInscription());
-            ps.setString(1, usuario.getEmail());
+            ps.setString(2, usuario.getEmail());    
+            ps.setString(3, usuario.getDateOfBirth());
+            ps.setString(4, mail);  
             
-            stmt.executeUpdate(query);
+            ps.executeUpdate();
             if (stmt != null) {
                 stmt.close();
             }
