@@ -14,8 +14,8 @@ import es.uco.pw.business.factory.Reserva.type;;
  */
 
 public class ReservaIndividual extends CrearReserva {
-	
-	/**
+    
+    /**
 	 * Método público para crear una reserva infantil
 	 * @param none
 	 * @return reserva
@@ -47,4 +47,23 @@ public class ReservaIndividual extends CrearReserva {
 		ReservaAdultos reserva=new ReservaAdultos(userId, date, duration, pistId, price, discount, typeRes, participants);
 		return reserva;
 	}
+
+    @Override
+    public ReservaInfantil createReservaInfantil() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public ReservaFamiliar createReservaFamiliar() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public ReservaAdultos createReservaAdultos() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

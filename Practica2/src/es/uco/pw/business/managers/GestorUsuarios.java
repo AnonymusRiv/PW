@@ -163,4 +163,19 @@ public class GestorUsuarios {
         );
         return true;
       }
+    
+    public Boolean deleteUsuario(String mail) {
+        if(usuarioActivo.getEmail().equals(mail)) {
+            return false;
+        }
+        ArrayList<UsuarioDTO> usuarios = getUsuarios();
+        for(int i=0; i<usuarios.size(); i++) {
+            if(usuarios.get(i).getEmail().equals(mail)) {
+                UsuarioDAO usuario = new UsuarioDAO();
+                usuario.deleteUsuario(mail);
+                return true;
+            }
+        }
+        return false;
+    }
 }

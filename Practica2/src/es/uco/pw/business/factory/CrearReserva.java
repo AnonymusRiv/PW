@@ -14,8 +14,7 @@ import es.uco.pw.business.factory.Reserva.type;
  */
 
 public abstract class CrearReserva {
-	public abstract ReservaInfantil createReservaInfantil(String userId, Date date, int duration, String pistId, float price, float discount, type typeRes, int nChild);
-	public abstract ReservaFamiliar createReservaFamiliar(String userId, Date date, int duration, String pistId, float price, float discount, type typeRes, int nAdults, int nChild);
-	public abstract ReservaAdultos createReservaAdultos(String userId, Date date, int duration, String pistId, float price, float discount, type typeRes, int participants);
+    public abstract ReservaInfantil createReservaInfantil();
+    public abstract ReservaFamiliar createReservaFamiliar();
+    public abstract ReservaAdultos createReservaAdultos();
 }
-

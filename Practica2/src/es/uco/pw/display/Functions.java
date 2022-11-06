@@ -54,7 +54,8 @@ import es.uco.pw.business.classes.*;
             System.out.println(" - Pulse 1 para crear una reserva");
             System.out.println(" - Pulse 2 para modificar una reserva");
             System.out.println(" - Pulse 3 para borrar una reserva");
-            System.out.println(" - Pulse 4 para moificar sus datos");
+            System.out.println(" - Pulse 4 para modificar sus datos");
+            System.out.println(" - Pulse 5 para eliminar un usuario");
             System.out.println(" - Pulse 0 para Salir");
             System.out.print("Escoja una opción y pulse enter: ");
             return scanner.nextInt();
@@ -127,11 +128,30 @@ import es.uco.pw.business.classes.*;
             Functions.clearConsole();
             GestorUsuarios usuario = GestorUsuarios.getInstance();
             ArrayList<UsuarioDTO> users = usuario.getUsuarios();
-            System.out.println("Email ");
-            System.out.println("-------");
+            System.out.println("     Email    ");
+            System.out.println("------------------");
             for (int i = 0; i < users.size(); i++) {
               System.out.println("   " + users.get(i).getEmail());
             }
+        }
+        
+        /**
+         * Elimina un usuario del sistema
+         * @param none
+         * @return none
+         */
+        
+        public static Boolean deleteUsuario(){
+            Functions.clearConsole();
+            scanner = new Scanner(System.in);
+            GestorUsuarios gestor = GestorUsuarios.getInstance();
+
+            Functions.listarUsuarios();
+            System.out.print("Introduzca el identificador del usuario que desea borrar: ");
+            String iduser = scanner.next();
+
+            return gestor.deleteUsuario(iduser);
+
         }
         
         /**
@@ -350,7 +370,7 @@ import es.uco.pw.business.classes.*;
               System.out.println("Introduzca los siguientes datos: ");
               System.out.print(" - Nombre: ");
               user.setName(scanner.nextLine());
-              SimpleDateFormat formatter6 = new SimpleDateFormat("yyyy-MM-dd");
+              //SimpleDateFormat formatter6 = new SimpleDateFormat("yyyy-MM-dd");
               System.out.print(" - Fecha de nacimiento con el formato \"yyyy-MM-dd\" : ");
               String date = scanner.nextLine();
               user.setDateOfBirth(date);

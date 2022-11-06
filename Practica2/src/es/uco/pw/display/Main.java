@@ -31,15 +31,25 @@ public class Main {
             
                     choice1 = Functions.printReservaMenuScreen();
 
+                    if(choice1 < 0 || choice1 > 5) {
+                        System.out.println("Seleccione una opción válida.");
+                    }
                     while(choice1 != 0){
                         if(choice1 == 1){
                             choice2 = Functions.registrarReserva();
 
+                            if(choice2 < 0 || choice2 > 3) {
+                                System.out.println("Seleccione una opción válida.");
+                            }
                             while(choice2 != 0){
                                 if(choice2 == 1){ 
                                     if(Functions.createRInfantil()){
 
                                         choice3 = Functions.printPistaMenuScreen();
+                                        
+                                        if(choice3 < 0 || choice3 > 2) {
+                                            System.out.println("Seleccione una opción válida.");
+                                        }
 
                                         while(choice3 != 0){
                                             if(choice3 == 1){
@@ -91,6 +101,9 @@ public class Main {
                         }
                         if(choice1 == 4){ 
                             Functions.modificarUsuario();
+                        }
+                        if(choice1 == 5){ 
+                            Functions.deleteUsuario();
                         }
                     }
                 }

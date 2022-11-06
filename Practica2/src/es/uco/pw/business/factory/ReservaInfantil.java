@@ -12,62 +12,102 @@ import java.util.Date;
  */
 
 public class ReservaInfantil extends Reserva{
-private int nChild;
-	
-	/**
-	 * Constructor sin parámetros
-	 * @param none
-	 */
-	
-	public ReservaInfantil() {
-		super();
-	}
+    private int nChild;
+    
+    private int bondId;
+    private int nSession;
+    
+    /**
+     * Constructor sin parámetros
+     * @param none
+     */
+    
+    public ReservaInfantil() {
+        super();
+    }
 
-	/**
-	 * Constructor con parámetros
-	 * @param userid
-	 * @param date
-	 * @param duration
-	 * @param pistId
-	 * @param price
-	 * @param discount
-	 * @param typeRes
-	 * @param nChild
-	 */
-	
-	public ReservaInfantil(String userId, Date date, int duration, String pistId, float price, float discount, type typeRes, int nChild) {
-		super(userId, date, duration, pistId, price, discount, typeRes);
-		this.nChild = nChild;
-	}
+    /**
+     * Constructor con parámetros
+     * @param userid
+     * @param date
+     * @param duration
+     * @param pistId
+     * @param price
+     * @param discount
+     * @param typeRes
+     * @param nChild
+     */
+    
+    public ReservaInfantil(String userId, Date date, int duration, String pistId, float price, float discount, type typeRes, int nChild) {
+        super(userId, date, duration, pistId, price, discount, typeRes);
+        this.nChild = nChild;
+    }
+    
+    /**
+     * Constructor con parámetros
+     * @param userid
+     * @param date
+     * @param duration
+     * @param pistId
+     * @param price
+     * @param discount
+     * @param typeRes
+     * @param nChild
+     * @param bondId
+     * @param nSession
+     */
+    
+    public ReservaInfantil(String userId, Date date, int duration, String pistId, float price, float discount, type typeRes, int nChild, int bondId, int nSession) {
+        super(userId, date, duration, pistId, price, discount, typeRes);
+        this.nChild = nChild;
+        this.bondId=bondId;
+        this.nSession=nSession;
+    }
 
-	/**
-	 * Método público para obtener el número de niños
-	 * @param none
-	 * @return nChild
-	 */
-	
-	public int getnChild() {
-		return nChild;
-	}
+    public int getBondId() {
+        return bondId;
+    }
 
-	/**
-	 * Método público para establecer el número de nChild 
-	 * @param nChild
-	 * @return none
-	 */
-	
-	public void setnChild(int nChild) {
-		this.nChild = nChild;
-	}
+    public void setBondId(int bondId) {
+        this.bondId = bondId;
+    }
 
-	/**
-	 * Método público para imprimir la información
-	 * @param none
-	 * @return ReservaInfanil info de la reserva infantil
-	 */
-	
-	@Override
-	public String toString() {
-		return "ReservaInfantil [nChild=" + nChild + "]";
-	}
+    public int getnSession() {
+        return nSession;
+    }
+
+    public void setnSession(int nSession) {
+        this.nSession = nSession;
+    }
+
+    /**
+     * Método público para obtener el número de niños
+     * @param none
+     * @return nChild
+     */
+    
+    public int getnChild() {
+        return nChild;
+    }
+
+    /**
+     * Método público para establecer el número de nChild 
+     * @param nChild
+     * @return none
+     */
+    
+    public void setnChild(int nChild) {
+        this.nChild = nChild;
+    }
+
+    /**
+     * Método público para imprimir la información
+     * @param none
+     * @return ReservaInfanil info de la reserva infantil
+     */
+    
+    @Override
+    public String toString() {
+        return "ReservaInfantil [nChild=" + nChild + "]";
+    }
 }

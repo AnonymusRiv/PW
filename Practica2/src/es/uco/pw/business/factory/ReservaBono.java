@@ -14,25 +14,6 @@ import es.uco.pw.business.factory.Reserva.type;;
  */
 
 public class ReservaBono extends CrearReserva {
-	
-	private int bondId;
-	private int nSession;
-	
-	public int getBondId() {
-		return bondId;
-	}
-
-	public void setBondId(int bondId) {
-		this.bondId = bondId;
-	}
-
-	public int getnSession() {
-		return nSession;
-	}
-
-	public void setnSession(int nSession) {
-		this.nSession = nSession;
-	}
 
 	/**
 	 * Método público para crear una reserva infantil
@@ -40,7 +21,7 @@ public class ReservaBono extends CrearReserva {
 	 * @return reserva
 	 */
 	
-	public ReservaInfantil createReservaInfantil(String userId, Date date, int duration, String pistId, float price, float discount, type typeRes, int nChild) {
+	public ReservaInfantil createReservaInfantil(String userId, Date date, int duration, String pistId, float price, float discount, type typeRes, int nChild,int bondId, int nSession) {
 		ReservaInfantil reserva= new ReservaInfantil(userId, date, duration, pistId, price, discount, typeRes, nChild);
 		return reserva;
 	}
@@ -51,7 +32,7 @@ public class ReservaBono extends CrearReserva {
 	 * @return reserva
 	 */
 	
-	public ReservaFamiliar createReservaFamiliar(String userId, Date date, int duration, String pistId, float price, float discount, type typeRes, int nAdults, int nChild) {
+	public ReservaFamiliar createReservaFamiliar(String userId, Date date, int duration, String pistId, float price, float discount, type typeRes, int nAdults, int nChild,int bondId, int nSession) {
 		ReservaFamiliar reserva=new ReservaFamiliar(userId, date, duration, pistId, price, discount, typeRes, nAdults, nChild);
 		return reserva;	
 	}
@@ -62,8 +43,26 @@ public class ReservaBono extends CrearReserva {
 	 * @return reserva
 	 */
 	
-	public ReservaAdultos createReservaAdultos(String userId, Date date, int duration, String pistId, float price, float discount, type typeRes, int participants) {
+	public ReservaAdultos createReservaAdultos(String userId, Date date, int duration, String pistId, float price, float discount, type typeRes, int participants, int bondId, int nSession) {
 		ReservaAdultos reserva=new ReservaAdultos(userId, date, duration, pistId, price, discount, typeRes, participants);
 		return reserva;
 	}
+
+    @Override
+    public ReservaInfantil createReservaInfantil() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public ReservaFamiliar createReservaFamiliar() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public ReservaAdultos createReservaAdultos() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

@@ -2,6 +2,7 @@ package es.uco.pw.data.DAO;
 
 import java.sql.*;
 import java.text.MessageFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -73,17 +74,17 @@ public class UsuarioDAO {
         try{
             DBmanager DBm = DBmanager.getInstance();
             Connection connection = DBm.getConnection();
+            PreparedStatement ps = null;
         
-            String query= MessageFormat.format(DBm.getRegistrarUsuarioQuery(), "'", name,"'","'", email,"'","'", dateOfBirth,"'","'",registerDate,"'");
-
-            System.out.print(name);
-            System.out.print(email);
-            System.out.print(dateOfBirth);
-            System.out.print(registerDate);
-            System.out.print(query);
-            
             Statement stmt = connection.createStatement();
-            stmt.executeUpdate(query);
+            String query= MessageFormat.format(DBm.getRegistrarUsuarioQuery(), "'", name,"'","'", email,"'","'", dateOfBirth,"'","'",registerDate,"'");
+            ps = connection.prepareStatement(query);
+            ps.setString(1, name);
+            ps.setString(2, email);
+            ps.setString(3, dateOfBirth);
+            ps.setString(4, registerDate);
+            
+            ps.executeUpdate();
             if (stmt != null) {
                 stmt.close();
             }
@@ -104,11 +105,15 @@ public class UsuarioDAO {
         try {
             DBmanager DBm = DBmanager.getInstance();
             Connection connection = DBm.getConnection();
-        
+            PreparedStatement ps = null;
+            
             Statement stmt = connection.createStatement();
             String query= MessageFormat.format(DBm.getDeleteUsuarioQuery(), "'",email,"'");
+            ps = connection.prepareStatement(query);
+            ps.setString(1, email);
             
-            stmt.executeUpdate(query);
+            
+            ps.executeUpdate(query);
             query=MessageFormat.format(DBm.getDeleteReservasFromUsuarioQuery(), "'",email,"'");
             stmt.executeUpdate(query);
             if (stmt != null) {
@@ -130,10 +135,16 @@ public class UsuarioDAO {
         try {
             DBmanager DBm = DBmanager.getInstance();
             Connection connection = DBm.getConnection();
+            PreparedStatement ps = null;
         
-            String query= MessageFormat.format(DBm.getModificarUsuarioQuery(),"'",usuario.getName(),"'","'",usuario.getDateOfBirth(),"'","'",usuario.getInscription(),"'","'",usuario.getEmail(),"'");
-            
             Statement stmt = connection.createStatement();
+            String query= MessageFormat.format(DBm.getModificarUsuarioQuery(),"'",usuario.getName(),"'","'",usuario.getDateOfBirth(),"'","'",usuario.getInscription(),"'","'",usuario.getEmail(),"'");
+            ps = connection.prepareStatement(query);
+            ps.setString(1, usuario.getName());
+            ps.setString(1, usuario.getDateOfBirth());
+            ps.setString(1, usuario.getInscription());
+            ps.setString(1, usuario.getEmail());
+            
             stmt.executeUpdate(query);
             if (stmt != null) {
                 stmt.close();
