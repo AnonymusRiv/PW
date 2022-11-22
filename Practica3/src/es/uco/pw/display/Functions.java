@@ -453,23 +453,59 @@ import es.uco.pw.business.classes.*;
             KartDTO kart =new KartDTO();
             scanner = new Scanner(System.in);
             GestorPistas gestor = GestorPistas.getInstance();
-            ArrayList<KartDTO> karts = gestor.getKarts();
 
             System.out.println("Introduzca los siguientes datos: ");
             System.out.print(" - Tipo (infantil o adulto): ");
-            if(scanner.nextLine().equals("infantil")) {
+            String aux = scanner.nextLine();
+            if(aux.equals("infantil") == true) {
                 kart.setType(true);
             }
-            if(scanner.nextLine().equals("adulto")) {
+            
+            if(aux.equals("adulto") == true) {
                 kart.setType(false);
             }
             System.out.print(" - Estado (disponible, reservado o mantenimiento): ");
-            kart.setStat(scanner.nextLine());
-            System.out.print(" - Pista (Seleccione una o deje vacio): ");
+            aux = scanner.nextLine();
+            if(aux.equals("disponible") == true) {
+                kart.setStat(KartDTO.status.disponible);
+            }
+            if(aux.equals("reservado") == true) {
+                kart.setStat(KartDTO.status.reservado);
+            }
+            if(aux.equals("mantenimiento") == true) {
+                kart.setStat(KartDTO.status.mantenimiento);
+            }
             listarPistas();
+            System.out.print(" - Pista (Seleccione una o deje vacio): ");
             kart.setpistaId(scanner.nextLine());
             
-            if(gestor.addKart(karts, kart)) {
+            ArrayList<KartDTO> karts = gestor.getKarts();
+            int n=0;
+            for(int i=0; i<karts.size(); i++) {
+                if(karts.get(i).getpistaId().equals(kart.getpistaId())) {
+                    n++;
+                }
+            }
+            
+            ArrayList<PistaDTO> pistas = gestor.getPistas();
+            for(int i=0; i<pistas.size(); i++) {
+                if(pistas.get(i).getName().equals(kart.getpistaId())) {
+                    if(pistas.get(i).getMax() <= n) {
+                        System.out.println("El número máximo de karts de esa pista se ha excedido");
+                        return false;
+                    }
+                    if(pistas.get(i).getDif() == PistaDTO.dificulty.infantil && kart.isType() == false) {
+                        System.out.println("No se puede añadir el tipo de kart adulto a una pista infantil");
+                        return false;
+                    }
+                    if(pistas.get(i).getDif() == PistaDTO.dificulty.adultos && kart.isType() == true) {
+                        System.out.println("No se puede añadir el tipo de kart infantil a una pista para adultos");
+                        return false;
+                    }
+                }
+            }
+            
+            if(gestor.registerKart(kart)) {
                 System.out.println("Registro correcto");
                 return true;
             }

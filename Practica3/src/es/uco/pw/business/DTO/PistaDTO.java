@@ -19,7 +19,6 @@ public class PistaDTO {
         infantil, familiar, adultos
     };
     private int max;
-    private ArrayList<KartDTO> karts = new ArrayList<KartDTO>();
     
     /**
      * Constructor sin parámetros
@@ -39,13 +38,12 @@ public class PistaDTO {
      * @param karts
      */
     
-    public PistaDTO(String name, boolean status, dificulty dif, int max, ArrayList<KartDTO> karts) {
+    public PistaDTO(String name, boolean status, dificulty dif, int max) {
         super();
         this.name = name;
         this.status = status;
         this.dif = dif;
         this.max = max;
-        this.karts = karts;
     }
     
     /**
@@ -136,25 +134,6 @@ public class PistaDTO {
         this.max = max;
     }
     
-    /**
-     * Método público para obtener la lista de karts asociados 
-     * @param none
-     * @return karts
-     */
-
-    public ArrayList<KartDTO> getKarts() {
-        return karts;
-    }
-    
-    /**
-     * Método público para establecer los karts asociados 
-     * @param karts
-     * @return none
-     */
-
-    public void setKarts(ArrayList<KartDTO> karts) {
-        this.karts = karts;
-    }
     
     /**
      * Método público para imprimir la información
@@ -164,7 +143,7 @@ public class PistaDTO {
 
     @Override
     public String toString() {
-        return "PistaDTO [name=" + name + ", status=" + status + ", dif=" + dif + ", max=" + max + ", karts=" + karts
+        return "PistaDTO [name=" + name + ", status=" + status + ", dif=" + dif + ", max=" + max
                 + "]";
     }
     

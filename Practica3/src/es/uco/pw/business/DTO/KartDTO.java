@@ -99,16 +99,8 @@ public class KartDTO {
      * @return none
      */
 
-    public void setStat(String status) {
-        if(status == "disponile") {
-            stat = es.uco.pw.business.DTO.KartDTO.status.disponible;
-        }
-        if(status == "reservado") {
-            stat = es.uco.pw.business.DTO.KartDTO.status.reservado;
-        }
-        if(status == "mantenimiento") {
-            stat = es.uco.pw.business.DTO.KartDTO.status.mantenimiento;
-        }
+    public void setStat(status stat) {
+        this.stat = stat;
     }
     
     /**

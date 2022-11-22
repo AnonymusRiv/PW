@@ -55,10 +55,8 @@ public class PistaDAO {
                         difi = PistaDTO.dificulty.adultos;
                     }
                     int max = rs.getInt("max");
-                    @SuppressWarnings("unchecked")
-                    ArrayList<KartDTO> karts = (ArrayList<KartDTO>) rs.getArray("karts");
                     
-                    pistas.add(new PistaDTO(name,status,difi,max, karts));
+                    pistas.add(new PistaDTO(name,status,difi,max));
                 }
 
                 if (stmt != null){ 
@@ -138,7 +136,7 @@ public class PistaDAO {
                 DBmanager DBm = DBmanager.getInstance();
                 Connection connection = DBm.getConnection();
             
-                String query= MessageFormat.format(DBm.getModificarPistaQuery(),"'",pista.getName(),"'","'",pista.isStatus(),"'","'",pista.getDif(),"'","'",pista.getMax(),"'","'",pista.getKarts(),"'");
+                String query= MessageFormat.format(DBm.getModificarPistaQuery(),"'",pista.getName(),"'","'",pista.isStatus(),"'","'",pista.getDif(),"'","'",pista.getMax(),"'");
                 
                 Statement stmt = connection.createStatement();
                 stmt.executeUpdate(query);
@@ -196,6 +194,50 @@ public class PistaDAO {
                 e.printStackTrace();
             }
             return karts;
+        }
+        
+        /**
+         * Registra un kart en el sistema
+         * @param name
+         * @param dateOfBirth
+         * @param registerDate
+         * @param email
+         * @return none
+         */
+        
+        public void registrarKart(int id, Boolean type, status stat, String pistaId) {
+            try{
+                DBmanager DBm = DBmanager.getInstance();
+                Connection connection = DBm.getConnection();
+                PreparedStatement ps = null;
+            
+                Statement stmt = connection.createStatement();
+                String query= MessageFormat.format(DBm.getRegistrarKartQuery(), "'", id,"'","'", type,"'","'", stat,"'","'",pistaId,"'");
+                String aux = null;
+                if(stat == status.disponible) {
+                    aux = "disponible";
+                }
+                if(stat == status.reservado) {
+                    aux = "reservado";
+                }
+                if(stat == status.mantenimiento) {
+                    aux = "mantenimiento";
+                }
+                ps = connection.prepareStatement(query);
+                ps.setInt(1, id);
+                ps.setBoolean(2, type);
+                ps.setString(3, aux);
+                ps.setString(4, pistaId);
+                
+                ps.executeUpdate();
+                if (stmt != null) {
+                    stmt.close();
+                }
+            
+            }catch (Exception e) {
+            System.err.println(e);
+            e.printStackTrace();
+          }
         }
         
     }

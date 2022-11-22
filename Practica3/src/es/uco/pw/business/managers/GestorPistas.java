@@ -2,11 +2,13 @@ package es.uco.pw.business.managers;
 
 import es.uco.pw.business.DTO.KartDTO;
 import es.uco.pw.business.DTO.PistaDTO;
+import es.uco.pw.business.DTO.UsuarioDTO;
 import es.uco.pw.business.classes.*;
 import es.uco.pw.business.classes.Pista.dificulty;
 import es.uco.pw.data.DAO.PistaDAO;
 import es.uco.pw.data.DAO.UsuarioDAO;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -100,14 +102,22 @@ public class GestorPistas {
 	 * @return true
 	 */
 	
-	public boolean addKart(ArrayList<KartDTO> karts, KartDTO kart) {
-		for(int i=0; i<karts.size(); i++){
-			if(karts.get(i).getId() == kart.getId()){
-				return false;
-			}
-		}
-		karts.add(kart);
-		return true;
+	public boolean registerKart(KartDTO kart) {
+	    GestorPistas gestor = new GestorPistas();
+        ArrayList<KartDTO> karts = gestor.getKarts();
+        for (int i = 0; i < karts.size(); i++) {
+          if (karts.get(i).getId() == kart.getId()) {
+            return false;
+          }
+        }
+        PistaDAO pistaDAO = new PistaDAO();
+        pistaDAO.registrarKart(
+          kart.getId(),
+          kart.isType(),
+          kart.getStat(),
+          kart.getpistaId()
+        );
+        return true;
 	}
 	
 	/**
@@ -122,13 +132,13 @@ public class GestorPistas {
 			if(karts.get(i).getId() == kart.getId()){
 				for(int j=0; j<pistas.size(); j++){
 					if(pistas.get(j).getName() == pista.getName()){
-						if((pista.getDif().equals(Pista.dificulty.infantil)==true) && (kart.isType()==false) && (pista.isStatus()==true) && ((pista.getKarts().size()+1)<pista.getMax())) {
+						if((pista.getDif().equals(Pista.dificulty.infantil)==true) && (kart.isType()==false) && (pista.isStatus()==true)) {
 							karts.add(kart);
 						}
-						if((pista.getDif().equals(Pista.dificulty.familiar)==true) && (pista.isStatus()==true) && ((pista.getKarts().size()+1)<pista.getMax())) {
+						if((pista.getDif().equals(Pista.dificulty.familiar)==true) && (pista.isStatus()==true)) {
 							karts.add(kart);
 						}
-						if((pista.getDif().equals(Pista.dificulty.adultos)==true) && (kart.isType()==true) && (pista.isStatus()==true) && ((pista.getKarts().size()+1)<pista.getMax())) {
+						if((pista.getDif().equals(Pista.dificulty.adultos)==true) && (kart.isType()==true) && (pista.isStatus()==true)) {
 							karts.add(kart);
 						}
 					}

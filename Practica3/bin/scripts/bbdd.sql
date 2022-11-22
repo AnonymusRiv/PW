@@ -39,7 +39,6 @@ CREATE TABLE IF NOT EXISTS `pista` (
     `status` BOOL NOT NULL,
     `difficulty` ENUM( 'infantil', 'familiar', 'adultos' ) NOT NULL,
     `max` INT DEFAULT NULL,
-    `karts` VARCHAR(255) COLLATE utf8_unicode_ci DEFAULT NULL,
     PRIMARY KEY (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -77,10 +76,10 @@ INSERT INTO `kart` VALUES (NULL,0 ,'reservado', '');
 INSERT INTO `kart` VALUES (NULL,1 ,'disponible', 'sevilla');
 INSERT INTO `kart` VALUES (NULL,0 ,'mantenimiento', 'barcelona');
 
-INSERT INTO `pista` VALUES ('cordoba', 0, 'infantil', 3, NULL);
-INSERT INTO `pista` VALUES ('sevilla', 0, 'familiar', 4, NULL);
-INSERT INTO `pista` VALUES ('madrid', 1, 'adultos', 2, NULL);
-INSERT INTO `pista` VALUES ('barcelona', 0, 'adultos', 10, NULL);
+INSERT INTO `pista` VALUES ('cordoba', 0, 'infantil', 3);
+INSERT INTO `pista` VALUES ('sevilla', 0, 'familiar', 4);
+INSERT INTO `pista` VALUES ('madrid', 1, 'adultos', 2);
+INSERT INTO `pista` VALUES ('barcelona', 0, 'adultos', 10);
 
 INSERT INTO `reserva` VALUES ('p02ritac@uco.es', '2022-11-04', 120, 'cordoba', 20, 10, 'infantil', 0, 2, 0);
 INSERT INTO `reserva` VALUES ('i02rofls@uco.es', '2022-08-13', 120, 'sevilla', 20, 5, 'familiar', 2, 3, 1);
