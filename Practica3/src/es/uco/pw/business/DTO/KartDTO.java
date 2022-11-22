@@ -16,6 +16,7 @@ public class KartDTO {
     public enum status{
         disponible, reservado, mantenimiento
     }
+    private String pistaId;
     
     /**
      * Constructor sin parámetros
@@ -31,13 +32,15 @@ public class KartDTO {
      * @param id
      * @param type
      * @param status
+     * @param pistaId
      */
 
-    public KartDTO(int id, boolean type, status stat) {
+    public KartDTO(int id, boolean type, status stat, String pistaId) {
         super();
         this.id = id;
         this.type = type;
         this.stat = stat;
+        this.pistaId = pistaId;
     }
     
     /**
@@ -96,8 +99,36 @@ public class KartDTO {
      * @return none
      */
 
-    public void setStat(status stat) {
-        this.stat = stat;
+    public void setStat(String status) {
+        if(status == "disponile") {
+            stat = es.uco.pw.business.DTO.KartDTO.status.disponible;
+        }
+        if(status == "reservado") {
+            stat = es.uco.pw.business.DTO.KartDTO.status.reservado;
+        }
+        if(status == "mantenimiento") {
+            stat = es.uco.pw.business.DTO.KartDTO.status.mantenimiento;
+        }
+    }
+    
+    /**
+     * Método público para obtener el pistaId 
+     * @param none
+     * @return id
+     */
+
+    public String getpistaId() {
+        return pistaId;
+    }
+    
+    /**
+     * Método público para establecer el pistaId 
+     * @param id
+     * @return none
+     */
+
+    public void setpistaId(String pistaId) {
+        this.pistaId = pistaId;
     }
     
     /**

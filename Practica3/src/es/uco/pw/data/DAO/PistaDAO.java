@@ -5,12 +5,14 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 
 import es.uco.pw.business.DTO.KartDTO;
+import es.uco.pw.business.DTO.KartDTO.status;
 import es.uco.pw.business.DTO.PistaDTO;
+import es.uco.pw.business.DTO.UsuarioDTO;
 import es.uco.pw.business.DTO.PistaDTO.dificulty;
 import es.uco.pw.business.managers.DBmanager;
 
 /**
- * DAO para pistas que hace uso de la base de datos con una conexión via JDBC
+ * DAO para pistas y karts que hace uso de la base de datos con una conexión via JDBC
  * @author Moisés Moyano Cejudo
  * @author Alba Palomino Jiménez
  * @author Carlos Rivero Talavera
@@ -41,12 +43,22 @@ public class PistaDAO {
                 while (rs.next()) {
                     String name = rs.getString("name");
                     Boolean status = rs.getBoolean("status");
-                    //dificulty dif = rs.getType("dificulty");
+                    String dif = rs.getString("difficulty");
+                    dificulty difi = null;
+                    if(dif.equals("infantil")) {
+                        difi = PistaDTO.dificulty.infantil;
+                    }
+                    if(dif.equals("familiar")) {
+                        difi = PistaDTO.dificulty.familiar;
+                    }
+                    if(dif.equals("adultos")) {
+                        difi = PistaDTO.dificulty.adultos;
+                    }
                     int max = rs.getInt("max");
                     @SuppressWarnings("unchecked")
                     ArrayList<KartDTO> karts = (ArrayList<KartDTO>) rs.getArray("karts");
                     
-                    //pistas.add(new PistaDTO(name,status,dif,max, karts));
+                    pistas.add(new PistaDTO(name,status,difi,max, karts));
                 }
 
                 if (stmt != null){ 
@@ -137,6 +149,53 @@ public class PistaDAO {
               System.err.println(e);
               e.printStackTrace();
             }
+        }
+        
+        /**
+         * Devuelve todos los karts de la base de datos
+         * @param none
+         * @return Lista de karts
+         */
+        
+        public ArrayList<KartDTO> getKarts() {
+            ArrayList<KartDTO> karts = new ArrayList<KartDTO>();
+            try {
+                DBmanager DBm = DBmanager.getInstance();
+                Connection connection = DBm.getConnection();
+                
+                String query = DBm.getKartsQuery();
+                
+                Statement stmt = connection.createStatement();
+                ResultSet rs = (ResultSet) stmt.executeQuery(query);
+
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    Boolean type = rs.getBoolean("type");
+                    String status = rs.getString("status");
+                    status stat = null;
+                    if(status.equals("disponible")) {
+                        stat = KartDTO.status.disponible;
+                    }
+                    if(status.equals("reservado")) {
+                        stat = KartDTO.status.reservado;
+                    }
+                    if(status.equals("mantenimiento")) {
+                        stat = KartDTO.status.mantenimiento;
+                    }
+                    String pistaId = rs.getString("pistaId");
+                    
+                    karts.add(new KartDTO(id,type,stat,pistaId));
+                }
+
+                if (stmt != null){ 
+                    stmt.close(); 
+                }
+                DBm.closeConnection();
+            } catch (Exception e){
+                System.err.println(e);
+                e.printStackTrace();
+            }
+            return karts;
         }
         
     }

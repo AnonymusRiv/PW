@@ -95,7 +95,7 @@ public class GestorUsuarios {
 	 * @return none
 	 */
 	
-	public void listarUsuarios(ArrayList<Usuario> usuarios) {
+	public void listarUsuarios(ArrayList<UsuarioDTO> usuarios) {
 		for(int i=0;i<usuarios.size();i++) {
 			System.out.println(usuarios.get(i).toString());
 		}

@@ -1,7 +1,11 @@
 package es.uco.pw.business.managers;
 
+import es.uco.pw.business.DTO.KartDTO;
+import es.uco.pw.business.DTO.PistaDTO;
 import es.uco.pw.business.classes.*;
 import es.uco.pw.business.classes.Pista.dificulty;
+import es.uco.pw.data.DAO.PistaDAO;
+import es.uco.pw.data.DAO.UsuarioDAO;
 
 import java.util.ArrayList;
 
@@ -16,8 +20,8 @@ import java.util.ArrayList;
 
 public class GestorPistas {
 	private static GestorPistas instance=null;
-	private ArrayList<Kart> karts=new ArrayList<Kart>();
-	private ArrayList<Pista> pistas=new ArrayList<Pista>();
+	private ArrayList<KartDTO> karts=new ArrayList<KartDTO>();
+	private ArrayList<PistaDTO> pistas=new ArrayList<PistaDTO>();
 	
 	/**
 	 * Método público para obtener una instancia
@@ -38,8 +42,9 @@ public class GestorPistas {
 	 * @return karts
 	 */
 	
-	public ArrayList<Kart> getKarts() {
-		return karts;
+	public ArrayList<KartDTO> getKarts() {
+	    PistaDAO karts = new PistaDAO();
+		return karts.getKarts();
 	}
 
 	/**
@@ -48,7 +53,7 @@ public class GestorPistas {
 	 * @return none
 	 */
 	
-	public void setKarts(ArrayList<Kart> karts) {
+	public void setKarts(ArrayList<KartDTO> karts) {
 		this.karts = karts;
 	}
 
@@ -58,8 +63,9 @@ public class GestorPistas {
 	 * @return pistas
 	 */
 	
-	public ArrayList<Pista> getPistas() {
-		return pistas;
+	public ArrayList<PistaDTO> getPistas() {
+	    PistaDAO pistas = new PistaDAO();
+		return pistas.getPistas();
 	}
 
 	/**
@@ -68,7 +74,7 @@ public class GestorPistas {
 	 * @return none
 	 */
 	
-	public void setPistas(ArrayList<Pista> pistas) {
+	public void setPistas(ArrayList<PistaDTO> pistas) {
 		this.pistas = pistas;
 	}
 	
@@ -78,7 +84,7 @@ public class GestorPistas {
 	 * @return true
 	 */
 	
-	public boolean addPista(ArrayList<Pista> pistas, Pista pista) {
+	public boolean addPista(ArrayList<PistaDTO> pistas, PistaDTO pista) {
 		for(int i=0; i<pistas.size(); i++){
 			if(pistas.get(i).getName() == pista.getName()){
 				return false;
@@ -94,7 +100,7 @@ public class GestorPistas {
 	 * @return true
 	 */
 	
-	public boolean addKart(ArrayList<Kart> karts, Kart kart) {
+	public boolean addKart(ArrayList<KartDTO> karts, KartDTO kart) {
 		for(int i=0; i<karts.size(); i++){
 			if(karts.get(i).getId() == kart.getId()){
 				return false;
@@ -111,18 +117,18 @@ public class GestorPistas {
 	 * @return none
 	 */
 	
-	public void asociarKartsAPista(ArrayList<Kart> karts, ArrayList<Pista> pistas, Kart kart, Pista pista) {
+	public void asociarKartsAPista(ArrayList<KartDTO> karts, ArrayList<PistaDTO> pistas, KartDTO kart, PistaDTO pista) {
 		for(int i=0; i<karts.size(); i++){
 			if(karts.get(i).getId() == kart.getId()){
 				for(int j=0; j<pistas.size(); j++){
 					if(pistas.get(j).getName() == pista.getName()){
-						if((pista.getDificulty().equals(Pista.dificulty.infantil)==true) && (kart.isType()==false) && (pista.isStatus()==true) && ((pista.getKarts().size()+1)<pista.getMax())) {
+						if((pista.getDif().equals(Pista.dificulty.infantil)==true) && (kart.isType()==false) && (pista.isStatus()==true) && ((pista.getKarts().size()+1)<pista.getMax())) {
 							karts.add(kart);
 						}
-						if((pista.getDificulty().equals(Pista.dificulty.familiar)==true) && (pista.isStatus()==true) && ((pista.getKarts().size()+1)<pista.getMax())) {
+						if((pista.getDif().equals(Pista.dificulty.familiar)==true) && (pista.isStatus()==true) && ((pista.getKarts().size()+1)<pista.getMax())) {
 							karts.add(kart);
 						}
-						if((pista.getDificulty().equals(Pista.dificulty.adultos)==true) && (kart.isType()==true) && (pista.isStatus()==true) && ((pista.getKarts().size()+1)<pista.getMax())) {
+						if((pista.getDif().equals(Pista.dificulty.adultos)==true) && (kart.isType()==true) && (pista.isStatus()==true) && ((pista.getKarts().size()+1)<pista.getMax())) {
 							karts.add(kart);
 						}
 					}
@@ -137,7 +143,7 @@ public class GestorPistas {
 	 * @return none
 	 */
 	
-	public void listarPistas(ArrayList<Pista> pistas) {
+	public void listarPistas(ArrayList<PistaDTO> pistas) {
 		for(int i=0;i<pistas.size();i++) {
 			System.out.println(pistas.get(i).toString());
 		}
@@ -151,10 +157,10 @@ public class GestorPistas {
 	 * @return pistasLibres
 	 */
 	
-	public ArrayList<Pista> pistasLibres(ArrayList<Pista>pistas, dificulty diff, int karts){
-		ArrayList<Pista> pistasLibres=new ArrayList<Pista>();
+	public ArrayList<PistaDTO> pistasLibres(ArrayList<PistaDTO>pistas, dificulty diff, int karts){
+		ArrayList<PistaDTO> pistasLibres=new ArrayList<PistaDTO>();
 		for(int i=0;i<pistas.size();i++) {
-			if(pistas.get(i).getDificulty().equals(diff) && pistas.get(i).getMax()>=karts) {
+			if(pistas.get(i).getDif().equals(diff) && pistas.get(i).getMax()>=karts) {
 				pistasLibres.add(pistas.get(i));
 			}
 		}

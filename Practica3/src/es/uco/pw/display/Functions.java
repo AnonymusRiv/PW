@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
     import java.util.Scanner;
 
+import es.uco.pw.business.DTO.KartDTO;
+import es.uco.pw.business.DTO.PistaDTO;
 import es.uco.pw.business.DTO.UsuarioDTO;
 import es.uco.pw.business.classes.*;
     import es.uco.pw.business.factory.*;
@@ -54,8 +56,18 @@ import es.uco.pw.business.classes.*;
             System.out.println(" - Pulse 1 para crear una reserva");
             System.out.println(" - Pulse 2 para modificar una reserva");
             System.out.println(" - Pulse 3 para borrar una reserva");
-            System.out.println(" - Pulse 4 para modificar sus datos");
-            System.out.println(" - Pulse 5 para eliminar un usuario");
+            System.out.println(" - Pulse 4 para listar sus reservas");
+            System.out.println(" - Pulse 5 para ver sus datos");
+            System.out.println(" - Pulse 6 para modificar sus datos");
+            System.out.println(" - Pulse 7 para eliminar un usuario");
+            System.out.println(" - Pulse 8 para crear una pista");
+            System.out.println(" - Pulse 9 para modificar una pista");
+            System.out.println(" - Pulse 10 para eliminar una pista");
+            System.out.println(" - Pulse 11 para listar las pistas");
+            System.out.println(" - Pulse 12 para crear un kart");
+            System.out.println(" - Pulse 13 para modificar un kart");
+            System.out.println(" - Pulse 14 para eliminar un kart");
+            System.out.println(" - Pulse 15 para listar los karts");
             System.out.println(" - Pulse 0 para Salir");
             System.out.print("Escoja una opción y pulse enter: ");
             return scanner.nextInt();
@@ -105,7 +117,6 @@ import es.uco.pw.business.classes.*;
             usuario.setName(scanner.nextLine());
             System.out.print(" - Email: ");
             usuario.setEmail(scanner.nextLine());
-            SimpleDateFormat formatter6 = new SimpleDateFormat("yyyy-MM-dd");
             System.out.print(" - Fecha de nacimiento con el formato \"yyyy-MM-dd\" : ");
             String date = scanner.nextLine();
             usuario.setDateOfBirth(date);
@@ -132,68 +143,6 @@ import es.uco.pw.business.classes.*;
             System.out.println("------------------");
             for (int i = 0; i < users.size(); i++) {
               System.out.println("   " + users.get(i).getEmail());
-            }
-        }
-        
-        /**
-         * Elimina un usuario del sistema
-         * @param none
-         * @return none
-         */
-        
-        public static Boolean deleteUsuario(){
-            Functions.clearConsole();
-            scanner = new Scanner(System.in);
-            GestorUsuarios gestor = GestorUsuarios.getInstance();
-
-            Functions.listarUsuarios();
-            System.out.print("Introduzca el identificador del usuario que desea borrar: ");
-            String iduser = scanner.next();
-
-            return gestor.deleteUsuario(iduser);
-
-        }
-        
-        /**
-         * Imprime el menú de registro de pistas
-         * @param none
-         * @return boolean True si se ha podido registrar
-         */
-        
-        public static Boolean registerPista() throws ParseException {
-            Functions.clearConsole();
-            Pista pista=new Pista();
-            scanner = new Scanner(System.in);
-            GestorPistas pist = GestorPistas.getInstance();
-            ArrayList<Pista> pistas = pist.getPistas();
-            
-
-            System.out.println("Introduzca los siguientes datos: ");
-            System.out.print(" - Nombre: ");
-            pista.setName(scanner.nextLine());
-            System.out.print(" - Estado: ");
-            pista.setStatus(scanner.nextBoolean());
-            System.out.print(" - Dificultad: ");
-            pista.setDificulty(scanner.nextLine());
-
-            pist.addPista(pistas, pista);
-            return true;
-        }
-        
-        /**
-         * Lista las pistas del sistema
-         * @param none
-         * @return none
-         */
-        
-        public static void listarPistas() {
-            Functions.clearConsole();
-            GestorPistas pista=GestorPistas.getInstance();
-            ArrayList<Pista> pistas=pista.getPistas();
-            System.out.println("Pistas");
-            System.out.println("----------");
-            for(int i=0;i<pistas.size();i++) {
-                System.out.println("  "+pistas.get(i).getName());
             }
         }
         
@@ -295,6 +244,79 @@ import es.uco.pw.business.classes.*;
         }
         
         /**
+         * Función que modifica un usuario
+         * @param none
+         * @return none
+         */
+        
+        public static Boolean modificarUsuario() throws ParseException {
+            Functions.clearConsole();
+            scanner = new Scanner(System.in);
+            GestorUsuarios usuario = GestorUsuarios.getInstance();
+        
+            Functions.listarUsuarios();
+        
+            System.out.println(
+              "Introduzca el correo del usuario que desea modificar: "
+            );
+            String mail = scanner.nextLine();
+            
+            UsuarioDTO user = usuario.findUser(mail);
+            
+            if (user != null) {
+              System.out.println("Introduzca los siguientes datos: ");
+              System.out.print(" - Nombre: ");
+              user.setName(scanner.nextLine());
+              //SimpleDateFormat formatter6 = new SimpleDateFormat("yyyy-MM-dd");
+              System.out.print(" - Fecha de nacimiento con el formato \"yyyy-MM-dd\" : ");
+              String date = scanner.nextLine();
+              user.setDateOfBirth(date);
+              System.out.print(" - Email: ");
+              user.setEmail(scanner.nextLine());
+        
+              return usuario.modificarUsuario(user, mail);
+            }
+        
+            return false;
+        }
+        
+        /**
+         * Elimina un usuario del sistema
+         * @param none
+         * @return none
+         */
+        
+        public static Boolean deleteUsuario(){
+            Functions.clearConsole();
+            scanner = new Scanner(System.in);
+            GestorUsuarios gestor = GestorUsuarios.getInstance();
+
+            Functions.listarUsuarios();
+            System.out.print("Introduzca el identificador del usuario que desea borrar: ");
+            String iduser = scanner.next();
+
+            return gestor.deleteUsuario(iduser);
+
+        }
+        
+        /**
+         * Lista las pistas del sistema
+         * @param none
+         * @return none
+         */
+        
+        public static void listarPistas() {
+            Functions.clearConsole();
+            GestorPistas gestor = GestorPistas.getInstance();
+            ArrayList<PistaDTO> pistas = gestor.getPistas();
+            System.out.println("            Pistas            ");
+            System.out.println("------------------------------");
+            for (int i = 0; i < pistas.size(); i++) {
+                System.out.println("\t"+pistas.get(i).getName());
+            }            
+        }        
+        
+        /**
          * Función que modifica una reserva del sistema
          * @param none
          * @return none
@@ -365,43 +387,6 @@ import es.uco.pw.business.classes.*;
         }
         
         /**
-         * Función que modifica un usuario
-         * @param none
-         * @return none
-         */
-        
-        public static Boolean modificarUsuario() throws ParseException {
-            Functions.clearConsole();
-            scanner = new Scanner(System.in);
-            GestorUsuarios usuario = GestorUsuarios.getInstance();
-        
-            Functions.listarUsuarios();
-        
-            System.out.println(
-              "Introduzca el correo del usuario que desea modificar: "
-            );
-            String mail = scanner.nextLine();
-            
-            UsuarioDTO user = usuario.findUser(mail);
-            
-            if (user != null) {
-              System.out.println("Introduzca los siguientes datos: ");
-              System.out.print(" - Nombre: ");
-              user.setName(scanner.nextLine());
-              //SimpleDateFormat formatter6 = new SimpleDateFormat("yyyy-MM-dd");
-              System.out.print(" - Fecha de nacimiento con el formato \"yyyy-MM-dd\" : ");
-              String date = scanner.nextLine();
-              user.setDateOfBirth(date);
-              System.out.print(" - Email: ");
-              user.setEmail(scanner.nextLine());
-        
-              return usuario.modificarUsuario(user, mail);
-            }
-        
-            return false;
-        }
-        
-        /**
          * Función que imprime el menu de pista
          * @param none
          * @return none
@@ -416,6 +401,113 @@ import es.uco.pw.business.classes.*;
             System.out.println(" - Pulse 0 para Salir");
             System.out.print("Escoja una opción y pulse enter: ");
             return scanner.nextInt();
+        }
+        
+        /**
+         * Registra una pista
+         * @param none
+         * @return boolean True si se ha podido registrar
+         */
+        
+        public static Boolean CreatePista() throws ParseException {
+            Functions.clearConsole();
+            PistaDTO pista =new PistaDTO();
+            scanner = new Scanner(System.in);
+            GestorPistas gestor = GestorPistas.getInstance();
+            ArrayList<PistaDTO> pistas = gestor.getPistas();
+
+            System.out.println("Introduzca los siguientes datos: ");
+            System.out.print(" - Nombre: ");
+            pista.setName(scanner.nextLine());
+            System.out.print(" - Estado (disponible o ocupado): ");
+            if(scanner.nextLine() == "disponible") {
+                pista.setStatus(true);
+            }
+            if(scanner.nextLine() == "ocupado") {
+                pista.setStatus(false);
+            }
+            System.out.print(" - Dificultad (infantil, familiar o adultos): ");
+            pista.setDificulty(scanner.nextLine());
+            System.out.print(" - Número máximo de karts: ");
+            pista.setMax(scanner.nextInt());
+            //System.out.print(" - Karts asociados a dicha pista: ");
+            //listar karts
+            
+            if(gestor.addPista(pistas, pista)) {
+                System.out.println("Registro correcto");
+                return true;
+            }
+            System.out.println("Error al registrar la pista");
+            return false;
+        }
+        
+        
+        /**
+         * Registra un kart
+         * @param none
+         * @return boolean True si se ha podido registrar
+         */
+        
+        public static Boolean CreateKart() throws ParseException {
+            Functions.clearConsole();
+            KartDTO kart =new KartDTO();
+            scanner = new Scanner(System.in);
+            GestorPistas gestor = GestorPistas.getInstance();
+            ArrayList<KartDTO> karts = gestor.getKarts();
+
+            System.out.println("Introduzca los siguientes datos: ");
+            System.out.print(" - Tipo (infantil o adulto): ");
+            if(scanner.nextLine().equals("infantil")) {
+                kart.setType(true);
+            }
+            if(scanner.nextLine().equals("adulto")) {
+                kart.setType(false);
+            }
+            System.out.print(" - Estado (disponible, reservado o mantenimiento): ");
+            kart.setStat(scanner.nextLine());
+            System.out.print(" - Pista (Seleccione una o deje vacio): ");
+            listarPistas();
+            kart.setpistaId(scanner.nextLine());
+            
+            if(gestor.addKart(karts, kart)) {
+                System.out.println("Registro correcto");
+                return true;
+            }
+            System.out.println("Error al registrar la pista");
+            return false;
+        }
+        
+        /**
+         * Registra un kart
+         * @param none
+         * @return boolean True si se ha podido registrar
+         */
+        
+        public static void listarUser() throws ParseException {
+            Functions.clearConsole();
+            GestorUsuarios usuario = GestorUsuarios.getInstance();
+            System.out.println("Nombre:  " + usuario.getUsuarioActivo().getName());
+            System.out.println("Email: " + usuario.getUsuarioActivo().getEmail());
+            System.out.println("Cumpleaños: " + usuario.getUsuarioActivo().getDateOfBirth());
+            System.out.println("Fecha de inscripción: " + usuario.getUsuarioActivo().getInscription());
+        }
+        
+        /**
+         * Lista los karts del sistema
+         * @param none
+         * @return none
+         */
+        
+        public static void listarKarts() {
+            Functions.clearConsole();
+            GestorPistas gestor = GestorPistas.getInstance();
+            ArrayList<KartDTO> karts = gestor.getKarts();
+            System.out.println("             karts            ");
+            System.out.println("  id  |  tipo  |    estado    |  pista");
+            System.out.println("----------------------------------------");
+            for (int i = 0; i < karts.size(); i++) {
+              System.out.println("   " + karts.get(i).getId() + "  | " + karts.get(i).isType() + "    " + karts.get(i).getStat() + "   " + karts.get(i).getpistaId());
+            }
         }
         
 }

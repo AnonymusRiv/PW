@@ -52,6 +52,10 @@ public class DBmanager {
     private String deleteReservasFromPistaQuery;
     private String modificarPistaQuery;
     
+    private String getKartsQuery;
+    private String registrarKartsQuery;
+    private String deleteKartQuery;
+    private String modificarKartQuery;
 
     protected Connection connection = null;
     
@@ -110,6 +114,11 @@ public class DBmanager {
         deletePistaQuery=prop.getProperty("deletePista");
         deleteReservasFromPistaQuery=prop.getProperty("deleteReservasFromPista");
         modificarPistaQuery=prop.getProperty("modificarPista");
+        
+        getKartsQuery=prop.getProperty("getKarts");
+        registrarKartsQuery=prop.getProperty("registrarKart");
+        deleteKartQuery=prop.getProperty("deleteKart");
+        modificarKartQuery=prop.getProperty("modificarKart");
         
       } catch (FileNotFoundException e) {
           e.printStackTrace();
@@ -601,6 +610,86 @@ public class DBmanager {
         this.modificarPistaQuery = modificarPistaQuery;
     }
     
+    
+    /**
+     * Método público para obtener una query
+     * @param none
+     * @return String Query buscada
+     */
+
+    public String getKartsQuery() {
+        return getKartsQuery;
+    }
+    
+    /**
+     * Método público para modificar una query
+     * @param String Query a modificar
+     * @return none
+     */
+
+    public void setKartsQuery(String KartsQuery) {
+        this.getKartsQuery = KartsQuery;
+    }
+    
+    /**
+     * Método público para obtener una query
+     * @param none
+     * @return String Query buscada
+     */
+
+    public String getRegistrarKartQuery() {
+        return registrarKartsQuery;
+    }
+    
+    /**
+     * Método público para modificar una query
+     * @param String Query a modificar
+     * @return none
+     */
+
+    public void setRegistrarKartQuery(String registrarKartsQuery) {
+        this.registrarKartsQuery = registrarKartsQuery;
+    }
+    
+    /**
+     * Método público para obtener una query
+     * @param none
+     * @return String Query buscada
+     */
+
+    public String getdeleteKartQuery() {
+        return deleteKartQuery;
+    }
+    
+    /**
+     * Método público para modificar una query
+     * @param String Query a modificar
+     * @return none
+     */
+
+    public void setdeleteKartQuery(String deleteKartQuery) {
+        this.deleteKartQuery = deleteKartQuery;
+    }
+    
+    /**
+     * Método público para obtener una query
+     * @param none
+     * @return String Query buscada
+     */
+
+    public String getModificarKartQuery() {
+        return modificarKartQuery;
+    }
+    
+    /**
+     * Método público para modificar una query
+     * @param String Query a modificar
+     * @return none
+     */
+
+    public void setModificarKartQuery(String modificarKartQuery) {
+        this.modificarKartQuery = modificarKartQuery;
+    }
     
 
 }
