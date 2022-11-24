@@ -80,20 +80,35 @@ public class PistaDAO {
          * @return none
          */
         
-        public void registrarPista(String name, String status, String dif, String max, String karts) {
+        public void registrarPista(String name, boolean status, dificulty dif, int max) {
             try{
                 DBmanager DBm = DBmanager.getInstance();
                 Connection connection = DBm.getConnection();
-            
-                String query= MessageFormat.format(DBm.getRegistrarPistaQuery(), "'",name,"'","'",status,"'","'",dif,"'","'",max,"'","'",karts,"'");
+                PreparedStatement ps = null;
             
                 Statement stmt = connection.createStatement();
-                stmt.executeUpdate(query);
+                String query= MessageFormat.format(DBm.getRegistrarPistaQuery(), "'",name,"'","'",status,"'","'",dif,"'","'",max,"'");
+
+                String aux = null;
+                if(dif == dificulty.infantil) {
+                    aux = "infantil";
+                }
+                if(dif == dificulty.familiar) {
+                    aux = "familiar";
+                }
+                if(dif == dificulty.adultos) {
+                    aux = "adultos";
+                }
+                ps = connection.prepareStatement(query);
+                ps.setString(1, name);
+                ps.setBoolean(2, status);
+                ps.setString(3, aux);
+                ps.setInt(4, max);
+                
+                ps.executeUpdate();
                 if (stmt != null) {
                     stmt.close();
-                }
-            
-            }catch (Exception e) {
+                }            }catch (Exception e) {
             System.err.println(e);
             e.printStackTrace();
           }
@@ -101,21 +116,23 @@ public class PistaDAO {
         
         /**
          * Borra una pista del sistema
-         * @param name
+         * @param email
          * @return none
          */
         
-        public void deletePista(String name) {
+        public void deletePista(String pistaId) {
             try {
                 DBmanager DBm = DBmanager.getInstance();
                 Connection connection = DBm.getConnection();
-            
-                Statement stmt = connection.createStatement();
-                String query= MessageFormat.format(DBm.getDeletePistaQuery(), "'",name,"'");
+                PreparedStatement ps = null;
                 
-                stmt.executeUpdate(query);
-                query=MessageFormat.format(DBm.getDeleteReservasFromPistaQuery(), "'",name,"'");
-                stmt.executeUpdate(query);
+                Statement stmt = connection.createStatement();
+                String query= MessageFormat.format(DBm.getDeletePistaQuery(), "'",pistaId,"'");
+                ps = connection.prepareStatement(query);
+                ps.setString(1, pistaId);
+                
+                
+                ps.executeUpdate();
                 if (stmt != null) {
                     stmt.close();
                 }
@@ -127,19 +144,35 @@ public class PistaDAO {
         
         /**
          * Modifica una pista del sistema
-         * @param name
+         * @param email
          * @return none
          */
         
-        public void modificarPista(PistaDTO pista) {
+        public void modificarPista(PistaDTO pista, String pistaId) {
             try {
                 DBmanager DBm = DBmanager.getInstance();
                 Connection connection = DBm.getConnection();
+                PreparedStatement ps = null;
             
-                String query= MessageFormat.format(DBm.getModificarPistaQuery(),"'",pista.getName(),"'","'",pista.isStatus(),"'","'",pista.getDif(),"'","'",pista.getMax(),"'");
-                
                 Statement stmt = connection.createStatement();
-                stmt.executeUpdate(query);
+                String query= MessageFormat.format(DBm.getModificarPistaQuery(),"'",pista.getName(),"'","'",pista.isStatus(),"'","'",pista.getDif(),"'","'",pista.getMax(),"'");
+                String aux = null;
+                if(pista.getDif() == dificulty.infantil) {
+                    aux = "infantil";
+                }
+                if(pista.getDif() == dificulty.familiar) {
+                    aux = "familiar";
+                }
+                if(pista.getDif() == dificulty.adultos) {
+                    aux = "adultos";
+                }
+                ps = connection.prepareStatement(query);
+                ps.setString(1, pistaId);
+                ps.setBoolean(2, pista.isStatus());    
+                ps.setString(3, aux);
+                ps.setInt(4, pista.getMax());  
+                
+                ps.executeUpdate();
                 if (stmt != null) {
                     stmt.close();
                 }
@@ -238,6 +271,74 @@ public class PistaDAO {
             System.err.println(e);
             e.printStackTrace();
           }
+        }
+        
+        /**
+         * Modifica un kart del sistema
+         * @param email
+         * @return none
+         */
+        
+        public void modificarKart(KartDTO kart, int id) {
+            try {
+                DBmanager DBm = DBmanager.getInstance();
+                Connection connection = DBm.getConnection();
+                PreparedStatement ps = null;
+            
+                Statement stmt = connection.createStatement();
+                String query= MessageFormat.format(DBm.getModificarKartQuery(),"'",kart.isType(),"'","'",kart.getStat(),"'","'",kart.getpistaId(),"'","'",kart.getId(),"'");
+                String aux = null;
+                if(kart.getStat() == KartDTO.status.disponible) {
+                    aux = "disponible";
+                }
+                if(kart.getStat() == KartDTO.status.reservado) {
+                    aux = "reservado";
+                }
+                if(kart.getStat() == KartDTO.status.mantenimiento) {
+                    aux = "mantenimiento";
+                }
+                ps = connection.prepareStatement(query);
+                ps.setBoolean(1, kart.isType());
+                ps.setString(2, aux);
+                ps.setString(3, kart.getpistaId());
+                ps.setInt(4, id);
+                
+                ps.executeUpdate();
+                if (stmt != null) {
+                    stmt.close();
+                }
+              } catch (Exception e) {
+              System.err.println(e);
+              e.printStackTrace();
+            }
+        }
+        
+        /**
+         * Borra un kart del sistema
+         * @param email
+         * @return none
+         */
+        
+        public void deleteKart(int id) {
+            try {
+                DBmanager DBm = DBmanager.getInstance();
+                Connection connection = DBm.getConnection();
+                PreparedStatement ps = null;
+                
+                Statement stmt = connection.createStatement();
+                String query= MessageFormat.format(DBm.getdeleteKartQuery(), "'",id,"'");
+                ps = connection.prepareStatement(query);
+                ps.setInt(1, id);
+                
+                
+                ps.executeUpdate();
+                if (stmt != null) {
+                    stmt.close();
+                }
+              } catch (Exception e) {
+              System.err.println(e);
+              e.printStackTrace();
+            }
         }
         
     }

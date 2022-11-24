@@ -86,14 +86,22 @@ public class GestorPistas {
 	 * @return true
 	 */
 	
-	public boolean addPista(ArrayList<PistaDTO> pistas, PistaDTO pista) {
-		for(int i=0; i<pistas.size(); i++){
-			if(pistas.get(i).getName() == pista.getName()){
-				return false;
-			}
-		}
-		pistas.add(pista);
-		return true;
+	public boolean registerPista(PistaDTO pista) {
+	    GestorPistas gestor = new GestorPistas();
+        ArrayList<PistaDTO> pistas = gestor.getPistas();
+        for (int i = 0; i < pistas.size(); i++) {
+          if (pistas.get(i).getName().equals(pista.getName())) {
+            return false;
+          }
+        }
+        PistaDAO pistaDAO = new PistaDAO();
+        pistaDAO.registrarPista(
+          pista.getName(),
+          pista.isStatus(),
+          pista.getDif(),
+          pista.getMax()
+        );
+        return true;
 	}
 	
 	/**
@@ -176,4 +184,64 @@ public class GestorPistas {
 		}
 		return pistasLibres;
 	}
+	
+	/**
+     * Método público para eliminar un Kart
+     * @param id
+     * @return true o false
+     */
+    
+    public Boolean deleteKart(int id) {
+        ArrayList<KartDTO> karts = getKarts();
+        for(int i=0; i<karts.size(); i++) {
+            if(karts.get(i).getId() == id) {
+                PistaDAO kart = new PistaDAO();
+                kart.deleteKart(id);
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Método público para modificar un kart
+     * @param user
+     * @return none
+     */
+    
+    public Boolean modificarKart(KartDTO kart, int id) {
+        PistaDAO kartdao = new PistaDAO();
+        kartdao.modificarKart(kart, id);
+        return true;
+    }
+    
+    /**
+     * Método público para modificar una pista
+     * @param user
+     * @return none
+     */
+    
+    public Boolean modificarPista(PistaDTO pista, String pistaId) {
+        PistaDAO pistadao = new PistaDAO();
+        pistadao.modificarPista(pista, pistaId);
+        return true;
+    }
+    
+    /**
+     * Método público para eliminar una pista
+     * @param id
+     * @return true o false
+     */
+    
+    public Boolean deletePista(String pistaId) {
+        ArrayList<PistaDTO> pistas = getPistas();
+        for(int i=0; i<pistas.size(); i++) {
+            if(pistas.get(i).getName().equals(pistaId)) {
+                PistaDAO pista = new PistaDAO();
+                pista.deletePista(pistaId);
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -138,7 +138,7 @@ public class UsuarioDAO {
             PreparedStatement ps = null;
         
             Statement stmt = connection.createStatement();
-            String query= MessageFormat.format(DBm.getModificarUsuarioQuery(),"'",usuario.getName(),"'","'",usuario.getDateOfBirth(),"'","'",usuario.getEmail(),"'","'",usuario.getEmail(),"'");
+            String query= MessageFormat.format(DBm.getModificarUsuarioQuery(),"'",usuario.getName(),"'","'",usuario.getEmail(),"'","'",usuario.getDateOfBirth(),"'","'",usuario.getEmail(),"'");
             ps = connection.prepareStatement(query);
             ps.setString(1, usuario.getName());
             ps.setString(2, usuario.getEmail());    

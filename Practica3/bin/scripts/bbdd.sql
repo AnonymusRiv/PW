@@ -62,6 +62,7 @@ CREATE TABLE IF NOT EXISTS `reserva` (
 CREATE TABLE IF NOT EXISTS `bono` (
     `bonoId` INT DEFAULT NULL,
     `session` INT DEFAULT NULL,
+    `caducity` DATETIME NULL,
     PRIMARY KEY (`bonoId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -83,10 +84,15 @@ INSERT INTO `pista` VALUES ('barcelona', 0, 'adultos', 10);
 
 INSERT INTO `reserva` VALUES ('p02ritac@uco.es', '2022-11-04', 120, 'cordoba', 20, 10, 'infantil', 0, 2, 0);
 INSERT INTO `reserva` VALUES ('i02rofls@uco.es', '2022-08-13', 120, 'sevilla', 20, 5, 'familiar', 2, 3, 1);
-INSERT INTO `reserva` VALUES ('i02pajia@uco.es', '2022-01-01', 120, 'barcelona', 20, 10, 'adultos', 5, 0, 2);
-INSERT INTO `reserva` VALUES ('i92mocem@uco.es', '2020-12-23', 120, 'madrid', 20, 5, 'adultos', 4, 0, 3);
+INSERT INTO `reserva` VALUES ('i02rofls@uco.es', '2022-09-13', 120, 'sevilla', 20, 5, 'familiar', 1, 4, 1);
+INSERT INTO `reserva` VALUES ('i02rofls@uco.es', '2022-12-13', 120, 'sevilla', 20, 5, 'familiar', 2, 5, 1);
+INSERT INTO `reserva` VALUES ('i02rofls@uco.es', '2023-04-13', 120, 'sevilla', 20, 5, 'familiar', 2, 1, 1);
+INSERT INTO `reserva` VALUES ('i02rofls@uco.es', '2023-01-10', 120, 'sevilla', 20, 5, 'familiar', 2, 3, 1);
+INSERT INTO `reserva` VALUES ('i02pajia@uco.es', '2022-01-01', 120, 'barcelona', 20, 10, 'adultos', 5, 0, 0);
+INSERT INTO `reserva` VALUES ('i92mocem@uco.es', '2020-12-23', 120, 'madrid', 20, 5, 'adultos', 4, 0, 0);
 
-INSERT INTO `bono` VALUES (1, 4);
-INSERT INTO `bono` VALUES (2, 2);
-INSERT INTO `bono` VALUES (3, 3);
-INSERT INTO `bono` VALUES (4, 5);
+INSERT INTO `bono` VALUES (1, 1, '2023-08-13');
+INSERT INTO `bono` VALUES (1, 2, '2023-08-13');
+INSERT INTO `bono` VALUES (1, 3, '2023-08-13');
+INSERT INTO `bono` VALUES (1, 4, '2023-08-13');
+INSERT INTO `bono` VALUES (1, 5, '2023-08-13');

@@ -35,30 +35,44 @@ public class Main {
                     while(choice != 0) {
                         
                         if(choice == 1) {
-                            choice = Functions.registrarReserva();
-                            
-                            if(choice < 0 || choice > 3) {
+                            choice = Functions.PrintTipoReserva();
+                            if(choice < 0 || choice > 2) {
                                 System.out.println("Seleccione una opción válida.");
-                                choice = Functions.registrarReserva();
+                                choice = Functions.PrintTipoReserva();
                             }
-                            
-                            while(choice != 0) {
+                            if(choice == 1) {
+                                choice = Functions.PrintRegistrarReserva();
+                                if(choice < 0 || choice > 3) {
+                                    System.out.println("Seleccione una opción válida.");
+                                    choice = Functions.PrintRegistrarReserva();
+                                }
                                 if(choice == 1) {
-                                    Functions.createRInfantil();
+                                    Functions.createRIndividualInfantil();
                                 }
-                                
                                 if(choice == 2) {
-                                    Functions.createRFamiliar();
+                                    Functions.createRIndividualFamiliar();
                                 }
-                                
                                 if(choice == 3) {
-                                    Functions.createRAdultos();
+                                    Functions.createRIndividualAdultos();
                                 }
-                                
-                                choice = Functions.registrarReserva();
                             }
-                            
-                        }
+                            if(choice == 2) {
+                                choice = Functions.PrintRegistrarReserva();
+                                if(choice < 0 || choice > 3) {
+                                    System.out.println("Seleccione una opción válida.");
+                                    choice = Functions.PrintRegistrarReserva();
+                                }
+                                if(choice == 1) {
+                                    Functions.createRBonoInfantil();
+                                }
+                                if(choice == 2) {
+                                    Functions.createRBonoFamiliar();
+                                }
+                                if(choice == 3) {
+                                    Functions.createRBonoAdultos();
+                                }
+                            }
+                        }                               
                         
                         if(choice == 2) {
                             Functions.modificarReserva();
@@ -89,11 +103,11 @@ public class Main {
                         }
                         
                         if(choice == 9) {
-                            //modificar pista
+                            Functions.modificarPista();
                         }
                         
                         if(choice == 10) {
-                            //eliminar pista
+                            Functions.deletePista();
                         }
                         
                         if(choice == 11) {
@@ -105,11 +119,11 @@ public class Main {
                         }
                         
                         if(choice == 13) {
-                            //modificar kart
+                            Functions.modificarKart();
                         }
                         
                         if(choice == 14) {
-                            //eliminar kart
+                            Functions.deleteKart();
                         }
                         
                         if(choice == 15) {

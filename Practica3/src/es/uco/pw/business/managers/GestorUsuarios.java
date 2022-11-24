@@ -139,22 +139,6 @@ public class GestorUsuarios {
     }
     
     /**
-     * Método público para buscar un usuario
-     * @param mail
-     * @return true o false
-     */
-    
-    public UsuarioDTO findUser(String mail) {
-        ArrayList<UsuarioDTO> usuarios = getUsuarios();
-        for(int i=0; i<usuarios.size(); i++) {
-            if(usuarios.get(i).getEmail().equals(mail)) {
-                return usuarios.get(i);
-            }
-        }
-        return null;
-    }
-    
-    /**
      * Método público para registrar un usuario
      * @param user
      * @return true o false
@@ -172,7 +156,7 @@ public class GestorUsuarios {
         new SimpleDateFormat("yyyy-MM-dd");
         //DateTimeFormatter registerDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         //registerDate.format(LocalDateTime.now());
-        String registerDate = "2022-05-11";
+        String registerDate = "2022-11-23";
         userDAO.registrarUsuario(
           user.getName(),
           user.getDateOfBirth(),

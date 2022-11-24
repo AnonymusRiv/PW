@@ -102,16 +102,8 @@ public class PistaDTO {
      * @return none
      */
     
-    public void setDificulty(String dificulty) {
-        if(dificulty == "infantil") {
-            dif = es.uco.pw.business.DTO.PistaDTO.dificulty.infantil;
-        }
-        if(dificulty == "familiar") {
-            dif = es.uco.pw.business.DTO.PistaDTO.dificulty.familiar;
-        }
-        if(dificulty == "adultos") {
-            dif = es.uco.pw.business.DTO.PistaDTO.dificulty.adultos;
-        }
+    public void setDificulty(dificulty dif) {
+        this.dif = dif;
     }
     
     /**

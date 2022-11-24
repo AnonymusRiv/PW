@@ -125,7 +125,7 @@ import es.uco.pw.business.classes.*;
                 System.out.println("Registro correcto");
                 return true;
             }
-            System.out.println("Error al registrarse");
+            System.out.println("Error al registrarse. El correo ya se ecuentra en el sistema");
             return false;
         }
         
@@ -152,34 +152,40 @@ import es.uco.pw.business.classes.*;
          * @return TypeRes -1 se ha podido registrar
          */
         
-        
-        public static int registrarReserva() throws ParseException{
+        public static int PrintRegistrarReserva() throws ParseException{
             Functions.clearConsole();
-            System.out.println("¿Qué tipo de espectáculo desea crear?");
+            System.out.println("¿Qué tipo de reserva desea crear?");
             System.out.println(" - Pulse 1 para crear una reserva infantil");
             System.out.println(" - Pulse 2 para crear una reserva familiar");
             System.out.println(" - Pulse 3 para crear una reserva adultos");
             System.out.println(" - Pulse 0 para cancelar");
             System.out.print("Escoja una opción y pulse enter: ");
-            int choice = scanner.nextInt();
-            while (choice < 0 || choice > 3) {
-              System.out.print(" - Error escoja una opción valida: ");
-              choice = scanner.nextInt();
-            }
-            
-            if (choice != 0) {
-                return choice;
-              }
-              return -1;
+            return scanner.nextInt();
         }
         
         /**
-         * Crea una reserva infantil
+         * Imprime el menú de tipo de reservas
+         * @param none
+         * @return TypeRes -1 se ha podido registrar
+         */
+        
+        public static int PrintTipoReserva() throws ParseException{
+            Functions.clearConsole();
+            System.out.println("¿Qué tipo de reserva desea crear?");
+            System.out.println(" - Pulse 1 para crear una reserva individual");
+            System.out.println(" - Pulse 2 para crear un bono");
+            System.out.println(" - Pulse 0 para cancelar");
+            System.out.print("Escoja una opción y pulse enter: ");
+            return scanner.nextInt();
+        }
+        
+        /**
+         * Crea una reserva infantil individual
          * @param none
          * @return boolean True si se ha podido registrar
          */
 
-        public static Boolean createRInfantil() throws ParseException{
+        public static Boolean createRIndividualInfantil() throws ParseException{
             Functions.clearConsole();
             scanner = new Scanner(System.in);
             ReservaInfantil reserva = new ReservaInfantil();
@@ -196,12 +202,12 @@ import es.uco.pw.business.classes.*;
         }
         
         /**
-         * Crea una reserva familiar
+         * Crea una reserva familiar individual
          * @param none
          * @return boolean True si se ha podido registrar
          */
         
-        public static Boolean createRFamiliar() throws ParseException{
+        public static Boolean createRIndividualFamiliar() throws ParseException{
             Functions.clearConsole();
             scanner = new Scanner(System.in);
             Functions.clearConsole();
@@ -220,12 +226,82 @@ import es.uco.pw.business.classes.*;
         }
         
         /**
-         * Crea una reserva adultos
+         * Crea una reserva adultos individual
          * @param none
          * @return boolean True si se ha podido registrar
          */
         
-        public static Boolean createRAdultos() throws ParseException{
+        public static Boolean createRIndividualAdultos() throws ParseException{
+            Functions.clearConsole();
+            scanner = new Scanner(System.in);
+            Functions.clearConsole();
+            scanner = new Scanner(System.in);
+            ReservaAdultos reserva=new ReservaAdultos();
+            System.out.println("Introduzca los siguientes datos: ");
+            System.out.print("- Email: ");
+            reserva.setUserId(scanner.nextLine());
+            System.out.print("- Fecha: ");
+            reserva.setDate(scanner.nextLine());
+            System.out.print("- Duración: ");
+            reserva.setDuration(scanner.nextInt());
+            System.out.print("- ID de la pista: ");
+            reserva.setPistId(scanner.nextLine());
+            return true;
+        }
+        
+        /**
+         * Crea una reserva infantil de bono
+         * @param none
+         * @return boolean True si se ha podido registrar
+         */
+
+        public static Boolean createRBonoInfantil() throws ParseException{
+            Functions.clearConsole();
+            scanner = new Scanner(System.in);
+            ReservaInfantil reserva = new ReservaInfantil();
+            System.out.println("Introduzca los siguientes datos: ");
+            System.out.print("- Email: ");
+            reserva.setUserId(scanner.nextLine());
+            System.out.print("- Fecha: ");
+            reserva.setDate(scanner.nextLine());
+            System.out.print("- Duración: ");
+            reserva.setDuration(scanner.nextInt());
+            System.out.print("- ID de la pista: ");
+            reserva.setPistId(scanner.nextLine());
+            return true;
+        }
+        
+        /**
+         * Crea una reserva familiar de bono
+         * @param none
+         * @return boolean True si se ha podido registrar
+         */
+        
+        public static Boolean createRBonoFamiliar() throws ParseException{
+            Functions.clearConsole();
+            scanner = new Scanner(System.in);
+            Functions.clearConsole();
+            scanner = new Scanner(System.in);
+            ReservaFamiliar reserva = new ReservaFamiliar();
+            System.out.println("Introduzca los siguientes datos: ");
+            System.out.print("- Email: ");
+            reserva.setUserId(scanner.nextLine());
+            System.out.print("- Fecha: ");
+            reserva.setDate(scanner.nextLine());
+            System.out.print("- Duración: ");
+            reserva.setDuration(scanner.nextInt());
+            System.out.print("- ID de la pista: ");
+            reserva.setPistId(scanner.nextLine());
+            return true;
+        }
+        
+        /**
+         * Crea una reserva adultos de bono
+         * @param none
+         * @return boolean True si se ha podido registrar
+         */
+        
+        public static Boolean createRBonoAdultos() throws ParseException{
             Functions.clearConsole();
             scanner = new Scanner(System.in);
             Functions.clearConsole();
@@ -253,31 +329,21 @@ import es.uco.pw.business.classes.*;
             Functions.clearConsole();
             scanner = new Scanner(System.in);
             GestorUsuarios usuario = GestorUsuarios.getInstance();
-        
-            Functions.listarUsuarios();
-        
-            System.out.println(
-              "Introduzca el correo del usuario que desea modificar: "
-            );
-            String mail = scanner.nextLine();
             
-            UsuarioDTO user = usuario.findUser(mail);
+            UsuarioDTO user = usuario.getUsuarioActivo();
+            String mail = user.getEmail();
             
-            if (user != null) {
-              System.out.println("Introduzca los siguientes datos: ");
-              System.out.print(" - Nombre: ");
-              user.setName(scanner.nextLine());
-              //SimpleDateFormat formatter6 = new SimpleDateFormat("yyyy-MM-dd");
-              System.out.print(" - Fecha de nacimiento con el formato \"yyyy-MM-dd\" : ");
-              String date = scanner.nextLine();
-              user.setDateOfBirth(date);
-              System.out.print(" - Email: ");
-              user.setEmail(scanner.nextLine());
+            System.out.println("Introduzca los siguientes datos: ");
+            System.out.print(" - Nombre: ");
+            user.setName(scanner.nextLine());
+            System.out.print(" - Fecha de nacimiento con el formato \"yyyy-MM-dd\" : ");
+            String date = scanner.nextLine();
+            user.setDateOfBirth(date);
+            System.out.print(" - Email: ");
+            user.setEmail(scanner.nextLine());
         
-              return usuario.modificarUsuario(user, mail);
-            }
+            return usuario.modificarUsuario(user, mail);
         
-            return false;
         }
         
         /**
@@ -414,31 +480,111 @@ import es.uco.pw.business.classes.*;
             PistaDTO pista =new PistaDTO();
             scanner = new Scanner(System.in);
             GestorPistas gestor = GestorPistas.getInstance();
-            ArrayList<PistaDTO> pistas = gestor.getPistas();
 
             System.out.println("Introduzca los siguientes datos: ");
             System.out.print(" - Nombre: ");
             pista.setName(scanner.nextLine());
             System.out.print(" - Estado (disponible o ocupado): ");
-            if(scanner.nextLine() == "disponible") {
+            String aux = scanner.nextLine();
+            if(aux.equals("disponible") == true) {
                 pista.setStatus(true);
             }
-            if(scanner.nextLine() == "ocupado") {
+            if(aux.equals("ocupado") == true) {
                 pista.setStatus(false);
             }
             System.out.print(" - Dificultad (infantil, familiar o adultos): ");
-            pista.setDificulty(scanner.nextLine());
+            aux = scanner.nextLine();
+            if(aux.equals("infantil") == true) {
+                pista.setDificulty(PistaDTO.dificulty.infantil);
+            }
+            if(aux.equals("familiar") == true) {
+                pista.setDificulty(PistaDTO.dificulty.familiar);
+            }
+            if(aux.equals("adultos") == true) {
+                pista.setDificulty(PistaDTO.dificulty.adultos);
+            }
             System.out.print(" - Número máximo de karts: ");
             pista.setMax(scanner.nextInt());
-            //System.out.print(" - Karts asociados a dicha pista: ");
-            //listar karts
             
-            if(gestor.addPista(pistas, pista)) {
+            if(gestor.registerPista(pista)) {
                 System.out.println("Registro correcto");
                 return true;
             }
             System.out.println("Error al registrar la pista");
             return false;
+        }
+        
+        /**
+         * Función que modifica una pista
+         * @param none
+         * @return none
+         */
+        
+        public static Boolean modificarPista() throws ParseException {
+            Functions.clearConsole();
+            scanner = new Scanner(System.in);
+            GestorPistas gestor = GestorPistas.getInstance();
+            ArrayList<PistaDTO> pistas = gestor.getPistas();
+        
+            Functions.listarPistas();
+        
+            System.out.println("Introduzca el nombre de la pista que desea modificar: ");
+            String name = scanner.nextLine();
+            
+            PistaDTO pista = null;
+            
+            for (int i=0; i<pistas.size(); i++) {
+                if(pistas.get(i).getName().equals(name)) {
+                    pista = pistas.get(i);
+                }
+            }
+            
+            if (pista != null) {
+                System.out.println("Introduzca los siguientes datos: ");
+                System.out.print(" - Estado (disponible o ocupado): ");
+                String aux = scanner.nextLine();
+                if(aux.equals("disponible") == true) {
+                    pista.setStatus(true);
+                }
+                if(aux.equals("ocupado") == true) {
+                    pista.setStatus(false);
+                }
+                System.out.print(" - Dificultad (infantil, familiar o adultos): ");
+                aux = scanner.nextLine();
+                if(aux.equals("infantil") == true) {
+                    pista.setDificulty(PistaDTO.dificulty.infantil);
+                }
+                if(aux.equals("familiar") == true) {
+                    pista.setDificulty(PistaDTO.dificulty.familiar);
+                }
+                if(aux.equals("adultos") == true) {
+                    pista.setDificulty(PistaDTO.dificulty.adultos);
+                }
+                System.out.print(" - Número máximo de karts: ");
+                pista.setMax(scanner.nextInt());        
+              return gestor.modificarPista(pista, name);
+            }
+        
+            return false;
+        }
+        
+        /**
+         * Elimina una pista del sistema
+         * @param none
+         * @return none
+         */
+        
+        public static Boolean deletePista(){
+            Functions.clearConsole();
+            scanner = new Scanner(System.in);
+            GestorPistas gestor = GestorPistas.getInstance();
+
+            Functions.listarPistas();
+            System.out.print("Introduzca el identificador de la pista que desea borrar: ");
+            String pistaId = scanner.next();
+
+            return gestor.deletePista(pistaId);
+
         }
         
         
@@ -544,6 +690,109 @@ import es.uco.pw.business.classes.*;
             for (int i = 0; i < karts.size(); i++) {
               System.out.println("   " + karts.get(i).getId() + "  | " + karts.get(i).isType() + "    " + karts.get(i).getStat() + "   " + karts.get(i).getpistaId());
             }
+        }
+        
+        /**
+         * Función que modifica un kart
+         * @param none
+         * @return none
+         */
+        
+        public static Boolean modificarKart() throws ParseException {
+            Functions.clearConsole();
+            scanner = new Scanner(System.in);
+            GestorPistas gestor = GestorPistas.getInstance();
+            ArrayList<KartDTO> karts = gestor.getKarts();
+        
+            Functions.listarKarts();
+        
+            System.out.println("Introduzca el identificador del kart que desea modificar: ");
+            String x = scanner.nextLine();
+            int id = Integer.parseInt(x);
+            
+            KartDTO kart = null;
+            
+            for (int i=0; i<karts.size(); i++) {
+                if(karts.get(i).getId() == id) {
+                    kart = karts.get(i);
+                }
+            }
+            
+            if (kart != null) {
+                System.out.println("Introduzca los siguientes datos: ");
+                System.out.print(" - Tipo (infantil o adulto): ");
+                String aux = scanner.nextLine();
+                if(aux.equals("infantil") == true) {
+                    kart.setType(true);
+                }
+                
+                if(aux.equals("adulto") == true) {
+                    kart.setType(false);
+                }
+                System.out.print(" - Estado (disponible, reservado o mantenimiento): ");
+                aux = scanner.nextLine();
+                if(aux.equals("disponible") == true) {
+                    kart.setStat(KartDTO.status.disponible);
+                }
+                if(aux.equals("reservado") == true) {
+                    kart.setStat(KartDTO.status.reservado);
+                }
+                if(aux.equals("mantenimiento") == true) {
+                    kart.setStat(KartDTO.status.mantenimiento);
+                }
+                listarPistas();
+                System.out.print(" - Pista (Seleccione una o deje vacio): ");
+                kart.setpistaId(scanner.nextLine());
+                
+                int n=0;
+                for(int i=0; i<karts.size(); i++) {
+                    if(karts.get(i).getpistaId().equals(kart.getpistaId())) {
+                        n++;
+                    }
+                }
+                
+                ArrayList<PistaDTO> pistas = gestor.getPistas();
+                for(int i=0; i<pistas.size(); i++) {
+                    if(pistas.get(i).getName().equals(kart.getpistaId())) {
+                        if(pistas.get(i).getMax() <= n) {
+                            System.out.println("El número máximo de karts de esa pista se ha excedido");
+                            return false;
+                        }
+                        if(pistas.get(i).getDif() == PistaDTO.dificulty.infantil && kart.isType() == false) {
+                            System.out.println("No se puede añadir el tipo de kart adulto a una pista infantil");
+                            return false;
+                        }
+                        if(pistas.get(i).getDif() == PistaDTO.dificulty.adultos && kart.isType() == true) {
+                            System.out.println("No se puede añadir el tipo de kart infantil a una pista para adultos");
+                            return false;
+                        }
+                    }
+                }
+        
+              return gestor.modificarKart(kart, id);
+            }
+        
+            return false;
+            
+        }
+        
+        /**
+         * Elimina un usuario del sistema
+         * @param none
+         * @return none
+         */
+        
+        public static Boolean deleteKart(){
+            Functions.clearConsole();
+            scanner = new Scanner(System.in);
+            GestorPistas gestor = GestorPistas.getInstance();
+
+            Functions.listarKarts();
+            System.out.print("Introduzca el identificador del kart que desea borrar: ");
+            int id = scanner.nextInt();
+
+            return gestor.deleteKart(id);
+
         }
         
 }
