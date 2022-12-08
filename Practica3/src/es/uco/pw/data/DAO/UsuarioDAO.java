@@ -2,9 +2,7 @@ package es.uco.pw.data.DAO;
 
 import java.sql.*;
 import java.text.MessageFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 
 //import com.mysql.jdbc.ResultSet;
 import es.uco.pw.business.DTO.UsuarioDTO;

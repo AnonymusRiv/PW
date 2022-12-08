@@ -1,14 +1,16 @@
 package es.uco.pw.display;
 
     import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-    import java.util.Scanner;
+    import java.util.ArrayList;
+import java.util.Date;
+import java.util.Scanner;
 
-import es.uco.pw.business.DTO.KartDTO;
-import es.uco.pw.business.DTO.PistaDTO;
-import es.uco.pw.business.DTO.UsuarioDTO;
-import es.uco.pw.business.classes.*;
+    import es.uco.pw.business.DTO.KartDTO;
+    import es.uco.pw.business.DTO.PistaDTO;
+import es.uco.pw.business.DTO.ReservaAdultosDTO;
+import es.uco.pw.business.DTO.ReservaFamiliarDTO;
+import es.uco.pw.business.DTO.ReservaInfantilDTO;
+    import es.uco.pw.business.DTO.UsuarioDTO;
     import es.uco.pw.business.factory.*;
     import es.uco.pw.business.managers.*;
 
@@ -118,8 +120,7 @@ import es.uco.pw.business.classes.*;
             System.out.print(" - Email: ");
             usuario.setEmail(scanner.nextLine());
             System.out.print(" - Fecha de nacimiento con el formato \"yyyy-MM-dd\" : ");
-            String date = scanner.nextLine();
-            usuario.setDateOfBirth(date);
+            usuario.setDateOfBirth(scanner.nextLine());
             
             if(user.registerUser(usuario)) {
                 System.out.println("Registro correcto");
@@ -188,17 +189,64 @@ import es.uco.pw.business.classes.*;
         public static Boolean createRIndividualInfantil() throws ParseException{
             Functions.clearConsole();
             scanner = new Scanner(System.in);
-            ReservaInfantil reserva = new ReservaInfantil();
+            ReservaInfantilDTO reserva = new ReservaInfantilDTO();
+            GestorUsuarios gestorUsuarios = GestorUsuarios.getInstance();
+            GestorPistas gestorPistas = GestorPistas.getInstance();
+            GestorReservas gestorReservas = GestorReservas.getInstance();
+            UsuarioDTO usuario = gestorUsuarios.getUsuarioActivo();
+            
+            String nacimiento = usuario.getDateOfBirth();
+            String año = nacimiento.substring(0, 4);
+            int añonacimiento = Integer.parseInt(año);
+            if(añonacimiento < 18) {
+                System.out.println("No puede realizar reservas ya que no es mayor de edad.");
+                return false;
+            }
+            
             System.out.println("Introduzca los siguientes datos: ");
-            System.out.print("- Email: ");
-            reserva.setUserId(scanner.nextLine());
-            System.out.print("- Fecha: ");
+            reserva.setUserId(usuario.getEmail());
+            System.out.print("- Fecha de la reserva con el formato \"yyyy-MM-dd\" : ");
             reserva.setDate(scanner.nextLine());
-            System.out.print("- Duración: ");
+            System.out.print("- Duración (60, 90 o 120 minutos): ");
             reserva.setDuration(scanner.nextInt());
-            System.out.print("- ID de la pista: ");
+            if(reserva.getDuration() == 60) {
+                reserva.setPrice(20);
+            }
+            if(reserva.getDuration() == 90) {
+                reserva.setPrice(30);
+            }
+            if(reserva.getDuration() == 120) {
+                reserva.setPrice(40);
+            }
+            Date antiguedad = usuario.getInscription();
+            @SuppressWarnings("deprecation")
+            int ant = antiguedad.getYear();
+            if(ant > 2) {
+                reserva.setDiscount(10);
+            }
+            else{
+                reserva.setDiscount(0);
+            }
+            System.out.print("- Seleccione una pista: ");
+            ArrayList<PistaDTO> pistas = gestorPistas.getPistas();
+            System.out.println("      Pistas     ");
+            System.out.println("------------------");
+            for (int i = 0; i < pistas.size(); i++) {
+                if(pistas.get(i).getDif().equals(PistaDTO.dificulty.infantil)) {
+                    System.out.println("   " + pistas.get(i).getName());   
+                }
+            }
+            System.out.print("- Nombre de la pista: ");
+            String aux = scanner.nextLine();
             reserva.setPistId(scanner.nextLine());
-            return true;
+            System.out.print("- Introduzca el número de niños de la reserva: ");
+            reserva.setnChildren(scanner.nextInt());
+            if(gestorReservas.hacerReservaIndividualInfantil(reserva)) {
+                System.out.print("Reserva realizada correctamente ");
+                return true;
+            }
+            System.out.print("No se ha podido realizar la reserva ");
+            return false;
         }
         
         /**
@@ -210,19 +258,66 @@ import es.uco.pw.business.classes.*;
         public static Boolean createRIndividualFamiliar() throws ParseException{
             Functions.clearConsole();
             scanner = new Scanner(System.in);
-            Functions.clearConsole();
-            scanner = new Scanner(System.in);
-            ReservaFamiliar reserva = new ReservaFamiliar();
+            ReservaFamiliarDTO reserva = new ReservaFamiliarDTO();
+            GestorUsuarios gestorUsuarios = GestorUsuarios.getInstance();
+            GestorPistas gestorPistas = GestorPistas.getInstance();
+            GestorReservas gestorReservas = GestorReservas.getInstance();
+            UsuarioDTO usuario = gestorUsuarios.getUsuarioActivo();
+            
+            String nacimiento = usuario.getDateOfBirth();
+            String año = nacimiento.substring(0, 4);
+            int añonacimiento = Integer.parseInt(año);
+            if(añonacimiento < 18) {
+                System.out.println("No puede realizar reservas ya que no es mayor de edad.");
+                return false;
+            }
+            
             System.out.println("Introduzca los siguientes datos: ");
-            System.out.print("- Email: ");
-            reserva.setUserId(scanner.nextLine());
-            System.out.print("- Fecha: ");
+            reserva.setUserId(usuario.getEmail());
+            System.out.print("- Fecha de la reserva con el formato \"yyyy-MM-dd\" : ");
             reserva.setDate(scanner.nextLine());
-            System.out.print("- Duración: ");
+            System.out.print("- Duración (60, 90 o 120 minutos): ");
             reserva.setDuration(scanner.nextInt());
-            System.out.print("- ID de la pista: ");
+            if(reserva.getDuration() == 60) {
+                reserva.setPrice(20);
+            }
+            if(reserva.getDuration() == 90) {
+                reserva.setPrice(30);
+            }
+            if(reserva.getDuration() == 120) {
+                reserva.setPrice(40);
+            }
+            Date antiguedad = usuario.getInscription();
+            @SuppressWarnings("deprecation")
+            int ant = antiguedad.getYear();
+            if(ant > 2) {
+                reserva.setDiscount(10);
+            }
+            else{
+                reserva.setDiscount(0);
+            }
+            System.out.print("- Seleccione una pista: ");
+            ArrayList<PistaDTO> pistas = gestorPistas.getPistas();
+            System.out.println("      Pistas     ");
+            System.out.println("------------------");
+            for (int i = 0; i < pistas.size(); i++) {
+                if(pistas.get(i).getDif().equals(PistaDTO.dificulty.familiar)) {
+                    System.out.println("   " + pistas.get(i).getName());   
+                }
+            }
+            System.out.print("- Nombre de la pista: ");
+            String aux = scanner.nextLine();
             reserva.setPistId(scanner.nextLine());
-            return true;
+            System.out.print("- Introduzca el número de niños de la reserva: ");
+            reserva.setnChildren(scanner.nextInt());
+            System.out.print("- Introduzca el número de adultos de la reserva: ");
+            reserva.setnAdults(scanner.nextInt());
+            if(gestorReservas.hacerReservaIndividualFamiliar(reserva)) {
+                System.out.print("Reserva realizada correctamente ");
+                return true;
+            }
+            System.out.print("No se ha podido realizar la reserva ");
+            return false;
         }
         
         /**
@@ -234,19 +329,64 @@ import es.uco.pw.business.classes.*;
         public static Boolean createRIndividualAdultos() throws ParseException{
             Functions.clearConsole();
             scanner = new Scanner(System.in);
-            Functions.clearConsole();
-            scanner = new Scanner(System.in);
-            ReservaAdultos reserva=new ReservaAdultos();
+            ReservaAdultosDTO reserva = new ReservaAdultosDTO();
+            GestorUsuarios gestorUsuarios = GestorUsuarios.getInstance();
+            GestorPistas gestorPistas = GestorPistas.getInstance();
+            GestorReservas gestorReservas = GestorReservas.getInstance();
+            UsuarioDTO usuario = gestorUsuarios.getUsuarioActivo();
+            
+            String nacimiento = usuario.getDateOfBirth();
+            String año = nacimiento.substring(0, 4);
+            int añonacimiento = Integer.parseInt(año);
+            if(añonacimiento < 18) {
+                System.out.println("No puede realizar reservas ya que no es mayor de edad.");
+                return false;
+            }
+            
             System.out.println("Introduzca los siguientes datos: ");
-            System.out.print("- Email: ");
-            reserva.setUserId(scanner.nextLine());
-            System.out.print("- Fecha: ");
+            reserva.setUserId(usuario.getEmail());
+            System.out.print("- Fecha de la reserva con el formato \"yyyy-MM-dd\" : ");
             reserva.setDate(scanner.nextLine());
-            System.out.print("- Duración: ");
+            System.out.print("- Duración (60, 90 o 120 minutos): ");
             reserva.setDuration(scanner.nextInt());
-            System.out.print("- ID de la pista: ");
+            if(reserva.getDuration() == 60) {
+                reserva.setPrice(20);
+            }
+            if(reserva.getDuration() == 90) {
+                reserva.setPrice(30);
+            }
+            if(reserva.getDuration() == 120) {
+                reserva.setPrice(40);
+            }
+            Date antiguedad = usuario.getInscription();
+            @SuppressWarnings("deprecation")
+            int ant = antiguedad.getYear();
+            if(ant > 2) {
+                reserva.setDiscount(10);
+            }
+            else{
+                reserva.setDiscount(0);
+            }
+            System.out.print("- Seleccione una pista: ");
+            ArrayList<PistaDTO> pistas = gestorPistas.getPistas();
+            System.out.println("      Pistas     ");
+            System.out.println("------------------");
+            for (int i = 0; i < pistas.size(); i++) {
+                if(pistas.get(i).getDif().equals(PistaDTO.dificulty.adultos)) {
+                    System.out.println("   " + pistas.get(i).getName());   
+                }
+            }
+            System.out.print("- Nombre de la pista: ");
+            String aux = scanner.nextLine();
             reserva.setPistId(scanner.nextLine());
-            return true;
+            System.out.print("- Introduzca el número de adultos de la reserva: ");
+            reserva.setnParticipants(scanner.nextInt());
+            if(gestorReservas.hacerReservaIndividualAdultos(reserva)) {
+                System.out.print("Reserva realizada correctamente ");
+                return true;
+            }
+            System.out.print("No se ha podido realizar la reserva ");
+            return false;
         }
         
         /**
@@ -258,17 +398,54 @@ import es.uco.pw.business.classes.*;
         public static Boolean createRBonoInfantil() throws ParseException{
             Functions.clearConsole();
             scanner = new Scanner(System.in);
-            ReservaInfantil reserva = new ReservaInfantil();
-            System.out.println("Introduzca los siguientes datos: ");
-            System.out.print("- Email: ");
-            reserva.setUserId(scanner.nextLine());
-            System.out.print("- Fecha: ");
-            reserva.setDate(scanner.nextLine());
-            System.out.print("- Duración: ");
-            reserva.setDuration(scanner.nextInt());
-            System.out.print("- ID de la pista: ");
-            reserva.setPistId(scanner.nextLine());
+            ReservaInfantilDTO reserva = new ReservaInfantilDTO();
+            GestorUsuarios gestorUsuarios = GestorUsuarios.getInstance();
+            GestorPistas gestorPistas = GestorPistas.getInstance();
+            GestorReservas gestorReservas = GestorReservas.getInstance();
+            UsuarioDTO usuario = gestorUsuarios.getUsuarioActivo();
+            
+            String nacimiento = usuario.getDateOfBirth();
+            String año = nacimiento.substring(0, 4);
+            int añonacimiento = Integer.parseInt(año);
+            if(añonacimiento < 18) {
+                System.out.println("No puede realizar reservas ya que no es mayor de edad.");
+                return false;
+            }
+            for(int i=0; i<5; i++) {
+                System.out.println("Introduzca los siguientes datos para su " + i + " reserva.");
+                reserva.setUserId(usuario.getEmail());
+                System.out.print("- Fecha de la reserva con el formato \"yyyy-MM-dd\" : ");
+                reserva.setDate(scanner.nextLine());
+                System.out.print("- Duración (60, 90 o 120 minutos): ");
+                reserva.setDuration(scanner.nextInt());
+                if(reserva.getDuration() == 60) {
+                    reserva.setPrice(20);
+                }
+                if(reserva.getDuration() == 90) {
+                    reserva.setPrice(30);
+                }
+                if(reserva.getDuration() == 120) {
+                    reserva.setPrice(40);
+                }
+                reserva.setDiscount(5);
+                System.out.print("- Seleccione una pista: ");
+                ArrayList<PistaDTO> pistas = gestorPistas.getPistas();
+                System.out.println("      Pistas     ");
+                System.out.println("------------------");
+                for (int j = 0; j < pistas.size(); j++) {
+                    if(pistas.get(j).getDif().equals(PistaDTO.dificulty.infantil)) {
+                        System.out.println("   " + pistas.get(j).getName());   
+                    }
+                }
+                System.out.print("- Nombre de la pista: ");
+                String aux = scanner.nextLine();
+                reserva.setPistId(scanner.nextLine());
+                System.out.print("- Introduzca el número de niños de la reserva: ");
+                reserva.setnChildren(scanner.nextInt());
+                
+            }
             return true;
+            
         }
         
         /**

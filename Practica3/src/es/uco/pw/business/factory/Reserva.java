@@ -14,7 +14,8 @@ import java.util.Date;
  */
 
 public abstract class Reserva {
-	private String userId;
+	private int Id;
+    private String userId;
 	private Date date;
 	private int duration;
 	private String pistId;
@@ -56,6 +57,28 @@ public abstract class Reserva {
 		this.discount = discount;
 		this.typeRes = typeRes;
 	}
+	
+
+    /**
+     * Método público para obtener el id de la reserva
+     * @param none
+     * @return id
+     */
+    
+    public int getId() {
+        return Id;
+    }
+    
+    /**
+     * Método público para establecer el id de la reserva 
+     * @param id
+     * @return none
+     */
+    
+    public void setId(int Id) {
+        this.Id = Id;
+    }
+
 
 	/**
 	 * Método público para obtener el id del usuario 

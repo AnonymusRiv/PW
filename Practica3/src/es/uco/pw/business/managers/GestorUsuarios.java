@@ -1,13 +1,9 @@
 package es.uco.pw.business.managers;
 
-import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import es.uco.pw.business.DTO.UsuarioDTO;
-import es.uco.pw.business.classes.*;
 import es.uco.pw.data.DAO.UsuarioDAO;
 
 /**

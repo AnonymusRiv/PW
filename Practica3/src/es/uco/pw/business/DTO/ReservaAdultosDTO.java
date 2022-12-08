@@ -14,8 +14,9 @@ import java.util.Date;
  */
 
 public class ReservaAdultosDTO {
+    private int Id;
     private String userId;
-    private Date date;
+    private String date;
     private int duration;
     private String pistId;
     private float price;
@@ -33,6 +34,7 @@ public class ReservaAdultosDTO {
     
     /**
      * Constructor con parámetros
+     * @param Id
      * @param userid
      * @param date
      * @param duration
@@ -42,8 +44,9 @@ public class ReservaAdultosDTO {
      * @param typeRes
      */
 
-    public ReservaAdultosDTO(String userId, Date date, int duration, String pistId, float price, float discount,
+    public ReservaAdultosDTO(int Id, String userId, String date, int duration, String pistId, float price, float discount,
             int nParticipants) {
+        this.Id = Id;
         this.userId = userId;
         this.date = date;
         this.duration = duration;
@@ -51,6 +54,26 @@ public class ReservaAdultosDTO {
         this.price = price;
         this.discount = discount;
         this.nParticipants = nParticipants;
+    }
+    
+    /**
+     * Método público para obtener el id de la reserva
+     * @param none
+     * @return id
+     */
+    
+    public int getId() {
+        return Id;
+    }
+    
+    /**
+     * Método público para establecer el id de la reserva 
+     * @param id
+     * @return none
+     */
+    
+    public void setId(int Id) {
+        this.Id = Id;
     }
     
     /**
@@ -79,7 +102,7 @@ public class ReservaAdultosDTO {
      * @return date
      */
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
     
@@ -89,9 +112,8 @@ public class ReservaAdultosDTO {
      * @return none
      */
 
-    public void setDate(String dat) throws ParseException {
-        Date d=new SimpleDateFormat("dd/MM/yyyy").parse(dat);
-        date=d;
+    public void setDate(String dat){
+        this.date = dat;
     }
     
     /**

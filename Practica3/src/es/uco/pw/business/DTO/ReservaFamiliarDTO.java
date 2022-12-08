@@ -14,8 +14,9 @@ import java.util.Date;
  */
 
 public class ReservaFamiliarDTO {
+    private int Id;
     private String userId;
-    private Date date;
+    private String date;
     private int duration;
     private String pistId;
     private float price;
@@ -34,6 +35,7 @@ public class ReservaFamiliarDTO {
     
     /**
      * Constructor con parámetros
+     * @param Id
      * @param userid
      * @param date
      * @param duration
@@ -43,9 +45,10 @@ public class ReservaFamiliarDTO {
      * @param typeRes
      */
     
-    public ReservaFamiliarDTO(String userId, Date date, int duration, String pistId, float price, float discount,
+    public ReservaFamiliarDTO(int Id, String userId, String date, int duration, String pistId, float price, float discount,
             int nChildren, int nAdults) {
         super();
+        this.Id = Id;
         this.userId = userId;
         this.date = date;
         this.duration = duration;
@@ -56,6 +59,26 @@ public class ReservaFamiliarDTO {
         this.nAdults = nAdults;
     }
 
+    /**
+     * Método público para obtener el id de la reserva
+     * @param none
+     * @return id
+     */
+    
+    public int getId() {
+        return Id;
+    }
+    
+    /**
+     * Método público para establecer el id de la reserva 
+     * @param id
+     * @return none
+     */
+    
+    public void setId(int Id) {
+        this.Id = Id;
+    }
+    
     /**
      * Método público para obtener el id del usuario 
      * @param none
@@ -82,7 +105,7 @@ public class ReservaFamiliarDTO {
      * @return date
      */
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
     
@@ -92,9 +115,8 @@ public class ReservaFamiliarDTO {
      * @return none
      */
 
-    public void setDate(String dat) throws ParseException {
-        Date d=new SimpleDateFormat("dd/MM/yyyy").parse(dat);
-        date=d;
+    public void setDate(String dat) {
+        this.date = dat;
     }
     
     /**

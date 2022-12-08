@@ -1,9 +1,5 @@
 package es.uco.pw.business.DTO;
 
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
-import java.util.Date;
-
 /**
  * DTO para el concepto reserva infantil
  * @author Moisés Moyano Cejudo
@@ -14,13 +10,15 @@ import java.util.Date;
  */
 
 public class ReservaInfantilDTO {
+    private int Id;
     private String userId;
-    private Date date;
+    private String date;
     private int duration;
     private String pistId;
     private float price;
     private float discount;
     private int nChildren;
+    private int BonoId;
     
     /**
      * Constructor sin parámetros
@@ -33,6 +31,7 @@ public class ReservaInfantilDTO {
     
     /**
      * Constructor con parámetros
+     * @param Id
      * @param userid
      * @param date
      * @param duration
@@ -42,8 +41,9 @@ public class ReservaInfantilDTO {
      * @param typeRes
      */
 
-    public ReservaInfantilDTO(String userId, Date date, int duration, String pistId, float price, float discount,
-            int nChildren) {
+    public ReservaInfantilDTO(int Id, String userId, String date, int duration, String pistId, float price, float discount,
+            int nChildren, int BonoId) {
+        
         this.userId = userId;
         this.date = date;
         this.duration = duration;
@@ -51,6 +51,27 @@ public class ReservaInfantilDTO {
         this.price = price;
         this.discount = discount;
         this.nChildren = nChildren;
+        this.BonoId = BonoId;
+    }
+    
+    /**
+     * Método público para obtener el id de la reserva
+     * @param none
+     * @return id
+     */
+    
+    public int getId() {
+        return Id;
+    }
+    
+    /**
+     * Método público para establecer el id de la reserva 
+     * @param id
+     * @return none
+     */
+    
+    public void setId(int Id) {
+        this.Id = Id;
     }
     
     /**
@@ -79,7 +100,7 @@ public class ReservaInfantilDTO {
      * @return date
      */
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
     
@@ -89,9 +110,8 @@ public class ReservaInfantilDTO {
      * @return none
      */
 
-    public void setDate(String dat) throws ParseException {
-        Date d=new SimpleDateFormat("dd/MM/yyyy").parse(dat);
-        date=d;
+    public void setDate(String date) {
+        this.date = date;
     }
     
     /**
@@ -192,6 +212,26 @@ public class ReservaInfantilDTO {
 
     public void setnChildren(int nChildren) {
         this.nChildren = nChildren;
+    }
+    
+    /**
+     * Método público para obtener el id del bono
+     * @param none
+     * @return discount
+     */
+
+    public int getBonoId() {
+        return BonoId;
+    }
+    
+    /**
+     * Método público para establecer el número de niños
+     * @param discount
+     * @return none
+     */
+
+    public void setBonoId(int BonoId) {
+        this.BonoId = BonoId;
     }
     
     /**

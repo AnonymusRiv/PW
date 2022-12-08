@@ -45,16 +45,16 @@ public class ReservasDAO {
             
 
             while (rs.next()) {
+                int id = rs.getInt("Id");
                 String userId = rs.getString("userId");
-                java.sql.Timestamp timetamp = rs.getTimestamp("date"); // O/P: DD:MM:YYYY HH:mm:ss
-                java.util.Date date = new java.util.Date(timetamp.getTime());
+                String date = rs.getString("date");
                 int duration = rs.getInt("duration");
                 String pistaId = rs.getString("pistaId");
                 float price = rs.getFloat("price");
                 float discount = rs.getFloat("discount");
                 int nParticipants = rs.getInt("nParticipants");
                 
-                adultos.add(new ReservaAdultosDTO(userId,date,duration,pistaId, price, discount, nParticipants));
+                adultos.add(new ReservaAdultosDTO(id,userId,date,duration,pistaId, price, discount, nParticipants));
             }
 
             if (stmt != null){ 
@@ -83,30 +83,43 @@ public class ReservasDAO {
     * @return none
     */
 
-    public void registrarReservaAdultos(String userId, Date date, int duration, String pistaId, float price, float discount, int nParticipants) {
-      try {
+    public void registrarReservaAdultos(ReservaAdultosDTO reserva) {
+        try {
 
-        DBmanager DBm = DBmanager.getInstance();
-        Connection connection = DBm.getConnection();
+            DBmanager DBm = DBmanager.getInstance();
+            Connection connection = DBm.getConnection();
+            PreparedStatement ps = null;
 
-        Statement stmt = connection.createStatement();
-        String query = MessageFormat.format(DBm.getRegistrarReservaAdultosQuery(),
-            "'",userId,"'",
-            "'",date,"'",
-            "'",duration,"'",
-            "'",pistaId,"'",
-            "'",price,"'",
-            "'",discount,"'",
-            "'",nParticipants,"'"
-        );
-        stmt.executeUpdate(query);
-        if (stmt != null) {
-          stmt.close();
+            Statement stmt = connection.createStatement();
+            String query = MessageFormat.format(DBm.getRegistrarReservaAdultosQuery(),
+                    "'",reserva.getId(),"'",
+                    "'",reserva.getUserId(),"'",
+                    "'",reserva.getDate(),"'",
+                    "'",reserva.getDuration(),"'",
+                    "'",reserva.getPistId(),"'",
+                    "'",reserva.getPrice(),"'",
+                    "'",reserva.getDiscount(),"'",
+                    "'",reserva.getnParticipants(),"'"
+                    );
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, reserva.getId());
+            ps.setString(2, reserva.getUserId());
+            ps.setString(3, reserva.getDate());
+            ps.setInt(4, reserva.getDuration());
+            ps.setString(5, reserva.getPistId());
+            ps.setFloat(6, reserva.getPrice());
+            ps.setFloat(7, reserva.getDiscount());
+            ps.setString(8, "adultos");
+            ps.setInt(9, reserva.getnParticipants());
+            
+            ps.executeUpdate();
+            if (stmt != null) {
+                stmt.close();
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+            e.printStackTrace();
         }
-      } catch (Exception e) {
-        System.err.println(e);
-        e.printStackTrace();
-      }
     }
 
 
@@ -194,9 +207,9 @@ public class ReservasDAO {
           
 
           while (rs.next()) {
+              int id = rs.getInt("Id");
               String userId = rs.getString("userId");
-              java.sql.Timestamp timetamp = rs.getTimestamp("date"); // O/P: DD:MM:YYYY HH:mm:ss
-              java.util.Date date = new java.util.Date(timetamp.getTime());
+              String date = rs.getString("date");
               int duration = rs.getInt("duration");
               String pistaId = rs.getString("pistaId");
               float price = rs.getFloat("price");
@@ -204,7 +217,7 @@ public class ReservasDAO {
               int nChildren = rs.getInt("nChildren");
               int nAdults = rs.getInt("nAdults");
               
-              familiar.add(new ReservaFamiliarDTO(userId,date,duration,pistaId, price, discount, nChildren, nAdults));
+              familiar.add(new ReservaFamiliarDTO(id, userId,date,duration,pistaId, price, discount, nChildren, nAdults));
           }
 
           if (stmt != null){ 
@@ -223,42 +236,49 @@ public class ReservasDAO {
 
   /**
   * Añade una reserva de adultos a la base de datos
-  * @param userId
-  * @param date
-  * @param duration
-  * @param pistaId
-  * @param price
-  * @param discount
-  * @param nChildren
-  * @param nAdults
+  * @param reserva
   * @return none
   */
 
-  public void registrarReservaFamiliar(String userId, Date date, int duration, String pistaId, float price, float discount, int nChildren, int nAdults) {
-    try {
+  public void registrarReservaFamiliar(ReservaFamiliarDTO reserva) {
+      try {
 
-      DBmanager DBm = DBmanager.getInstance();
-      Connection connection = DBm.getConnection();
+          DBmanager DBm = DBmanager.getInstance();
+          Connection connection = DBm.getConnection();
+          PreparedStatement ps = null;
 
-      Statement stmt = connection.createStatement();
-      String query = MessageFormat.format(DBm.getRegistrarReservaFamiliarQuery(),
-          "'",userId,"'",
-          "'",date,"'",
-          "'",duration,"'",
-          "'",pistaId,"'",
-          "'",price,"'",
-          "'",discount,"'",
-          "'",nChildren,"'",
-          "'",nAdults,"'"
-      );
-      stmt.executeUpdate(query);
-      if (stmt != null) {
-        stmt.close();
+          Statement stmt = connection.createStatement();
+          String query = MessageFormat.format(DBm.getRegistrarReservaFamiliarQuery(),
+                  "'",reserva.getId(),"'",
+                  "'",reserva.getUserId(),"'",
+                  "'",reserva.getDate(),"'",
+                  "'",reserva.getDuration(),"'",
+                  "'",reserva.getPistId(),"'",
+                  "'",reserva.getPrice(),"'",
+                  "'",reserva.getDiscount(),"'",
+                  "'",reserva.getnChildren(),"'",
+                  "'",reserva.getnAdults(),"'"
+                  );
+          ps = connection.prepareStatement(query);
+          ps.setInt(1, reserva.getId());
+          ps.setString(2, reserva.getUserId());
+          ps.setString(3, reserva.getDate());
+          ps.setInt(4, reserva.getDuration());
+          ps.setString(5, reserva.getPistId());
+          ps.setFloat(6, reserva.getPrice());
+          ps.setFloat(7, reserva.getDiscount());
+          ps.setString(8, "familiar");
+          ps.setInt(9, reserva.getnChildren());
+          ps.setInt(10, reserva.getnAdults());
+          
+          ps.executeUpdate();
+          if (stmt != null) {
+              stmt.close();
+          }
+      } catch (Exception e) {
+          System.err.println(e);
+          e.printStackTrace();
       }
-    } catch (Exception e) {
-      System.err.println(e);
-      e.printStackTrace();
-    }
   }
 
 
@@ -348,16 +368,17 @@ public class ReservasDAO {
           
 
           while (rs.next()) {
+              int id = rs.getInt("Id");
               String userId = rs.getString("userId");
-              java.sql.Timestamp timetamp = rs.getTimestamp("date"); // O/P: DD:MM:YYYY HH:mm:ss
-              java.util.Date date = new java.util.Date(timetamp.getTime());
+              String date = rs.getString("date");
               int duration = rs.getInt("duration");
               String pistaId = rs.getString("pistaId");
               float price = rs.getFloat("price");
               float discount = rs.getFloat("discount");
               int nChildren = rs.getInt("nChildren");
+              int BonoId = rs.getInt("BonoID");
               
-              infantil.add(new ReservaInfantilDTO(userId,date,duration,pistaId, price, discount, nChildren));
+              infantil.add(new ReservaInfantilDTO(id, userId,date,duration,pistaId, price, discount, nChildren, BonoId));
           }
 
           if (stmt != null){ 
@@ -376,41 +397,48 @@ public class ReservasDAO {
 
   /**
   * Añade una reserva de niños a la base de datos
-  * @param userId
-  * @param date
-  * @param duration
-  * @param pistaId
-  * @param price
-  * @param discount
-  * @param nChildren
+  * @param reserva
   * @return none
   */
 
-  public void registrarReservaInfantil(String userId, Date date, int duration, String pistaId, float price, float discount, int nChildren) {
-    try {
+    public void registrarReservaInfantil(ReservaInfantilDTO reserva) {  
+        try {
 
-      DBmanager DBm = DBmanager.getInstance();
-      Connection connection = DBm.getConnection();
+            DBmanager DBm = DBmanager.getInstance();
+            Connection connection = DBm.getConnection();
+            PreparedStatement ps = null;
 
-      Statement stmt = connection.createStatement();
-      String query = MessageFormat.format(DBm.getRegistrarReservaInfantilQuery(),
-          "'",userId,"'",
-          "'",date,"'",
-          "'",duration,"'",
-          "'",pistaId,"'",
-          "'",price,"'",
-          "'",discount,"'",
-          "'",nChildren,"'"
-      );
-      stmt.executeUpdate(query);
-      if (stmt != null) {
-        stmt.close();
-      }
-    } catch (Exception e) {
-      System.err.println(e);
-      e.printStackTrace();
+            Statement stmt = connection.createStatement();
+            String query = MessageFormat.format(DBm.getRegistrarReservaInfantilQuery(),
+                    "'",reserva.getId(),"'",
+                    "'",reserva.getUserId(),"'",
+                    "'",reserva.getDate(),"'",
+                    "'",reserva.getDuration(),"'",
+                    "'",reserva.getPistId(),"'",
+                    "'",reserva.getPrice(),"'",
+                    "'",reserva.getDiscount(),"'",
+                    "'",reserva.getnChildren(),"'"
+                    );
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, reserva.getId());
+            ps.setString(2, reserva.getUserId());
+            ps.setString(3, reserva.getDate());
+            ps.setInt(4, reserva.getDuration());
+            ps.setString(5, reserva.getPistId());
+            ps.setFloat(6, reserva.getPrice());
+            ps.setFloat(7, reserva.getDiscount());
+            ps.setString(8, "infantil");
+            ps.setInt(9, reserva.getnChildren());
+            
+            ps.executeUpdate();
+            if (stmt != null) {
+                stmt.close();
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+            e.printStackTrace();
+        }
     }
-  }
 
 
   /**
@@ -474,5 +502,150 @@ public class ReservasDAO {
       e.printStackTrace();
     }
   }
+  
+  /**
+   * Añade una reserva bono familiar a la base de datos
+   * @param reserva
+   * @return none
+   */
+
+   public void registrarReservaBonoFamiliar(ReservaFamiliarDTO reserva) {
+       try {
+
+           DBmanager DBm = DBmanager.getInstance();
+           Connection connection = DBm.getConnection();
+           PreparedStatement ps = null;
+
+           Statement stmt = connection.createStatement();
+           int BonoId = 0;
+           String query = MessageFormat.format(DBm.getRegistrarReservaBonoFamiliarQuery(),
+                   "'",reserva.getId(),"'",
+                   "'",reserva.getUserId(),"'",
+                   "'",reserva.getDate(),"'",
+                   "'",reserva.getDuration(),"'",
+                   "'",reserva.getPistId(),"'",
+                   "'",reserva.getPrice(),"'",
+                   "'",reserva.getDiscount(),"'",
+                   "'",reserva.getnChildren(),"'",
+                   "'",reserva.getnAdults(),"'",
+                   "'",BonoId,"'"
+                   );
+           ps = connection.prepareStatement(query);
+           ps.setInt(1, reserva.getId());
+           ps.setString(2, reserva.getUserId());
+           ps.setString(3, reserva.getDate());
+           ps.setInt(4, reserva.getDuration());
+           ps.setString(5, reserva.getPistId());
+           ps.setFloat(6, reserva.getPrice());
+           ps.setFloat(7, reserva.getDiscount());
+           ps.setString(8, "familiar");
+           ps.setInt(9, reserva.getnChildren());
+           ps.setInt(10, reserva.getnAdults());
+           ps.setInt(11, BonoId);
+           
+           ps.executeUpdate();
+           if (stmt != null) {
+               stmt.close();
+           }
+       } catch (Exception e) {
+           System.err.println(e);
+           e.printStackTrace();
+       }
+   }
+   
+   /**
+    * Añade una reserva bono de adultos a la base de datos
+    * @param reserva
+    * @return none
+    */
+
+    public void registrarReservaBonoAdultos(ReservaAdultosDTO reserva) {
+        try {
+
+            DBmanager DBm = DBmanager.getInstance();
+            Connection connection = DBm.getConnection();
+            PreparedStatement ps = null;
+
+            Statement stmt = connection.createStatement();
+            int BonoId = 0;
+            String query = MessageFormat.format(DBm.getRegistrarReservaBonoFamiliarQuery(),
+                    "'",reserva.getId(),"'",
+                    "'",reserva.getUserId(),"'",
+                    "'",reserva.getDate(),"'",
+                    "'",reserva.getDuration(),"'",
+                    "'",reserva.getPistId(),"'",
+                    "'",reserva.getPrice(),"'",
+                    "'",reserva.getDiscount(),"'",
+                    "'",reserva.getnParticipants(),"'",
+                    "'",BonoId,"'"
+                    );
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, reserva.getId());
+            ps.setString(2, reserva.getUserId());
+            ps.setString(3, reserva.getDate());
+            ps.setInt(4, reserva.getDuration());
+            ps.setString(5, reserva.getPistId());
+            ps.setFloat(6, reserva.getPrice());
+            ps.setFloat(7, reserva.getDiscount());
+            ps.setString(8, "adultos");
+            ps.setInt(9, reserva.getnParticipants());
+            ps.setInt(10, BonoId);
+            
+            ps.executeUpdate();
+            if (stmt != null) {
+                stmt.close();
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * Añade una reserva bono infantil a la base de datos
+     * @param reserva
+     * @return none
+     */
+
+     public void registrarReservaBonoInfantil(ReservaInfantilDTO reserva) {
+         try {
+
+             DBmanager DBm = DBmanager.getInstance();
+             Connection connection = DBm.getConnection();
+             PreparedStatement ps = null;
+
+             Statement stmt = connection.createStatement();
+             String query = MessageFormat.format(DBm.getRegistrarReservaBonoInfantilQuery(),
+                     "'",reserva.getId(),"'",
+                     "'",reserva.getUserId(),"'",
+                     "'",reserva.getDate(),"'",
+                     "'",reserva.getDuration(),"'",
+                     "'",reserva.getPistId(),"'",
+                     "'",reserva.getPrice(),"'",
+                     "'",reserva.getDiscount(),"'",
+                     "'",reserva.getnChildren(),"'",
+                     "'",reserva.getBonoId(),"'"
+                     );
+             ps = connection.prepareStatement(query);
+             ps.setInt(1, reserva.getId());
+             ps.setString(2, reserva.getUserId());
+             ps.setString(3, reserva.getDate());
+             ps.setInt(4, reserva.getDuration());
+             ps.setString(5, reserva.getPistId());
+             ps.setFloat(6, reserva.getPrice());
+             ps.setFloat(7, reserva.getDiscount());
+             ps.setString(8, "infantil");
+             ps.setInt(9, reserva.getnChildren());
+             ps.setInt(10, reserva.getBonoId());
+             
+             ps.executeUpdate();
+             if (stmt != null) {
+                 stmt.close();
+             }
+         } catch (Exception e) {
+             System.err.println(e);
+             e.printStackTrace();
+         }
+     }
 
 }

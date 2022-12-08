@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import es.uco.pw.business.DTO.KartDTO;
 import es.uco.pw.business.DTO.KartDTO.status;
 import es.uco.pw.business.DTO.PistaDTO;
-import es.uco.pw.business.DTO.UsuarioDTO;
 import es.uco.pw.business.DTO.PistaDTO.dificulty;
 import es.uco.pw.business.managers.DBmanager;
 

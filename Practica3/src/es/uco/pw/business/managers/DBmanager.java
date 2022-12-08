@@ -46,6 +46,10 @@ public class DBmanager {
     private String modificarReservaInfantilQuery;
     private String deleteReservaInfantilQuery;
     
+    private String registrarReservaBonoAdultosQuery;
+    private String registrarReservaBonoFamiliarQuery;
+    private String registrarReservaBonoInfantilQuery;
+    
     private String getPistaQuery;
     private String registrarPistaQuery;
     private String deletePistaQuery;
@@ -108,6 +112,10 @@ public class DBmanager {
         registrarReservaInfantilQuery=prop.getProperty("registrarReservaInfantil");
         modificarReservaInfantilQuery=prop.getProperty("modificarReservaInfantil");
         deleteReservaInfantilQuery=prop.getProperty("deleteReservaInfantil");
+        
+        registrarReservaBonoAdultosQuery=prop.getProperty("registrarReservaBonoAdultos");
+        registrarReservaBonoFamiliarQuery=prop.getProperty("registrarReservaBonoFamiliar");
+        registrarReservaBonoInfantilQuery=prop.getProperty("registrarReservaBonoInfantil");
         
         getPistaQuery=prop.getProperty("getPista");
         registrarPistaQuery=prop.getProperty("registrarPista");
@@ -510,6 +518,66 @@ public class DBmanager {
         this.deleteReservaInfantilQuery = deleteReservaInfantilQuery;
     }
 
+    /**
+     * Método público para obtener una query
+     * @param none
+     * @return String Query buscada
+     */
+
+    public String getRegistrarReservaBonoAdultosQuery() {
+        return registrarReservaBonoAdultosQuery;
+    }
+    
+    /**
+     * Método público para modificar una query
+     * @param String Query a modificar
+     * @return none
+     */
+
+    public void setRegistrarReservaBonoAdultosQuery(String registrarReservaBonoAdultosQuery) {
+        this.registrarReservaBonoAdultosQuery = registrarReservaBonoAdultosQuery;
+    }
+    
+    /**
+     * Método público para obtener una query
+     * @param none
+     * @return String Query buscada
+     */
+
+    public String getRegistrarReservaBonoFamiliarQuery() {
+        return registrarReservaBonoFamiliarQuery;
+    }
+    
+    /**
+     * Método público para modificar una query
+     * @param String Query a modificar
+     * @return none
+     */
+
+    public void setRegistrarReservaBonoFamiliarQuery(String registrarReservaBonoFamiliarQuery) {
+        this.registrarReservaBonoFamiliarQuery = registrarReservaBonoFamiliarQuery;
+    }
+    
+    /**
+     * Método público para obtener una query
+     * @param none
+     * @return String Query buscada
+     */
+
+    public String getRegistrarReservaBonoInfantilQuery() {
+        return registrarReservaBonoInfantilQuery;
+    }
+    
+    /**
+     * Método público para modificar una query
+     * @param String Query a modificar
+     * @return none
+     */
+
+    public void setRegistrarReservaBonoInfantilQuery(String registrarReservaBonoInfantilQuery) {
+        this.registrarReservaBonoInfantilQuery = registrarReservaBonoInfantilQuery;
+    }
+    
     /**
      * Método público para obtener una query
      * @param none

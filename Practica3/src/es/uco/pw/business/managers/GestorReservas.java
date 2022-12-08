@@ -3,9 +3,13 @@ package es.uco.pw.business.managers;
 import java.util.ArrayList;
 import java.util.Date;
 
+import es.uco.pw.business.DTO.ReservaAdultosDTO;
+import es.uco.pw.business.DTO.ReservaFamiliarDTO;
+import es.uco.pw.business.DTO.ReservaInfantilDTO;
 import es.uco.pw.business.classes.Pista;
 import es.uco.pw.business.classes.Usuario;
 import es.uco.pw.business.factory.Reserva;
+import es.uco.pw.data.DAO.ReservasDAO;
 
 /**
  * Clase GestorReservas
@@ -34,71 +38,77 @@ public class GestorReservas {
 	}
 	
 	/**
-	 * Método público para hacer una reserva individual
-	 * @param usuario
-	 * @param usuarios
-	 * @param pista
+	 * Método público para hacer una reserva individual infantil
 	 * @param reserva
 	 * @return none
 	 */
 	
-	public void hacerReservaIndividual(es.uco.pw.business.classes.Usuario usuario, ArrayList<es.uco.pw.business.classes.Usuario> usuarios, es.uco.pw.business.classes.Pista pista, es.uco.pw.business.factory.Reserva reserva){
-		for(int i=0;i<usuarios.size();i++){
-			if(usuarios.get(i).getEmail()==usuario.getEmail()){
-				if((pista.isStatus() == true) && (pista.getDificulty().equals(reserva.getTypeRes()) == true) && (pista.getMax() < pista.getKarts().size())) {
-					if(Integer.parseInt(usuario.calcularAntiguedad()) > 2) {
-						reserva.setDiscount(10);
-					}
-				}
-			}
-		}
+	public boolean hacerReservaIndividualInfantil(ReservaInfantilDTO reserva){
+		ReservasDAO reservasDAO = new ReservasDAO();
+		reservasDAO.registrarReservaInfantil(reserva);
+	    return true;
 	}
 	
 	/**
-	 * Método público para hacer una reserva bono
-	 * @param reserva
-	 * @param usuario
-	 * @param usuarios
-	 * @return none
-	 */
+     * Método público para hacer una reserva individual de adultos
+     * @param reserva
+     * @return none
+     */
+    
+    public boolean hacerReservaIndividualAdultos(ReservaAdultosDTO reserva){
+        ReservasDAO reservasDAO = new ReservasDAO();
+        reservasDAO.registrarReservaAdultos(reserva);
+        return true;
+    }
+    
+    /**
+     * Método público para hacer una reserva individual familiar
+     * @param reserva
+     * @return none
+     */
+    
+    public boolean hacerReservaIndividualFamiliar(ReservaFamiliarDTO reserva){
+        ReservasDAO reservasDAO = new ReservasDAO();
+        reservasDAO.registrarReservaFamiliar(reserva);
+        return true;
+    }
 	
-	public void hacerReservaBono(es.uco.pw.business.factory.Reserva reserva, es.uco.pw.business.classes.Usuario usuario, ArrayList<es.uco.pw.business.classes.Usuario> usuarios){
-		for(int i=0;i<usuarios.size();i++){
-			if(usuarios.get(i).getEmail()==usuario.getEmail()){
-				if(reserva.getDuration() == 60){
-					reserva.setDiscount(5);
-				}
-				if(reserva.getDuration() == 90){
-					reserva.setDiscount(5);
-				}
-				if(reserva.getDuration() == 120){
-					reserva.setDiscount(5);
-				}
-			}
-		}
-	}
-	
-	/**
-	 * Método público para establecer el precio
-	 * @param reserva
-	 * @return none
-	 */
-	
-	public void establecerprecio(ArrayList <es.uco.pw.business.factory.Reserva> reservas, es.uco.pw.business.factory.Reserva reserva){
-		for(int i=0; i<reservas.size(); i++){
-			if(reservas.get(i).getUserId() == reserva.getUserId()){
-				if(reserva.getDuration() == 60){
-					reserva.setPrice(20);
-				}
-				if(reserva.getDuration() == 90){
-					reserva.setPrice(30);
-				}
-				if(reserva.getDuration() == 120){
-					reserva.setPrice(40);
-				}
-			}
-		}
-	}
+
+    /**
+     * Método público para hacer una reserva bono infantil
+     * @param reserva
+     * @return none
+     */
+    
+    public boolean hacerReservaBonoInfantil(ReservaInfantilDTO reserva){
+        ReservasDAO reservasDAO = new ReservasDAO();
+        reservasDAO.registrarReservaBonoInfantil(reserva);
+        return true;
+    }
+    
+    /**
+     * Método público para hacer una reserva individual de adultos
+     * @param reserva
+     * @return none
+     */
+    
+    public boolean hacerReservaBonoAdultos(ReservaAdultosDTO reserva){
+        ReservasDAO reservasDAO = new ReservasDAO();
+        reservasDAO.registrarReservaBonoAdultos(reserva);
+        return true;
+    }
+    
+    /**
+     * Método público para hacer una reserva individual familiar
+     * @param reserva
+     * @return none
+     */
+    
+    public boolean hacerReservaBonoFamiliar(ReservaFamiliarDTO reserva){
+        ReservasDAO reservasDAO = new ReservasDAO();
+        reservasDAO.registrarReservaBonoFamiliar(reserva);
+        return true;
+    }
 
 	/**
 	 * Método público para modificar la reserva

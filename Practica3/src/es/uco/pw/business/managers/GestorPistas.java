@@ -2,13 +2,10 @@ package es.uco.pw.business.managers;
 
 import es.uco.pw.business.DTO.KartDTO;
 import es.uco.pw.business.DTO.PistaDTO;
-import es.uco.pw.business.DTO.UsuarioDTO;
 import es.uco.pw.business.classes.*;
 import es.uco.pw.business.classes.Pista.dificulty;
 import es.uco.pw.data.DAO.PistaDAO;
-import es.uco.pw.data.DAO.UsuarioDAO;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
