@@ -412,7 +412,7 @@ import es.uco.pw.business.DTO.ReservaInfantilDTO;
                 return false;
             }
             for(int i=0; i<5; i++) {
-                System.out.println("Introduzca los siguientes datos para su " + i + " reserva.");
+                System.out.println("Introduzca los siguientes datos para su " + (i + 1) + " reserva.");
                 reserva.setUserId(usuario.getEmail());
                 System.out.print("- Fecha de la reserva con el formato \"yyyy-MM-dd\" : ");
                 reserva.setDate(scanner.nextLine());
@@ -442,6 +442,13 @@ import es.uco.pw.business.DTO.ReservaInfantilDTO;
                 reserva.setPistId(scanner.nextLine());
                 System.out.print("- Introduzca el número de niños de la reserva: ");
                 reserva.setnChildren(scanner.nextInt());
+                aux = scanner.nextLine();
+                if(gestorReservas.hacerReservaBonoInfantil(reserva)) {
+                    System.out.print("Reserva realizada correctamente ");
+                }
+                else{
+                    System.out.print("No se ha podido realizar la reserva ");
+                }
                 
             }
             return true;
@@ -457,18 +464,62 @@ import es.uco.pw.business.DTO.ReservaInfantilDTO;
         public static Boolean createRBonoFamiliar() throws ParseException{
             Functions.clearConsole();
             scanner = new Scanner(System.in);
-            Functions.clearConsole();
-            scanner = new Scanner(System.in);
-            ReservaFamiliar reserva = new ReservaFamiliar();
-            System.out.println("Introduzca los siguientes datos: ");
-            System.out.print("- Email: ");
-            reserva.setUserId(scanner.nextLine());
-            System.out.print("- Fecha: ");
-            reserva.setDate(scanner.nextLine());
-            System.out.print("- Duración: ");
-            reserva.setDuration(scanner.nextInt());
-            System.out.print("- ID de la pista: ");
-            reserva.setPistId(scanner.nextLine());
+            ReservaFamiliarDTO reserva = new ReservaFamiliarDTO();
+            GestorUsuarios gestorUsuarios = GestorUsuarios.getInstance();
+            GestorPistas gestorPistas = GestorPistas.getInstance();
+            GestorReservas gestorReservas = GestorReservas.getInstance();
+            UsuarioDTO usuario = gestorUsuarios.getUsuarioActivo();
+            
+            String nacimiento = usuario.getDateOfBirth();
+            String año = nacimiento.substring(0, 4);
+            int añonacimiento = Integer.parseInt(año);
+            if(añonacimiento < 18) {
+                System.out.println("No puede realizar reservas ya que no es mayor de edad.");
+                return false;
+            }
+            for(int i=0; i<5; i++) {
+                System.out.println("Introduzca los siguientes datos para su " + (i + 1) + " reserva.");
+                reserva.setUserId(usuario.getEmail());
+                System.out.print("- Fecha de la reserva con el formato \"yyyy-MM-dd\" : ");
+                reserva.setDate(scanner.nextLine());
+                System.out.print("- Duración (60, 90 o 120 minutos): ");
+                reserva.setDuration(scanner.nextInt());
+                String aux = scanner.nextLine();
+                if(reserva.getDuration() == 60) {
+                    reserva.setPrice(20);
+                }
+                if(reserva.getDuration() == 90) {
+                    reserva.setPrice(30);
+                }
+                if(reserva.getDuration() == 120) {
+                    reserva.setPrice(40);
+                }
+                reserva.setDiscount(5);
+                System.out.print("- Seleccione una pista: ");
+                ArrayList<PistaDTO> pistas = gestorPistas.getPistas();
+                System.out.println("      Pistas     ");
+                System.out.println("------------------");
+                for (int j = 0; j < pistas.size(); j++) {
+                    if(pistas.get(j).getDif().equals(PistaDTO.dificulty.familiar)) {
+                        System.out.println("   " + pistas.get(j).getName());   
+                    }
+                }
+                System.out.print("- Nombre de la pista: ");
+                reserva.setPistId(scanner.nextLine());
+                System.out.print("- Introduzca el número de adultos de la reserva: ");
+                reserva.setnAdults(scanner.nextInt());
+                aux = scanner.nextLine();
+                System.out.print("- Introduzca el número de niños de la reserva: ");
+                reserva.setnChildren(scanner.nextInt());
+                aux = scanner.nextLine();
+                if(gestorReservas.hacerReservaBonoFamiliar(reserva)) {
+                    System.out.print("Reserva realizada correctamente ");
+                }
+                else{
+                    System.out.print("No se ha podido realizar la reserva ");
+                }
+                
+            }
             return true;
         }
         
@@ -481,18 +532,59 @@ import es.uco.pw.business.DTO.ReservaInfantilDTO;
         public static Boolean createRBonoAdultos() throws ParseException{
             Functions.clearConsole();
             scanner = new Scanner(System.in);
-            Functions.clearConsole();
-            scanner = new Scanner(System.in);
-            ReservaAdultos reserva=new ReservaAdultos();
-            System.out.println("Introduzca los siguientes datos: ");
-            System.out.print("- Email: ");
-            reserva.setUserId(scanner.nextLine());
-            System.out.print("- Fecha: ");
-            reserva.setDate(scanner.nextLine());
-            System.out.print("- Duración: ");
-            reserva.setDuration(scanner.nextInt());
-            System.out.print("- ID de la pista: ");
-            reserva.setPistId(scanner.nextLine());
+            ReservaAdultosDTO reserva = new ReservaAdultosDTO();
+            GestorUsuarios gestorUsuarios = GestorUsuarios.getInstance();
+            GestorPistas gestorPistas = GestorPistas.getInstance();
+            GestorReservas gestorReservas = GestorReservas.getInstance();
+            UsuarioDTO usuario = gestorUsuarios.getUsuarioActivo();
+            
+            String nacimiento = usuario.getDateOfBirth();
+            String año = nacimiento.substring(0, 4);
+            int añonacimiento = Integer.parseInt(año);
+            if(añonacimiento < 18) {
+                System.out.println("No puede realizar reservas ya que no es mayor de edad.");
+                return false;
+            }
+            for(int i=0; i<5; i++) {
+                System.out.println("Introduzca los siguientes datos para su " + (i + 1) + " reserva.");
+                reserva.setUserId(usuario.getEmail());
+                System.out.print("- Fecha de la reserva con el formato \"yyyy-MM-dd\" : ");
+                reserva.setDate(scanner.nextLine());
+                System.out.print("- Duración (60, 90 o 120 minutos): ");
+                reserva.setDuration(scanner.nextInt());
+                String aux = scanner.nextLine();
+                if(reserva.getDuration() == 60) {
+                    reserva.setPrice(20);
+                }
+                if(reserva.getDuration() == 90) {
+                    reserva.setPrice(30);
+                }
+                if(reserva.getDuration() == 120) {
+                    reserva.setPrice(40);
+                }
+                reserva.setDiscount(5);
+                System.out.print("- Seleccione una pista: ");
+                ArrayList<PistaDTO> pistas = gestorPistas.getPistas();
+                System.out.println("      Pistas     ");
+                System.out.println("------------------");
+                for (int j = 0; j < pistas.size(); j++) {
+                    if(pistas.get(j).getDif().equals(PistaDTO.dificulty.familiar)) {
+                        System.out.println("   " + pistas.get(j).getName());   
+                    }
+                }
+                System.out.print("- Nombre de la pista: ");
+                reserva.setPistId(scanner.nextLine());
+                System.out.print("- Introduzca el número de adultos de la reserva: ");
+                reserva.setnParticipants(scanner.nextInt());
+                aux = scanner.nextLine();
+                if(gestorReservas.hacerReservaBonoAdultos(reserva)) {
+                    System.out.print("Reserva realizada correctamente ");
+                }
+                else{
+                    System.out.print("No se ha podido realizar la reserva ");
+                }
+                
+            }
             return true;
         }
         
@@ -618,14 +710,63 @@ import es.uco.pw.business.DTO.ReservaInfantilDTO;
          * @return none
          */
         
+        @SuppressWarnings("deprecation")
         public static void listarReservas(){
             Functions.clearConsole();
-            GestorReservas reserva = GestorReservas.getInstance();
-            ArrayList<Reserva> reservas = reserva.getReservas();
-            System.out.println("Reservas ");
-            System.out.println("---------- ");
-            for(int i=0; i<reservas.size(); i++){
-                System.out.println(" " + reservas.get(i).getUserId());
+            GestorReservas gestor = GestorReservas.getInstance();
+            GestorUsuarios usuario = GestorUsuarios.getInstance();
+            ArrayList<ReservaInfantilDTO> reservasInfantil = gestor.reservasFuturasInfantil();
+            ArrayList<ReservaFamiliarDTO> reservasFamiliar = gestor.reservasFuturasFamiliar();
+            ArrayList<ReservaAdultosDTO> reservasAdultos = gestor.reservasFuturasAdultos();
+            System.out.println("             Reservas            ");
+            System.out.println("  id  |  tipo  |    día    |  pista");
+            System.out.println("----------------------------------------");
+            for(int i=0; i<reservasInfantil.size(); i++) {
+                if(reservasInfantil.get(i).getUserId().equals(usuario.getUsuarioActivo().getEmail())) {
+                    java.util.Date hoy = new Date();
+                    String año = reservasInfantil.get(i).getDate().substring(0, 4);
+                    int añoreserva = Integer.parseInt(año);
+                    String mes = reservasInfantil.get(i).getDate().substring(5, 7);
+                    int mesreserva = Integer.parseInt(mes);
+                    String dia = reservasInfantil.get(i).getDate().substring(8, 10);
+                    int diareserva = Integer.parseInt(dia);
+                    if(añoreserva >= hoy.getYear() && mesreserva >= hoy.getMonth() && diareserva >= hoy.getDay()) {
+                        System.out.println("   " + reservasInfantil.get(i).getId() + "   infantil   " + reservasInfantil.get(i).getDate().substring(0, 11) + "   " + reservasInfantil.get(i).getPistId()); 
+                        //ESTO NO FUNCIONA Y NO SE PQ NO COGE LA FECHA BIEN CON GET YEARS Y ESO
+                        //System.out.println(hoy);
+                        //System.out.println(hoy.getYear());
+                        //System.out.println(hoy.getMonth());
+                        //System.out.println(hoy.getDay());
+                    }
+                }
+            }
+            for(int i=0; i<reservasFamiliar.size(); i++) {
+                if(reservasFamiliar.get(i).getUserId().equals(usuario.getUsuarioActivo().getEmail())) {
+                    Date hoy = new Date();
+                    String año = reservasFamiliar.get(i).getDate().substring(0, 4);
+                    int añoreserva = Integer.parseInt(año);
+                    String mes = reservasFamiliar.get(i).getDate().substring(5, 7);
+                    int mesreserva = Integer.parseInt(mes);
+                    String dia = reservasFamiliar.get(i).getDate().substring(8, 10);
+                    int diareserva = Integer.parseInt(dia);
+                    if(añoreserva >= hoy.getYear() && mesreserva >= hoy.getMonth() && diareserva >= hoy.getDay()) {
+                        System.out.println("   " + reservasFamiliar.get(i).getId() + "   familiar   " + reservasFamiliar.get(i).getDate().substring(0, 11) + "   " + reservasFamiliar.get(i).getPistId()); 
+                    }
+                }
+            }
+            for(int i=0; i<reservasAdultos.size(); i++) {
+                if(reservasAdultos.get(i).getUserId().equals(usuario.getUsuarioActivo().getEmail())) {
+                    Date hoy = new Date();
+                    String año = reservasAdultos.get(i).getDate().substring(0, 4);
+                    int añoreserva = Integer.parseInt(año);
+                    String mes = reservasAdultos.get(i).getDate().substring(5, 7);
+                    int mesreserva = Integer.parseInt(mes);
+                    String dia = reservasAdultos.get(i).getDate().substring(8, 10);
+                    int diareserva = Integer.parseInt(dia);
+                    if(añoreserva >= hoy.getYear() && mesreserva >= hoy.getMonth() && diareserva >= hoy.getDay()) {
+                        System.out.println("   " + reservasAdultos.get(i).getId() + "   adultos   " + reservasAdultos.get(i).getDate().substring(0, 11) + "   " + reservasAdultos.get(i).getPistId()); 
+                    }
+                }
             }
         }
         
@@ -837,7 +978,7 @@ import es.uco.pw.business.DTO.ReservaInfantilDTO;
         }
         
         /**
-         * Registra un kart
+         * listar el usuario actual
          * @param none
          * @return boolean True si se ha podido registrar
          */

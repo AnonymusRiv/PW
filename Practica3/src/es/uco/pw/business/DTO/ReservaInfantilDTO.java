@@ -225,7 +225,7 @@ public class ReservaInfantilDTO {
     }
     
     /**
-     * Método público para establecer el número de niños
+     * Método público para establecer el id del bono
      * @param discount
      * @return none
      */

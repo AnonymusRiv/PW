@@ -137,20 +137,37 @@ public class GestorReservas {
 	}
 
 	/**
-	 * Método público para ver el número de reservas futuras
+	 * Método público para ver las reservas futuras infantiles
 	 * @param reserva
 	 * @return nreservas
 	 */
 	
-	public int reservasFuturas(ArrayList<es.uco.pw.business.factory.Reserva> reservas){
-		int nreservas = 0;
-		for(int i=0; i<reservas.size(); i++) {
-			if(reservas.get(i).getDate().after(new Date())) {
-				nreservas++;
-			}
-		}
-		return nreservas;
+	public ArrayList<ReservaInfantilDTO> reservasFuturasInfantil(){
+	    ReservasDAO reservas = new ReservasDAO();
+	    return reservas.getReservaInfantil();
 	}
+	
+	/**
+     * Método público para ver las reservas futuras familiares
+     * @param reserva
+     * @return nreservas
+     */
+    
+    public ArrayList<ReservaFamiliarDTO> reservasFuturasFamiliar(){
+        ReservasDAO reservas = new ReservasDAO();
+        return reservas.getReservaFamiliar();
+    }
+    
+    /**
+     * Método público para ver las reservas futuras de adultos
+     * @param reserva
+     * @return nreservas
+     */
+    
+    public ArrayList<ReservaAdultosDTO> reservasFuturasAdultos(){
+        ReservasDAO reservas = new ReservasDAO();
+        return reservas.getReservaAdultos();
+    }
 
 	/**
 	 * Método público para ver las reservas de un dia concreto

@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `reserva` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `bono` (
-    `bonoId` INT DEFAULT NULL,
+    `bonoId` INT DEFAULT NULL AUTO_INCREMENT,
     `session` INT DEFAULT NULL,
     `caducity` DATETIME NULL,
     PRIMARY KEY (`bonoId`)

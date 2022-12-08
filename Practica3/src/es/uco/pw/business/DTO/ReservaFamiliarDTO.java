@@ -23,6 +23,7 @@ public class ReservaFamiliarDTO {
     private float discount;
     private int nChildren;
     private int nAdults;
+    private int BonoId;
     
     /**
      * Constructor sin parámetros
@@ -46,7 +47,7 @@ public class ReservaFamiliarDTO {
      */
     
     public ReservaFamiliarDTO(int Id, String userId, String date, int duration, String pistId, float price, float discount,
-            int nChildren, int nAdults) {
+            int nChildren, int nAdults, int BonoId) {
         super();
         this.Id = Id;
         this.userId = userId;
@@ -57,6 +58,7 @@ public class ReservaFamiliarDTO {
         this.discount = discount;
         this.nChildren = nChildren;
         this.nAdults = nAdults;
+        this.BonoId = BonoId;
     }
 
     /**
@@ -237,6 +239,26 @@ public class ReservaFamiliarDTO {
 
     public void setnAdults(int nAdults) {
         this.nAdults = nAdults;
+    }
+    
+    /**
+     * Método público para obtener el id del bono
+     * @param none
+     * @return discount
+     */
+
+    public int getBonoId() {
+        return BonoId;
+    }
+    
+    /**
+     * Método público para establecer el id del bono
+     * @param discount
+     * @return none
+     */
+
+    public void setBonoId(int BonoId) {
+        this.BonoId = BonoId;
     }
     
     /**
