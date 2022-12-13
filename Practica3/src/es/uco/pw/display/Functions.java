@@ -98,8 +98,10 @@ import es.uco.pw.business.DTO.ReservaInfantilDTO;
 
             System.out.print(" - Email: ");
             String email = scanner.nextLine();
+            System.out.print(" - Contraseña: ");
+            String password = scanner.nextLine();
             
-            return usuario.loginUser(email);
+            return usuario.loginUser(email, password);
         }
         
         /**

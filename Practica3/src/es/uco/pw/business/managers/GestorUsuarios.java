@@ -123,10 +123,10 @@ public class GestorUsuarios {
      * @return true o false
      */
 	
-    public Boolean loginUser(String email) {
+    public Boolean loginUser(String email, String password) {
         ArrayList<UsuarioDTO> usuarios = getUsuarios();
         for(int i=0; i<usuarios.size(); i++) {
-            if(usuarios.get(i).getEmail().equals(email)) {
+            if(usuarios.get(i).getEmail().equals(email) && (usuarios.get(i).getPassword().equals(password))) {
                setUsuarioActivo(usuarios.get(i));
                 return true;
             }

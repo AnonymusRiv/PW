@@ -18,6 +18,11 @@ public class UsuarioDTO {
     private String dateOfBirth;
     private java.util.Date inscription;
     private String email;
+    private String password;
+    private type typ;
+    public enum type{
+        cliente, administrador
+    }
     
     /**
      * Constructor sin parámetros
@@ -35,12 +40,14 @@ public class UsuarioDTO {
      * @param mail
      */
 
-    public UsuarioDTO(String name, String dateOfBirth, Date inscription, String email) {
+    public UsuarioDTO(String name, String dateOfBirth, Date inscription, String email, String password, type typ) {
         super();
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.inscription = inscription;
         this.email = email;
+        this.password = password;
+        this.typ = typ;
     }
     
     /**
@@ -146,10 +153,44 @@ public class UsuarioDTO {
     }
     
     /**
-     * Método público para imprimir la información
+     * Método público para obtener la contraseña
+     * @param none
+     * @return mail
+     */
+
+    public String getPassword() {
+        return password;
+    }
+    
+    /**
+     * Método público para establecer la contraseña 
+     * @param mail
+     * @return none
+     */
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    
+    /**
+     * Método público para imprimir el tipo
      * @param none
      * @return Usuario info del usuario
      */
+    public type getType() {
+        return typ;
+    }
+    
+    /**
+     * Método público para establecer el tipo 
+     * @param mail
+     * @return none
+     */
+
+    public void setEmail(type typ) {
+        this.typ = typ;
+    }
 
     @Override
     public String toString() {

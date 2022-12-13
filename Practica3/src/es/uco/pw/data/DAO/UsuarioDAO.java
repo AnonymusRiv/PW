@@ -4,7 +4,7 @@ import java.sql.*;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 
-//import com.mysql.jdbc.ResultSet;
+import es.uco.pw.business.DTO.PistaDTO;
 import es.uco.pw.business.DTO.UsuarioDTO;
 import es.uco.pw.business.managers.DBmanager;
 
@@ -38,14 +38,23 @@ public class UsuarioDAO {
 
             while (rs.next()) {
                 String name = rs.getString("name");
+                String password = rs.getString("password");
                 /*java.sql.Timestamp timetamp = rs.getTimestamp("dateOfBirth"); // O/P: DD:MM:YYYY HH:mm:ss
                 java.util.Date dateOfBirth = new java.util.Date(timetamp.getTime());*/
                 String dateOfBirth = rs.getString("dateOfBirth");
                 java.sql.Timestamp timetamp2 = rs.getTimestamp("inscription"); // O/P: DD:MM:YYYY HH:mm:ss
                 java.util.Date inscription = new java.util.Date(timetamp2.getTime());
                 String email = rs.getString("email");
+                String typ = rs.getString("type");
+                UsuarioDTO.type tp = null;
+                if(typ.equals("cliente")) {
+                    tp = UsuarioDTO.type.cliente;
+                }
+                if(typ.equals("administrador")) {
+                    tp = UsuarioDTO.type.administrador;
+                }
                 
-                usuarios.add(new UsuarioDTO(name,dateOfBirth,inscription,email));
+                usuarios.add(new UsuarioDTO(name,dateOfBirth,inscription,email,password,tp));
             }
 
             if (stmt != null){ 

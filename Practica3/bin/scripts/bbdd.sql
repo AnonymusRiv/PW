@@ -19,9 +19,11 @@ DROP TABLE IF EXISTS `bono` ;
 
 CREATE TABLE IF NOT EXISTS `usuario` (
     `name` VARCHAR(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+    `password` VARCHAR(255) COLLATE utf8_unicode_ci DEFAULT NULL,
     `email` VARCHAR(255) COLLATE utf8_unicode_ci DEFAULT NULL,
     `dateOfBirth` DATETIME NULL,
     `inscription` DATETIME NULL,
+    `type` ENUM('cliente', 'administrador'),
     PRIMARY KEY (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -68,10 +70,10 @@ CREATE TABLE IF NOT EXISTS `bono` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-INSERT INTO `usuario` VALUES ('Carlos', 'p02ritac@uco.es','2002-08-15', '2022-11-05');
-INSERT INTO `usuario` VALUES ('Silvia', 'i02rofls@uco.es','2002-09-02', '2022-11-05');
-INSERT INTO `usuario` VALUES ('Alba', 'i02pajia@uco.es','2002-10-01', '2022-11-05');
-INSERT INTO `usuario` VALUES ('Moises', 'i92mocem@uco.es','2001-04-05', '2022-11-05');
+INSERT INTO `usuario` VALUES ('Carlos', 'p02ritac', 'p02ritac@uco.es','2002-08-15', '2022-11-05', 'administrador');
+INSERT INTO `usuario` VALUES ('Silvia', 'i02rofls', 'i02rofls@uco.es','2002-09-02', '2022-11-05', 'administrador');
+INSERT INTO `usuario` VALUES ('Alba', 'i02pajia', 'i02pajia@uco.es','2002-10-01', '2022-11-05', 'cliente');
+INSERT INTO `usuario` VALUES ('Moises', 'i92mocem', 'i92mocem@uco.es','2001-04-05', '2022-11-05', 'cliente');
 
 INSERT INTO `kart` VALUES (NULL,0 ,'disponible', 'cordoba');
 INSERT INTO `kart` VALUES (NULL,0 ,'reservado', '');
