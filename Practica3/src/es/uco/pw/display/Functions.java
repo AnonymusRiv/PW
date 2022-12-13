@@ -660,7 +660,102 @@ import es.uco.pw.business.DTO.ReservaInfantilDTO;
         public static void modificarReserva() {
             Functions.clearConsole();
             scanner = new Scanner(System.in);
-            //Necesita del gestor de reservas
+            GestorReservas gestor = GestorReservas.getInstance();
+            Functions.listarReservas();
+            System.out.println("Seleccione el id de la reserva a modificar");
+            int id = scanner.nextInt();
+            String aux = scanner.nextLine();
+            ArrayList<ReservaInfantilDTO> reservasInfantil = gestor.reservasFuturasInfantil();
+            ArrayList<ReservaFamiliarDTO> reservasFamiliar = gestor.reservasFuturasFamiliar();
+            ArrayList<ReservaAdultosDTO> reservasAdultos = gestor.reservasFuturasAdultos();
+            GestorPistas gestorPistas = GestorPistas.getInstance();
+            GestorUsuarios gestorUsuarios = new GestorUsuarios();
+            UsuarioDTO usuario = gestorUsuarios.getUsuarioActivo();
+            
+            for(int i=0; i<reservasInfantil.size(); i++) {
+                if(reservasInfantil.get(i).getId() == id) {
+                    java.util.Date hoy = new Date();
+                    String año = reservasInfantil.get(i).getDate().substring(0, 4);
+                    int añoreserva = Integer.parseInt(año);
+                    String mes = reservasInfantil.get(i).getDate().substring(5, 7);
+                    int mesreserva = Integer.parseInt(mes);
+                    String dia = reservasInfantil.get(i).getDate().substring(8, 10);
+                    int diareserva = Integer.parseInt(dia);
+                    if(añoreserva >= hoy.getYear() && mesreserva >= hoy.getMonth() && diareserva > hoy.getDay()) {
+                        ReservaInfantilDTO reserva = new ReservaInfantilDTO();
+                        System.out.print("- Fecha de la reserva con el formato \"yyyy-MM-dd\" : ");
+                        reserva.setDate(scanner.nextLine());
+                        System.out.print("- Duración (60, 90 o 120 minutos): ");
+                        reserva.setDuration(scanner.nextInt());
+                        if(reserva.getDuration() == 60) {
+                            reserva.setPrice(20);
+                        }
+                        if(reserva.getDuration() == 90) {
+                            reserva.setPrice(30);
+                        }
+                        if(reserva.getDuration() == 120) {
+                            reserva.setPrice(40);
+                        }
+                        Date antiguedad = usuario.getInscription();
+                        @SuppressWarnings("deprecation")
+                        int ant = antiguedad.getYear();
+                        if(ant > 2) {
+                            reserva.setDiscount(10);
+                        }
+                        else{
+                            reserva.setDiscount(0);
+                        }
+                        System.out.print("- Seleccione una pista: ");
+                        ArrayList<PistaDTO> pistas = gestorPistas.getPistas();
+                        System.out.println("      Pistas     ");
+                        System.out.println("------------------");
+                        for (int j = 0; j < pistas.size(); j++) {
+                            if(pistas.get(j).getDif().equals(PistaDTO.dificulty.infantil)) {
+                                System.out.println("   " + pistas.get(j).getName());   
+                            }
+                        }
+                        System.out.print("- Nombre de la pista: ");
+                        aux = scanner.nextLine();
+                        reserva.setPistId(scanner.nextLine());
+                        System.out.print("- Introduzca el número de niños de la reserva: ");
+                        reserva.setnChildren(scanner.nextInt());
+                        if(gestor.modificarReservaIndividualInfantil(reserva, id)) {
+                            System.out.print("Reserva modificada correctamente ");
+                        }
+                        else{
+                            System.out.print("No se ha podido modificar la reserva ");
+                        }
+                    }
+                }
+            }
+            for(int i=0; i<reservasFamiliar.size(); i++) {
+                if(reservasFamiliar.get(i).getId() == id) {
+                    Date hoy = new Date();
+                    String año = reservasFamiliar.get(i).getDate().substring(0, 4);
+                    int añoreserva = Integer.parseInt(año);
+                    String mes = reservasFamiliar.get(i).getDate().substring(5, 7);
+                    int mesreserva = Integer.parseInt(mes);
+                    String dia = reservasFamiliar.get(i).getDate().substring(8, 10);
+                    int diareserva = Integer.parseInt(dia);
+                    if(añoreserva >= hoy.getYear() && mesreserva >= hoy.getMonth() && diareserva > hoy.getDay()) {
+                         
+                    }
+                }
+            }
+            for(int i=0; i<reservasAdultos.size(); i++) {
+                if(reservasAdultos.get(i).getId() == id) {
+                    Date hoy = new Date();
+                    String año = reservasAdultos.get(i).getDate().substring(0, 4);
+                    int añoreserva = Integer.parseInt(año);
+                    String mes = reservasAdultos.get(i).getDate().substring(5, 7);
+                    int mesreserva = Integer.parseInt(mes);
+                    String dia = reservasAdultos.get(i).getDate().substring(8, 10);
+                    int diareserva = Integer.parseInt(dia);
+                    if(añoreserva >= hoy.getYear() && mesreserva >= hoy.getMonth() && diareserva >= hoy.getDay()) {
+                         
+                    }
+                }
+            }
         }
         
         /**
@@ -730,13 +825,8 @@ import es.uco.pw.business.DTO.ReservaInfantilDTO;
                     int mesreserva = Integer.parseInt(mes);
                     String dia = reservasInfantil.get(i).getDate().substring(8, 10);
                     int diareserva = Integer.parseInt(dia);
-                    if(añoreserva >= hoy.getYear() && mesreserva >= hoy.getMonth() && diareserva >= hoy.getDay()) {
+                    if(añoreserva > hoy.getYear() || (añoreserva == hoy.getYear() && mesreserva > hoy.getMonth()) || (añoreserva == hoy.getYear() && mesreserva == hoy.getMonth() && diareserva >= hoy.getDay())) {
                         System.out.println("   " + reservasInfantil.get(i).getId() + "   infantil   " + reservasInfantil.get(i).getDate().substring(0, 11) + "   " + reservasInfantil.get(i).getPistId()); 
-                        //ESTO NO FUNCIONA Y NO SE PQ NO COGE LA FECHA BIEN CON GET YEARS Y ESO
-                        //System.out.println(hoy);
-                        //System.out.println(hoy.getYear());
-                        //System.out.println(hoy.getMonth());
-                        //System.out.println(hoy.getDay());
                     }
                 }
             }
@@ -749,7 +839,7 @@ import es.uco.pw.business.DTO.ReservaInfantilDTO;
                     int mesreserva = Integer.parseInt(mes);
                     String dia = reservasFamiliar.get(i).getDate().substring(8, 10);
                     int diareserva = Integer.parseInt(dia);
-                    if(añoreserva >= hoy.getYear() && mesreserva >= hoy.getMonth() && diareserva >= hoy.getDay()) {
+                    if(añoreserva > hoy.getYear() || (añoreserva == hoy.getYear() && mesreserva > hoy.getMonth()) || (añoreserva == hoy.getYear() && mesreserva == hoy.getMonth() && diareserva >= hoy.getDay())) {
                         System.out.println("   " + reservasFamiliar.get(i).getId() + "   familiar   " + reservasFamiliar.get(i).getDate().substring(0, 11) + "   " + reservasFamiliar.get(i).getPistId()); 
                     }
                 }
@@ -763,7 +853,7 @@ import es.uco.pw.business.DTO.ReservaInfantilDTO;
                     int mesreserva = Integer.parseInt(mes);
                     String dia = reservasAdultos.get(i).getDate().substring(8, 10);
                     int diareserva = Integer.parseInt(dia);
-                    if(añoreserva >= hoy.getYear() && mesreserva >= hoy.getMonth() && diareserva >= hoy.getDay()) {
+                    if(añoreserva > hoy.getYear() || (añoreserva == hoy.getYear() && mesreserva > hoy.getMonth()) || (añoreserva == hoy.getYear() && mesreserva == hoy.getMonth() && diareserva >= hoy.getDay())) {
                         System.out.println("   " + reservasAdultos.get(i).getId() + "   adultos   " + reservasAdultos.get(i).getDate().substring(0, 11) + "   " + reservasAdultos.get(i).getPistId()); 
                     }
                 }

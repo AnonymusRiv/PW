@@ -290,33 +290,41 @@ public class ReservasDAO {
   * @return none
   */
 
-  public void modificarReservaFamiliar(ReservaFamiliarDTO familiar) {
-    try {
+  public void modificarReservaFamiliar(ReservaFamiliarDTO reserva, int id) {
+      try {
 
-      DBmanager DBm = DBmanager.getInstance();
-      Connection connection = DBm.getConnection();
+          DBmanager DBm = DBmanager.getInstance();
+          Connection connection = DBm.getConnection();
+          PreparedStatement ps = null;
 
-      String query = MessageFormat.format(DBm.getModificarReservaFamiliarQuery(),
-          "'",familiar.getUserId(),"'",
-          "'",familiar.getDate(),"'",
-          "'",familiar.getDuration(),"'",
-          "'",familiar.getPistId(),"'",
-          "'",familiar.getPrice(),"'",
-          "'",familiar.getDiscount(),"'",
-          "'",familiar.getnChildren(),"'",
-          "'",familiar.getnAdults(),"'"
-      );
-
-      Statement stmt = connection.createStatement();
-      stmt.executeUpdate(query);
-
-      if (stmt != null) {
-        stmt.close();
+          Statement stmt = connection.createStatement();
+          String query = MessageFormat.format(DBm.getModificarReservaInfantilQuery(),
+                  "'",reserva.getId(),"'",
+                  "'",reserva.getUserId(),"'",
+                  "'",reserva.getDate(),"'",
+                  "'",reserva.getDuration(),"'",
+                  "'",reserva.getPistId(),"'",
+                  "'",reserva.getPrice(),"'",
+                  "'",reserva.getDiscount(),"'",
+                  "'",reserva.getnChildren(),"'"
+                  );
+          ps = connection.prepareStatement(query);
+          ps.setString(1, reserva.getDate());
+          ps.setInt(2, reserva.getDuration());
+          ps.setString(3, reserva.getPistId());
+          ps.setFloat(4, reserva.getPrice());
+          ps.setFloat(5, reserva.getDiscount());
+          ps.setInt(6, reserva.getnChildren());
+          ps.setInt(7, id);
+          
+          ps.executeUpdate();
+          if (stmt != null) {
+              stmt.close();
+          }
+      } catch (Exception e) {
+          System.err.println(e);
+          e.printStackTrace();
       }
-    } catch (Exception e) {
-      System.err.println(e);
-      e.printStackTrace();
-    }
   }
 
 
@@ -449,32 +457,41 @@ public class ReservasDAO {
   * @return none
   */
 
-  public void modificarReservaInfantil(ReservaInfantilDTO infantil) {
-    try {
+  public void modificarReservaInfantil(ReservaInfantilDTO reserva, int id) {
+      try {
 
-      DBmanager DBm = DBmanager.getInstance();
-      Connection connection = DBm.getConnection();
+          DBmanager DBm = DBmanager.getInstance();
+          Connection connection = DBm.getConnection();
+          PreparedStatement ps = null;
 
-      String query = MessageFormat.format(DBm.getModificarReservaInfantilQuery(),
-          "'",infantil.getUserId(),"'",
-          "'",infantil.getDate(),"'",
-          "'",infantil.getDuration(),"'",
-          "'",infantil.getPistId(),"'",
-          "'",infantil.getPrice(),"'",
-          "'",infantil.getDiscount(),"'",
-          "'",infantil.getnChildren(),"'"
-      );
-
-      Statement stmt = connection.createStatement();
-      stmt.executeUpdate(query);
-
-      if (stmt != null) {
-        stmt.close();
+          Statement stmt = connection.createStatement();
+          String query = MessageFormat.format(DBm.getModificarReservaInfantilQuery(),
+                  "'",reserva.getId(),"'",
+                  "'",reserva.getUserId(),"'",
+                  "'",reserva.getDate(),"'",
+                  "'",reserva.getDuration(),"'",
+                  "'",reserva.getPistId(),"'",
+                  "'",reserva.getPrice(),"'",
+                  "'",reserva.getDiscount(),"'",
+                  "'",reserva.getnChildren(),"'"
+                  );
+          ps = connection.prepareStatement(query);
+          ps.setString(1, reserva.getDate());
+          ps.setInt(2, reserva.getDuration());
+          ps.setString(3, reserva.getPistId());
+          ps.setFloat(4, reserva.getPrice());
+          ps.setFloat(5, reserva.getDiscount());
+          ps.setInt(6, reserva.getnChildren());
+          ps.setInt(7, id);
+          
+          ps.executeUpdate();
+          if (stmt != null) {
+              stmt.close();
+          }
+      } catch (Exception e) {
+          System.err.println(e);
+          e.printStackTrace();
       }
-    } catch (Exception e) {
-      System.err.println(e);
-      e.printStackTrace();
-    }
   }
 
 

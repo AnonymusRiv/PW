@@ -110,31 +110,41 @@ public class GestorReservas {
         return true;
     }
 
-	/**
-	 * Método público para modificar la reserva
-	 * @param reserva
-	 * @param usuario
-	 * @return none
-	 */
-	
-	public void modificarReserva(ArrayList <es.uco.pw.business.factory.Reserva> reservas, ArrayList <es.uco.pw.business.classes.Usuario> usuarios, es.uco.pw.business.factory.Reserva reserva, es.uco.pw.business.classes.Usuario usuario){
-		for(int i=0; i<reservas.size(); i++){
-			if(reservas.get(i).getUserId() == reserva.getUserId()){
-				for(int j=0;j<usuarios.size();j++){
-					if(usuarios.get(j).getEmail()==usuario.getEmail()){
-						if(reserva.getDate().before(new Date())) {
-							reserva.setDate(reserva.getDate());
-							reserva.setDuration(reserva.getDuration());
-							reserva.setPistId(reserva.getPistId());
-							reserva.setPrice(reserva.getPrice());
-							reserva.setDiscount(reserva.getDiscount());
-							reserva.setTypeRes(reserva.getTypeRes());
-						}
-					}
-				}
-			}
-		}
-	}
+    /**
+    * Método público para modificar una reserva individual infantil
+    * @param reserva
+    * @return none
+    */
+   
+   public boolean modificarReservaIndividualInfantil(ReservaInfantilDTO reserva, int id){
+       ReservasDAO reservasDAO = new ReservasDAO();
+       reservasDAO.modificarReservaInfantil(reserva, id);
+       return true;
+   }
+   
+   /**
+    * Método público para modificar una reserva individual de adultos
+    * @param reserva
+    * @return none
+    */
+   
+   public boolean modificarReservaIndividualAdultos(ReservaAdultosDTO reserva, int id){
+       ReservasDAO reservasDAO = new ReservasDAO();
+       reservasDAO.modificarReservaAdultos(reserva, id);
+       return true;
+   }
+   
+   /**
+    * Método público para modificar una reserva individual familiar
+    * @param reserva
+    * @return none
+    */
+   
+   public boolean modificarReservaIndividualFamiliar(ReservaFamiliarDTO reserva, int id){
+       ReservasDAO reservasDAO = new ReservasDAO();
+       reservasDAO.modificarReservaFamiliar(reserva, id);
+       return true;
+   }
 
 	/**
 	 * Método público para ver las reservas futuras infantiles
