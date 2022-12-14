@@ -49,15 +49,15 @@ public class LoginServlet extends HttpServlet {
 
 	      session.setAttribute("customerBean", customerBean);
 
-	      if (usuario.getType().equals("cliente")) {
-	        RequestDispatcher dispatcher = request.getRequestDispatcher("/mvc/view/userHome.jsp");
+	      if (usuario.getType().equals(UsuarioDTO.type.cliente)) {
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/userHome.jsp");
 	        dispatcher.include(request, response);
-	      } else {RequestDispatcher dispatcher = request.getRequestDispatcher("/mvc/view/adminHome.jsp");
+	      } else {RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/adminHome.jsp");
 	        dispatcher.include(request, response);
 	      }
 
 	    } else {
-	      RequestDispatcher dispatcher = request.getRequestDispatcher("/mvc/view/userNotFound.html");
+	      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/userNotFound.html");
 	      dispatcher.include(request, response);
 	    }
 	}

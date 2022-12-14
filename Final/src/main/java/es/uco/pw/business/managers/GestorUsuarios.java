@@ -151,11 +151,6 @@ public class GestorUsuarios {
           }
         }
         UsuarioDAO userDAO = new UsuarioDAO();
-        new SimpleDateFormat("yyyy-MM-dd");
-        //DateTimeFormatter registerDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        //registerDate.format(LocalDateTime.now());
-        String registerDate = "2022-11-23";
-        user.setInscription(registerDate);
         userDAO.registrarUsuario(user);
         return true;
       }
