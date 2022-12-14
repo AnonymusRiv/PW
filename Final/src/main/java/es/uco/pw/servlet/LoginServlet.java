@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
 
 	      session.setAttribute("customerBean", customerBean);
 
-	      if (usuario.getType().equals("Cliente")) {
+	      if (usuario.getType().equals("cliente")) {
 	        RequestDispatcher dispatcher = request.getRequestDispatcher("/mvc/view/userHome.jsp");
 	        dispatcher.include(request, response);
 	      } else {RequestDispatcher dispatcher = request.getRequestDispatcher("/mvc/view/adminHome.jsp");

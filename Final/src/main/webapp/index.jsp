@@ -132,7 +132,7 @@
 
 	<!-- BEGIN | Header -->
 	<div class="landing-hero">
-		<img src="/JSPMVC/images/logo1.png" alt="Logo">
+		<img src="/images/logo1.png" alt="Logo">
 		<h2>RESERVA LAS MEJORES PISTAS DE</h2>
 		<h2 class="text-yellow">KARTS</h2>
 		<h2>DE ESPAÑA</h2>
@@ -145,7 +145,7 @@
 		<br></br>
 		<div class="container">
 			<div class="flex-parent-ft">
-				<a><img class="logo" src="/JSPMVC/images/logo1.png" alt=""></a>
+				<a><img class="logo" src="/images/logo1.png" alt=""></a>
 				<div class="flex-child-ft item2">
 					<br></br>
 					<h4>Recursos</h4>
@@ -190,13 +190,13 @@
 	</footer>
 	<!-- end of footer section-->
 
-	<script src="/JSPMVC/js/jquery.js"></script>
-	<script src="/JSPMVC/js/plugins.js"></script>
-	<script src="/JSPMVC/js/plugins2.js"></script>
-	<script src="/JSPMVC/js/custom.js"></script>
+	<script src="/js/jquery.js"></script>
+	<script src="/js/plugins.js"></script>
+	<script src="/js/plugins2.js"></script>
+	<script src="/js/custom.js"></script>
 	<%
 		} else {
-			if (customerBean.getTypeUser().equals("Cliente")) {
+			if (customerBean.getTypeUser().equals("cliente")) {
 				nextPage = "/mvc/view/userHome.jsp";
 	%>
 	<jsp:forward page="<%=nextPage%>">

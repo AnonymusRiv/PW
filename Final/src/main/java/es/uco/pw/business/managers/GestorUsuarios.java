@@ -1,5 +1,6 @@
 package es.uco.pw.business.managers;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -123,10 +124,10 @@ public class GestorUsuarios {
      * @return true o false
      */
 	
-    public Boolean loginUser(String email) {
+    public Boolean loginUser(String email, String password) {
         ArrayList<UsuarioDTO> usuarios = getUsuarios();
         for(int i=0; i<usuarios.size(); i++) {
-            if(usuarios.get(i).getEmail().equals(email)) {
+            if(usuarios.get(i).getEmail().equals(email) && (usuarios.get(i).getPassword().equals(password))) {
                setUsuarioActivo(usuarios.get(i));
                 return true;
             }
@@ -138,9 +139,10 @@ public class GestorUsuarios {
      * Método público para registrar un usuario
      * @param user
      * @return true o false
+     * @throws ParseException 
      */
     
-    public boolean registerUser(UsuarioDTO user) {
+    public boolean registerUser(UsuarioDTO user) throws ParseException {
         GestorUsuarios gestor = new GestorUsuarios();
         ArrayList<UsuarioDTO> users = gestor.getUsuarios();
         for (int i = 0; i < users.size(); i++) {
@@ -153,12 +155,8 @@ public class GestorUsuarios {
         //DateTimeFormatter registerDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         //registerDate.format(LocalDateTime.now());
         String registerDate = "2022-11-23";
-        userDAO.registrarUsuario(
-          user.getName(),
-          user.getDateOfBirth(),
-          registerDate,
-          user.getEmail()
-        );
+        user.setInscription(registerDate);
+        userDAO.registrarUsuario(user);
         return true;
       }
     
@@ -181,5 +179,21 @@ public class GestorUsuarios {
             }
         }
         return false;
+    }
+    
+    /**
+     * Método público para buscar un usuario
+     * @param mail
+     * @return true o false
+     */
+    
+    public UsuarioDTO findUser(String mail) {
+        ArrayList<UsuarioDTO> usuarios = getUsuarios();
+        for(int i=0; i<usuarios.size(); i++) {
+            if(usuarios.get(i).getEmail().equals(mail)) {
+                return usuarios.get(i);
+            }
+        }
+		return null;
     }
 }

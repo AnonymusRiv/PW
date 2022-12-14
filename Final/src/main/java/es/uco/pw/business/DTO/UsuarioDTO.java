@@ -20,6 +20,7 @@ public class UsuarioDTO {
     private String dateOfBirth;
     private java.util.Date inscription;
     private String email;
+    private String password;
     private type tipo;
     public enum type{
         administrador,cliente
@@ -37,10 +38,20 @@ public class UsuarioDTO {
     public type getType() {
 		return tipo;
 	}
-
-	public void setType(type tipo) {
+    
+    public void setType(type tipo) {
 		this.tipo = tipo;
 	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	 public String getPassword() {
+			return password;
+		}
+
+		
 
 	/**
      * Constructor con parámetros
@@ -49,12 +60,14 @@ public class UsuarioDTO {
      * @param mail
      */
 
-    public UsuarioDTO(String name, String dateOfBirth, Date inscription, String email) {
+    public UsuarioDTO(String name, String dateOfBirth, Date inscription, String email, String password, type tipo) {
         super();
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.inscription = inscription;
         this.email = email;
+        this.password = password;
+        this.tipo = tipo;
     }
     
     /**

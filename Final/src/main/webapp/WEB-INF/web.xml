@@ -14,7 +14,7 @@
         <param-value>WEB-INF/sql.properties</param-value>
     </context-param>
     <context-param>
-        <param-name>ur</param-name>
+        <param-name>url</param-name>
         <param-value>jdbc:mysql://oraclepr.uco.es:3306/p02ritac</param-value>
     </context-param>
   <context-param>

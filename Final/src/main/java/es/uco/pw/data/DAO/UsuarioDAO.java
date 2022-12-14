@@ -38,6 +38,7 @@ public class UsuarioDAO {
 
             while (rs.next()) {
                 String name = rs.getString("name");
+                String password = rs.getString("password");
                 /*java.sql.Timestamp timetamp = rs.getTimestamp("dateOfBirth"); // O/P: DD:MM:YYYY HH:mm:ss
                 java.util.Date dateOfBirth = new java.util.Date(timetamp.getTime());*/
                 String dateOfBirth = rs.getString("dateOfBirth");
@@ -45,7 +46,16 @@ public class UsuarioDAO {
                 java.util.Date inscription = new java.util.Date(timetamp2.getTime());
                 String email = rs.getString("email");
                 
-                usuarios.add(new UsuarioDTO(name,dateOfBirth,inscription,email));
+                String typ = rs.getString("type");
+                UsuarioDTO.type tp = null;
+                if(typ.equals("cliente")) {
+                    tp = UsuarioDTO.type.cliente;
+                }
+                if(typ.equals("administrador")) {
+                    tp = UsuarioDTO.type.administrador;
+                }
+                
+                usuarios.add(new UsuarioDTO(name,dateOfBirth,inscription,email,password,tp));
             }
 
             if (stmt != null){ 
@@ -68,19 +78,26 @@ public class UsuarioDAO {
      * @return none
      */
     
-    public void registrarUsuario(String name, String dateOfBirth, String registerDate, String email) {
+    public void registrarUsuario(UsuarioDTO usuario) {
         try{
             DBmanager DBm = DBmanager.getInstance();
             Connection connection = DBm.getConnection();
             PreparedStatement ps = null;
         
             Statement stmt = connection.createStatement();
-            String query= MessageFormat.format(DBm.getRegistrarUsuarioQuery(), "'", name,"'","'", email,"'","'", dateOfBirth,"'","'",registerDate,"'");
+            String query= MessageFormat.format(DBm.getRegistrarUsuarioQuery(), "'", usuario.getName(),"'", "'", usuario.getPassword() ,"'", usuario.getEmail(),"'","'", usuario.getDateOfBirth(),"'","'",usuario.getInscription(),"'","'", usuario.getType(), "'");
             ps = connection.prepareStatement(query);
-            ps.setString(1, name);
-            ps.setString(2, email);
-            ps.setString(3, dateOfBirth);
-            ps.setString(4, registerDate);
+            ps.setString(1, usuario.getName());
+            ps.setString(2, usuario.getPassword());
+            ps.setString(3, usuario.getEmail());
+            ps.setString(4, usuario.getDateOfBirth());
+            java.util.Date inscription = usuario.getInscription();
+            int year = inscription.getYear();
+            int month = inscription.getMonth();
+            int day = inscription.getDay();
+            String date = year+"-"+month+"-"+day;
+            ps.setString(5, date);
+            ps.setString(6, "cliente");
             
             ps.executeUpdate();
             if (stmt != null) {
