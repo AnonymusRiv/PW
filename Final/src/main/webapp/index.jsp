@@ -23,7 +23,7 @@
 <meta name="keywords" content="">
 <meta name="author" content="">
 <link rel="profile" href="#">
-<link rel="icon" type="image/x-icon" href="/JSPMVC/images/favicon.ico">
+<link rel="icon" type="image/x-icon" href="images/favicon.ico">
 
 <!--Google Font-->
 <link rel="stylesheet"
@@ -33,14 +33,14 @@
 <meta name="format-detection" content="telephone-no">
 
 <!-- CSS files -->
-<link rel="stylesheet" href="/JSPMVC/css/plugins.css">
-<link rel="stylesheet" href="/JSPMVC/css/style.css">
+<link rel="stylesheet" href="css/plugins.css">
+<link rel="stylesheet" href="css/style.css">
 
 </head>
 <body>
 	<!--preloading-->
 	<div id="preloader">
-		<img class="logo" src="/JSPMVC/images/logo1.png" alt="" width="119"
+		<img class="logo" src="images/logo1.png" alt="" width="119"
 			height="58">
 		<div id="status">
 			<span></span> <span></span>
@@ -132,7 +132,7 @@
 
 	<!-- BEGIN | Header -->
 	<div class="landing-hero">
-		<img src="/images/logo1.png" alt="Logo">
+		<img src="images/logo1.png" alt="Logo">
 		<h2>RESERVA LAS MEJORES PISTAS DE</h2>
 		<h2 class="text-yellow">KARTS</h2>
 		<h2>DE ESPAÑA</h2>
@@ -145,7 +145,7 @@
 		<br></br>
 		<div class="container">
 			<div class="flex-parent-ft">
-				<a><img class="logo" src="/images/logo1.png" alt=""></a>
+				<a><img class="logo" src="images/logo1.png" alt=""></a>
 				<div class="flex-child-ft item2">
 					<br></br>
 					<h4>Recursos</h4>
@@ -190,21 +190,21 @@
 	</footer>
 	<!-- end of footer section-->
 
-	<script src="/js/jquery.js"></script>
-	<script src="/js/plugins.js"></script>
-	<script src="/js/plugins2.js"></script>
-	<script src="/js/custom.js"></script>
+	<script src="js/jquery.js"></script>
+	<script src="js/plugins.js"></script>
+	<script src="js/plugins2.js"></script>
+	<script src="js/custom.js"></script>
 	<%
 		} else {
-			if (customerBean.getTypeUser().equals("cliente")) {
-				nextPage = "/mvc/view/userHome.jsp";
+			if (customerBean.getTypeUser().equals(UsuarioDTO.type.cliente)) {
+				nextPage = "mvc/view/userHome.jsp";
 	%>
 	<jsp:forward page="<%=nextPage%>">
 		<jsp:param value="<%=mensajeNextPage%>" name="message" />
 	</jsp:forward>
 	<%
 		} else {
-				nextPage = "/mvc/view/adminHome.jsp";
+				nextPage = "mvc/view/adminHome.jsp";
 	%>
 	<jsp:forward page="<%=nextPage%>">
 		<jsp:param value="<%=mensajeNextPage%>" name="message" />
