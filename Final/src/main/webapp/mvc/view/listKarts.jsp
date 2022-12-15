@@ -3,14 +3,16 @@
 <jsp:useBean id="customerBean" scope="session"
 	class="es.uco.pw.display.javabean.CustomerBean"></jsp:useBean>
 <%@ page
-	import="java.text.SimpleDateFormat,es.uco.pw.business.DTO.UsuarioDTO,es.uco.pw.business.managers.DBmanager,es.uco.pw.business.managers.GestorUsuarios,java.util.ArrayList"%>
+	import="java.text.SimpleDateFormat,es.uco.pw.business.DTO.UsuarioDTO,es.uco.pw.business.managers.DBmanager,es.uco.pw.business.managers.GestorUsuarios,es.uco.pw.business.managers.GestorPistas,es.uco.pw.business.DTO.KartDTO,java.util.ArrayList"%>
 <html>
 <%
 	SimpleDateFormat formatter6 = new SimpleDateFormat("dd-MM-yyyy");
 	request.setCharacterEncoding("UTF-8");
 	SimpleDateFormat formatter5 = new SimpleDateFormat(
 			"dd-MM-yyyy HH:mm");
-	GestorUsuarios gestor = GestorUsuarios.getInstance();
+	GestorUsuarios gestorUsuarios = GestorUsuarios.getInstance();
+	GestorPistas gestorPistas = GestorPistas.getInstance();
+	ArrayList<KartDTO> karts = gestorPistas.getKarts();
 %>
 <!-- moviegridfw07:38-->
 <head>
@@ -47,12 +49,15 @@
 		<%
 			String nextPage = "";
 			String mensajeNextPage = "";
-			if (customerBean != null
-					&& customerBean.getTypeUser().equals(UsuarioDTO.type.administrador)) {
+			if (customerBean != null) {
+				String search = customerBean.getSearch();
+				String filter = customerBean.getFilter();
 		%>
+		<jsp:setProperty property="search" value="" name="customerBean" />
+		<jsp:setProperty property="filter" value="" name="customerBean" />
 	</div>
 	<!--end of preloading-->
-	<!-- BEGIN | Header -->
+		<!-- BEGIN | Header -->
 	<header class="ht-header">
 		<div class="container">
 			<nav class="navbar navbar-default navbar-custom">
@@ -82,7 +87,7 @@
 						</a>
 							<ul class="dropdown-menu level1">
 								<li><a href="addPista">Añadir pista</a></li>
-								<li><a href="listPistas">Ver pistas</a></li>
+								<li><a href="searchSpectacle">Ver pistas</a></li>
 							</ul></li>
 						<li class="dropdown first"><a
 							class="btn btn-default dropdown-toggle lv1"
@@ -137,28 +142,51 @@
 			</div>
 		</div>
 	</div>
-	<!-- list section-->
+	<!-- List section-->
 	<div class="page-single">
 		<div class="container">
 			<div class="row ipad-width2">
 				<div class="col-md-9 col-sm-12 col-xs-12">
-					<h1 style="color: white">Usuarios del sistema</h1>
+					<h1 style="color: white">Karts</h1>
 					<br></br>
-					<%
-						ArrayList<UsuarioDTO> users = gestor.getUsuarios();
-					%>
 					<div class="row">
 						<%
-							for (int i = 0; i < users.size(); i++) {
+							for (int i = 0; i < karts.size(); i++) {
 						%>
 						<div class="col-md-12">
 							<div class="ceb-item-style-2">
 								<div class="ceb-infor">
-									<p><%="Nombre: " + users.get(i).getName()%></p>
-									<p><%="Email: " + users.get(i).getEmail()%></p>
-									<p><%="Rol: " + users.get(i).getType()%></p>
-									<p><%="Fecha de registro: "
-							+ formatter5.format(users.get(i).getInscription())%></p>
+									<h2>
+										<a
+											href=<%="listKarts?KartId="
+								+ karts.get(i).getId()%>></a>
+									</h2>
+									<p />
+								<p>
+								<p><% if(karts.get(i).isType() == false){ %>
+								<%="Tipo = infantil"%>
+								<% }else{ %>
+								<%="Tipo = adulto"%>
+								<% } %>
+								</p>
+								<p><%="Estado = "
+								+ karts.get(i).getStat()%></p>
+								<p>
+								<p><%="Pista = "
+								+ karts.get(i).getpistaId() %></p>
+								<p>
+								<p>
+									<%
+										if (customerBean.getTypeUser().equals(UsuarioDTO.type.administrador)) {
+									%>
+									<hr>
+									<a class="redbtn"
+										href=<%="deleteKart?KartId="
+									+ karts.get(i).getId()%>
+										style="border: none" type="submit">Borrar</a> <br></br>
+									<%
+										}
+									%>
 								</div>
 							</div>
 						</div>
@@ -167,44 +195,7 @@
 						%>
 					</div>
 				</div>
-				<div class="col-md-3 col-xs-12 col-sm-12">
-					<div class="sidebar">
-						<div class="searh-form">
-							<h4 class="sb-title">Registrar usuario</h4>
-							<form class="form-style-1 celebrity-form" method="post"
-								autocomplete="off" action="register">
-								<div class="row">
-									<div class="col-md-12 form-it">
-										<label>Nombre</label> <input type="text" name="name"
-											required="required" />
-									</div>
-									<div class="col-md-12 form-it">
-										<label>Rol</label> <select name="type">
-										<option value="administrador">Administrador</option>
-										<option value="cliente">Cliente</option>
-									</select>
-									</div>
-									<div class="col-md-12 form-it">
-										<label>Email</label> <input type="text" name="email"
-											required="required" />
-									</div>
-									<div class="col-md-12 form-it">
-										<label>Contraseña</label> <input type="password"
-											name="password" required="required" />
-									</div>
-									<div class="col-md-12 form-it">
-										<label for="dateOfBirth"> Fecha de nacimiento: <input type="dateOfBirth"
-											name="dateOfBirth" required="required" />
-										</label>
-									</div>
-									<div class="col-md-12 ">
-										<input class="submit" type="submit" value="register">
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -263,22 +254,6 @@
 	<script src="js/plugins2.js"></script>
 	<script src="js/custom.js"></script>
 	<%
-		} else {
-			if (customerBean.getTypeUser().equals(UsuarioDTO.type.cliente)) {
-				nextPage = "mvc/view/userHome.jsp";
-	%>
-	<jsp:forward page="<%=nextPage%>">
-		<jsp:param value="<%=mensajeNextPage%>" name="message" />
-	</jsp:forward>
-	<%
-		} else {
-				nextPage = "../../index.jsp";
-	%>
-	<jsp:forward page="<%=nextPage%>">
-		<jsp:param value="<%=mensajeNextPage%>" name="message" />
-	</jsp:forward>
-	<%
-		}
 		}
 	%>
 </body>

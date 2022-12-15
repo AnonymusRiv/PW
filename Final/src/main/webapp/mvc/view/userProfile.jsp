@@ -3,14 +3,15 @@
 <jsp:useBean id="customerBean" scope="session"
 	class="es.uco.pw.display.javabean.CustomerBean"></jsp:useBean>
 <%@ page
-	import="java.text.SimpleDateFormat,es.uco.pw.business.DTO.UsuarioDTO,es.uco.pw.business.managers.DBmanager,es.uco.pw.business.managers.GestorUsuarios,java.util.ArrayList"%>
+	import="java.text.SimpleDateFormat,es.uco.pw.business.DTO.UsuarioDTO,es.uco.pw.business.managers.DBmanager,es.uco.pw.business.managers.GestorUsuarios,es.uco.pw.business.managers.GestorReservas,java.util.ArrayList"%>
 <html>
 <%
 	SimpleDateFormat formatter6 = new SimpleDateFormat("dd-MM-yyyy");
 	request.setCharacterEncoding("UTF-8");
 	SimpleDateFormat formatter5 = new SimpleDateFormat(
-			"dd-MM-yyyy HH:mm");
-	GestorUsuarios gestor = GestorUsuarios.getInstance();
+		"dd-MM-yyyy HH:mm");
+	GestorUsuarios gestorUsuarios = GestorUsuarios.getInstance();
+	GestorReservas gestorReservas = GestorReservas.getInstance();
 %>
 <!-- moviegridfw07:38-->
 <head>
@@ -48,7 +49,7 @@
 			String nextPage = "";
 			String mensajeNextPage = "";
 			if (customerBean != null
-					&& customerBean.getTypeUser().equals(UsuarioDTO.type.administrador)) {
+					&& customerBean.getTypeUser().equals(UsuarioDTO.type.cliente)) {
 		%>
 	</div>
 	<!--end of preloading-->
@@ -65,8 +66,8 @@
 							<span></span> <span></span> <span></span>
 						</div>
 					</div>
-					<a href="#"><img class="logo" src="images/logo1.png" alt=""
-						width="119" height="58"></a>
+					<a href="index.jsp"><img class="logo" src="images/logo1.png"
+						alt="" width="119" height="58"></a>
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse flex-parent"
@@ -75,26 +76,14 @@
 						<li class="hidden"><a href="#page-top"></a></li>
 						<li><a style="color: #DCF836" href="index.jsp">Inicio</a></li>
 						<li><a href="userProfile">Perfil</a></li>
-						<li class="dropdown first"><a
-							class="btn btn-default dropdown-toggle lv1"
-							data-toggle="dropdown"> Pistas <i
-								class="fa fa-angle-down" aria-hidden="true"></i>
-						</a>
-							<ul class="dropdown-menu level1">
-								<li><a href="addPista">Añadir pista</a></li>
-								<li><a href="listPistas">Ver pistas</a></li>
-							</ul></li>
-						<li class="dropdown first"><a
-							class="btn btn-default dropdown-toggle lv1"
-							data-toggle="dropdown"> karts <i class="fa fa-angle-down"
-								aria-hidden="true"></i>
-						</a>
-							<ul class="dropdown-menu level1">
-								<li><a href="addKart">Añadir kart</a></li>
-								<li><a href="listKarts">Ver karts</a></li>
-							</ul></li>
-						<li><a href="userReviews">Mis críticas</a></li>
+						<li><a href="searchSpectacle">Reservas</a></li>
 					</ul>
+					<form method="get" autocomplete="off" action="modifyUser">
+						<ul class="nav navbar-nav flex-child-menu menu-right">
+							<li><button class="redbtn" style="border: none"
+									type="submit">Modificar datos</button></li>
+						</ul>
+					</form>
 					<form method="get" autocomplete="off" action="logout">
 						<ul class="nav navbar-nav flex-child-menu menu-right">
 							<li><button class="redbtn" style="border: none"
@@ -104,109 +93,53 @@
 				</div>
 				<!-- /.navbar-collapse -->
 			</nav>
-
-			<!-- top search form -->
-			<form method="post" autocomplete="off" action="searchSpectacle">
-				<div class="top-search">
-					<select name="filter">
-						<option value="title">T&iacute;tulo</option>
-						<option value="category">Categor&iacute;a</option>
-					</select> <input type="text" name="search"
-						placeholder="Busque un espect&aacute;culo por t&iacute;tulo o por categor&iacute;a">
-					<input name="hidden" type="submit" style="display: none;">
-				</div>
-			</form>
 		</div>
 	</header>
 	<!-- END | Header -->
-
-	<div class="hero common-hero">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="hero-ct">
-						<h1>
-							Bienvenido de nuevo:
-							<jsp:getProperty property="emailUser" name="customerBean" /></h1>
-						<ul class="breadcumb">
-							<li class="active"><a href="#">Hoy es: </a></li>
-							<li><%=formatter6.format(new java.util.Date())%></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- list section-->
+	<!-- List section-->
 	<div class="page-single">
 		<div class="container">
 			<div class="row ipad-width2">
 				<div class="col-md-9 col-sm-12 col-xs-12">
-					<h1 style="color: white">Usuarios del sistema</h1>
+				<br></br>
+					<h1 style="color: white">Datos de usuario:</h1>
 					<br></br>
 					<%
-						ArrayList<UsuarioDTO> users = gestor.getUsuarios();
+						ArrayList<UsuarioDTO> users = gestorUsuarios.getUsuarios();
 					%>
 					<div class="row">
 						<%
 							for (int i = 0; i < users.size(); i++) {
+								if(users.get(i).getEmail().equals(customerBean.getEmailUser())){
+									UsuarioDTO usuario=users.get(i);
+								
 						%>
 						<div class="col-md-12">
 							<div class="ceb-item-style-2">
 								<div class="ceb-infor">
-									<p><%="Nombre: " + users.get(i).getName()%></p>
-									<p><%="Email: " + users.get(i).getEmail()%></p>
-									<p><%="Rol: " + users.get(i).getType()%></p>
+									<p><%="Nombre: " + usuario.getName()%></p>
+									<p><%="Email: " + usuario.getEmail()%></p>
+									<p><%="Fecha de nacimiento: " + usuario.getDateOfBirth()%></p>
 									<p><%="Fecha de registro: "
-							+ formatter5.format(users.get(i).getInscription())%></p>
+							+ formatter5.format(usuario.getInscription())%></p>
 								</div>
 							</div>
 						</div>
 						<%
+								break;
+								}
 							}
 						%>
-					</div>
-				</div>
-				<div class="col-md-3 col-xs-12 col-sm-12">
-					<div class="sidebar">
-						<div class="searh-form">
-							<h4 class="sb-title">Registrar usuario</h4>
-							<form class="form-style-1 celebrity-form" method="post"
-								autocomplete="off" action="register">
-								<div class="row">
-									<div class="col-md-12 form-it">
-										<label>Nombre</label> <input type="text" name="name"
-											required="required" />
-									</div>
-									<div class="col-md-12 form-it">
-										<label>Rol</label> <select name="type">
-										<option value="administrador">Administrador</option>
-										<option value="cliente">Cliente</option>
-									</select>
-									</div>
-									<div class="col-md-12 form-it">
-										<label>Email</label> <input type="text" name="email"
-											required="required" />
-									</div>
-									<div class="col-md-12 form-it">
-										<label>Contraseña</label> <input type="password"
-											name="password" required="required" />
-									</div>
-									<div class="col-md-12 form-it">
-										<label for="dateOfBirth"> Fecha de nacimiento: <input type="dateOfBirth"
-											name="dateOfBirth" required="required" />
-										</label>
-									</div>
-									<div class="col-md-12 ">
-										<input class="submit" type="submit" value="register">
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
+						<form method="get" autocomplete="off" action="deleteUser">
+						<ul class="nav navbar-nav flex-child-menu menu-right">
+							<li><button class="redbtn" style="border: none"
+									type="submit">Eliminar cuenta</button></li>
+						</ul>
+					</form>
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 	<!-- end of list section-->
 	<!-- footer section-->
@@ -248,7 +181,7 @@
 					<br></br>
 					<h4>Contacto</h4>
 					<p>
-						Av. de Medina Azahara, 5,<br>14071 C&oacute;rdoba
+						Av. de Rabanales, s/n,<br>14014 C&oacute;rdoba
 					</p>
 					<p>
 						Ll&aacute;manos: <a href="#">(+34) 957 218 000</a>
@@ -264,12 +197,14 @@
 	<script src="js/custom.js"></script>
 	<%
 		} else {
-			if (customerBean.getTypeUser().equals(UsuarioDTO.type.cliente)) {
-				nextPage = "mvc/view/userHome.jsp";
+			if (customerBean.getTypeUser().equals(UsuarioDTO.type.administrador)) {
+				nextPage = "mvc/view/adminHome.jsp";
 	%>
+	
 	<jsp:forward page="<%=nextPage%>">
 		<jsp:param value="<%=mensajeNextPage%>" name="message" />
 	</jsp:forward>
+	
 	<%
 		} else {
 				nextPage = "../../index.jsp";

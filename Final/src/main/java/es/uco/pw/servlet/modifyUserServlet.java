@@ -1,10 +1,12 @@
 package es.uco.pw.servlet;
 
-import es.uco.pw.business.managers.GestorPistas;
-import es.uco.pw.business.DTO.KartDTO;
+import es.uco.pw.business.managers.GestorUsuarios;
 import es.uco.pw.business.DTO.UsuarioDTO;
 import es.uco.pw.display.javabean.CustomerBean;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Clase addKart del sistema
+ * Clase modifyUserServlet para modificar un usuario del sistema
  * @author Moisés Moyano Cejudo
  * @author Alba Palomino Jiménez
  * @author Silvia Roldán Flores
@@ -22,20 +24,20 @@ import javax.servlet.http.HttpSession;
  * @version 1.0
  */
 
-@WebServlet(name = "addKart", urlPatterns = "/addKart")
-public class addKartServlet extends HttpServlet {
+@WebServlet(name = "modifyUser", urlPatterns = "/modifyUser")
+public class modifyUserServlet extends HttpServlet {
 
   /** Serial ID */
-  private static final long serialVersionUID = -1L;
+  private static final long serialVersionUID = 1L;
 
   /**
-   * Modifica una sesión proveniente de un formulario
+   * Modifica un usuario proveniente de un formulario
    * @param HttpServletRequest request
    * @param HttpServletResponse response
    * @return none
    */
 
-protected void doPost(
+  protected void doPost(
     HttpServletRequest request,
     HttpServletResponse response
   )
@@ -52,34 +54,27 @@ protected void doPost(
       RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/userHome.jsp");
       dispatcher.include(request, response);
     } else {
-      GestorPistas gestorPistas = GestorPistas.getInstance();
+      GestorUsuarios gestorUsuario = GestorUsuarios.getInstance();
 
-      KartDTO kart = new KartDTO();
-      kart.setpistaId(request.getParameter("pista"));
-      String type = request.getParameter("type");
-      if(type.equals("false")) {
-    	  kart.setType(false);
-      }
-      else {
-    	  kart.setType(true);
-      }
-      if(kart.getpistaId() != "") {
-    	  kart.setStat(KartDTO.status.reservado);
-      }
-      else {
-    	  kart.setStat(KartDTO.status.disponible);
-      }
-      
+      String mail = request.getParameter("mail");
 
-      gestorPistas.registerKart(kart);
+      UsuarioDTO usuario = gestorUsuario.findUser(mail); 
 
-      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/listKarts.jsp");
+      if (usuario!=null) {
+
+        gestorUsuario.modificarUsuario(usuario, mail);
+      } else {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/errorAdingPista.html");
+        dispatcher.include(request, response);
+      }
+
+      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/listPistas.jsp");
       dispatcher.include(request, response);
     }
   }
 
   /**
-   * Redirige al usuario a la vista para modificar una sesión
+   * Redirige al usuario a la vista para modificar un usuario
    * @param HttpServletRequest request
    * @param HttpServletResponse response
    * @return none
@@ -108,7 +103,7 @@ protected void doPost(
 
       session.setAttribute("customerBean", customerBean);
 
-      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/addKart.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/modifyPista.jsp");
       dispatcher.include(request, response);
     }
   }

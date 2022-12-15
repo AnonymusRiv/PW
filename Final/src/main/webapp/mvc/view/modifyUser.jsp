@@ -1,25 +1,29 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@page import="es.uco.pw.business.DTO.KartDTO"%>
+<%@page import="es.uco.pw.business.managers.GestorPistas"%>
+<%@page import="es.uco.pw.business.DTO.PistaDTO"%>
+<%@page import="es.uco.pw.business.DTO.ReservaAdultosDTO"%>
+<%@page import="es.uco.pw.business.DTO.ReservaInfantilDTO"%>
+<%@page import="es.uco.pw.business.DTO.ReservaFamiliarDTO"%>
+<%@page import="es.uco.pw.business.managers.GestorReservas"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
 <jsp:useBean id="customerBean" scope="session"
 	class="es.uco.pw.display.javabean.CustomerBean"></jsp:useBean>
 <%@ page
-	import="java.text.SimpleDateFormat, es.uco.pw.business.managers.GestorPistas,es.uco.pw.business.DTO.KartDTO, es.uco.pw.business.DTO.PistaDTO,es.uco.pw.business.DTO.UsuarioDTO, es.uco.pw.business.managers.GestorUsuarios ,java.util.ArrayList"%>
+	import="java.text.SimpleDateFormat,es.uco.pw.business.DTO.UsuarioDTO,es.uco.pw.business.managers.DBmanager,es.uco.pw.business.managers.GestorUsuarios,java.util.ArrayList"%>
 <html>
 <%
-	SimpleDateFormat formatter6 = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm");
+	SimpleDateFormat formatter6 = new SimpleDateFormat("dd-MM-yyyy");
 	request.setCharacterEncoding("UTF-8");
 	SimpleDateFormat formatter5 = new SimpleDateFormat(
-			"dd-MM-yyyy HH:mm");
-	GestorPistas gestorPistas = GestorPistas.getInstance();
-	ArrayList<KartDTO> karts = gestorPistas.getKarts();
-	ArrayList<PistaDTO> pistas = gestorPistas.getPistas();
+		"dd-MM-yyyy HH:mm");
 	GestorUsuarios gestorUsuarios = GestorUsuarios.getInstance();
 %>
 <!-- moviegridfw07:38-->
 <head>
 <!-- Basic need -->
-<title>UCOKarts</title>
+<title>UCOkarts</title>
 <meta charset="UTF-8">
 <meta name="description" content="">
 <meta name="keywords" content="">
@@ -49,12 +53,13 @@
 			<span></span> <span></span>
 		</div>
 		<%
-			String nextPage = "";
-			String mensajeNextPage = "";
-			if (customerBean != null) {
-				UsuarioDTO user = gestorUsuarios.findUser(customerBean.getEmailUser());
-				//ArrayList<ReviewDTO> userReviews = reviewManager.searchUsersReview(user.getEmail());
+		String nextPage = "";
+		String mensajeNextPage = "";
+		if (customerBean != null
+				&& customerBean.getTypeUser().equals(UsuarioDTO.type.cliente)) {
 		%>
+		<jsp:setProperty property="search" value="" name="customerBean" />
+		<jsp:setProperty property="filter" value="" name="customerBean" />
 	</div>
 	<!--end of preloading-->
 	<!-- BEGIN | Header -->
@@ -87,15 +92,15 @@
 					<ul class="nav navbar-nav flex-child-menu menu-left">
 						<li class="hidden"><a href="#page-top"></a></li>
 						<li><a href="index.jsp">Inicio</a></li>
-						<li><a href="userProfile">Perfil</a></li>
-						<li><a href="searchSpectacle">EspectÃ¡culos</a></li>
+						<li><a style="color: #DCF836" href="userProfile">Perfil</a></li>
+						<li><a href="searchSpectacle">Espectáculos</a></li>
 						<li><a href="listSesions">Sesiones</a></li>
-						<li><a href="userReviews">Mis crÃ­ticas</a></li>
+						<li><a href="userReviews">Mis críticas</a></li>
 					</ul>
 					<form method="get" autocomplete="off" action="logout">
 						<ul class="nav navbar-nav flex-child-menu menu-right">
 							<li><button class="redbtn" style="border: none"
-									type="submit">Cerrar sesiÃ³n</button></li>
+									type="submit">Cerrar sesión</button></li>
 						</ul>
 					</form>
 				</div>
@@ -115,6 +120,7 @@
 			</form>
 		</div>
 	</header>
+	<!-- END | Header -->
 	<%
 		} else {
 	%>
@@ -148,7 +154,7 @@
 								aria-hidden="true"></i>
 						</a>
 							<ul class="dropdown-menu level1">
-								<li><a href="addPista">AÃ±adir pista</a></li>
+								<li><a href="addPista">Añadir pista</a></li>
 								<li><a href="listPistas">Ver pistas</a></li>
 							</ul></li>
 						<li class="dropdown first"><a
@@ -157,15 +163,15 @@
 								aria-hidden="true"></i>
 						</a>
 							<ul class="dropdown-menu level1">
-								<li><a href="addKart">AÃ±adir kart</a></li>
+								<li><a href="addKart">Añadir kart</a></li>
 								<li><a href="listKarts">Ver karts</a></li>
 							</ul></li>
-						<li><a href="userReviews">Mis crÃ­ticas</a></li>
+						<li><a href="userReviews">Mis críticas</a></li>
 					</ul>
 					<form method="get" autocomplete="off" action="logout">
 						<ul class="nav navbar-nav flex-child-menu menu-right">
 							<li><button class="redbtn" style="border: none"
-									type="submit">Cerrar sesiÃ³n</button></li>
+									type="submit">Cerrar sesión</button></li>
 						</ul>
 					</form>
 				</div>
@@ -195,7 +201,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="hero-ct">
-						<h1>Crear un nuevo kart</h1>
+						<h1>Modificar datos de usuario</h1>
 					</div>
 				</div>
 			</div>
@@ -206,36 +212,85 @@
 			<div class="row ipad-width">
 				<div class="col-md-3 col-sm-12 col-xs-12">
 					<div class="user-information">
-						<div class="user-fav">
-							<ul>
-								<li><h1 style="color: white">Total</h1></li>
-							</ul>
-							<p>
-								Hay registrados:
-								<%=karts.size()%></p>
-						</div>
-						<div class="user-img">
-							<a href="listKarts" class="redbtn">Ver karts</a>
-						</div>
+						<%
+							ArrayList<UsuarioDTO> users = gestorUsuarios.getUsuarios();
+						%>
 					</div>
 				</div>
 				<div class="col-md-9 col-sm-12 col-xs-12">
 					<div class="form-style-1 user-pro">
-						<form method="post" action="addKart" class="user">
-							<h4>Datos del kart</h4>
-							<div class="row">
+						<form method="post" action="modifyUsser" class="user">
 							<div class="col-md-6 form-it">
-								<label>Tipo</label> <select name="type">
-										<option value="false">Infantil</option>
-										<option value="true">Adultos</option>
+									<label>Nombre: </label> <input type="text" name="name"
+										required="required" />
+								</div>
+								<div class="col-md-6 form-it">
+									<label>Contraseña: </label> <input type="text" name="password" required="required" />
+								</div>
+							<p>Fecha de nacimiento:</p>
+							<div class="row">
+								<div class="col-md-6 form-it">
+									<label>Día</label> <select name="day">
+										<option value="01">01</option>
+										<option value="02">02</option>
+										<option value="03">03</option>
+										<option value="04">04</option>
+										<option value="05">05</option>
+										<option value="06">06</option>
+										<option value="07">07</option>
+										<option value="08">08</option>
+										<option value="09">09</option>
+										<option value="10">10</option>
+										<option value="11">11</option>
+										<option value="12">12</option>
+										<option value="13">13</option>
+										<option value="14">14</option>
+										<option value="15">15</option>
+										<option value="16">16</option>
+										<option value="17">17</option>
+										<option value="18">18</option>
+										<option value="19">19</option>
+										<option value="20">20</option>
+										<option value="21">21</option>
+										<option value="22">22</option>
+										<option value="23">23</option>
+										<option value="24">24</option>
+										<option value="25">25</option>
+										<option value="26">26</option>
+										<option value="27">27</option>
+										<option value="28">28</option>
+										<option value="29">29</option>
+										<option value="30">30</option>
+										<option value="31">31</option>
 									</select>
 								</div>
 								<div class="col-md-6 form-it">
-									<label>Pistas</label> <select name="pista">
-										<option value="">-</option>
-										<option value="cordoba">CÃ³rdoba</option>
-										<option value="concierto">Concierto</option>
-										<option value="monologo">MonÃ³logo</option>
+									<label>Mes</label> <select name="month">
+										<option value="01">Enero</option>
+										<option value="02">Febrero</option>
+										<option value="03">Marzo</option>
+										<option value="04">Abril</option>
+										<option value="05">Mayo</option>
+										<option value="06">Junio</option>
+										<option value="07">Julio</option>
+										<option value="08">Agosto</option>
+										<option value="09">Septiembre</option>
+										<option value="10">Octubre</option>
+										<option value="11">Noviembre</option>
+										<option value="12">Diciembre</option>
+									</select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6 form-it">
+									<label>Año</label> <select name="year">
+										<%
+											for (int i = 1970; i < 2023; i++) {
+										%>
+										<option value=<%=i%>><%=i%></option>
+										<%
+											}
+										%>
 									</select>
 								</div>
 							</div>
@@ -257,7 +312,7 @@
 		<br></br>
 		<div class="container">
 			<div class="flex-parent-ft">
-				<a><img class="logo" src="images/logo1.png" alt=""></a>
+				<a><img class="logo" src="/JSPMVC/images/logo1.png" alt=""></a>
 				<div class="flex-child-ft item2">
 					<br></br>
 					<h4>Recursos</h4>
@@ -301,10 +356,10 @@
 		</div>
 	</footer>
 	<!-- end of footer section-->
-	<script src="js/jquery.js"></script>
-	<script src="js/plugins.js"></script>
-	<script src="js/plugins2.js"></script>
-	<script src="js/custom.js"></script>
+	<script src="/JSPMVC/js/jquery.js"></script>
+	<script src="/JSPMVC/js/plugins.js"></script>
+	<script src="/JSPMVC/js/plugins2.js"></script>
+	<script src="/JSPMVC/js/custom.js"></script>
 	<%
 		}
 	%>

@@ -82,7 +82,7 @@
 					<ul class="nav navbar-nav flex-child-menu menu-left">
 						<li class="hidden"><a href="#page-top"></a></li>
 						<li><a style="color: #DCF836" href="index.jsp">Inicio</a></li>
-						<li><a href="./userProfile.jsp">Perfil</a></li>
+						<li><a href="userProfile">Perfil</a></li>
 						<li><a href="searchSpectacle">Reservas</a></li>
 					</ul>
 					<form method="get" autocomplete="off" action="logout">
@@ -192,6 +192,8 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	</div>
 	</div>
 	<!-- end of list section-->
 	<!-- footer section-->

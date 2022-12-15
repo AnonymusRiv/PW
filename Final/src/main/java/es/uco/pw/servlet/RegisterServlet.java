@@ -40,7 +40,7 @@ public class RegisterServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 	    response.setContentType("text/html;charset=UTF-8");
 	    GestorUsuarios gestorUsuarios = GestorUsuarios.getInstance();
-		//String typeUser = request.getParameter("type");
+		String typeUser = request.getParameter("type");
 		String name = request.getParameter("name");
 		String password = request.getParameter("password");
 		String email = request.getParameter("email");
@@ -56,7 +56,12 @@ public class RegisterServlet extends HttpServlet {
 		    user.setDateOfBirth(birthday);
 		    Date now = new Date();
 		    user.setInscription(now);
-		    user.setType(UsuarioDTO.type.cliente);
+		    if(typeUser.equals("administrador")) {
+		    	user.setType(UsuarioDTO.type.administrador);
+		    }
+		    else {
+		    	user.setType(UsuarioDTO.type.cliente);
+		    }
 		    
 		    try {
 				if (gestorUsuarios.registerUser(user)) {
