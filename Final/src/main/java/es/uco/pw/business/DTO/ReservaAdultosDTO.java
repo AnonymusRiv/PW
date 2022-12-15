@@ -22,6 +22,7 @@ public class ReservaAdultosDTO {
     private float price;
     private float discount;
     private int nParticipants;
+    private int BonoId;
     
     /**
      * Constructor sin parámetros
@@ -45,7 +46,7 @@ public class ReservaAdultosDTO {
      */
 
     public ReservaAdultosDTO(int Id, String userId, String date, int duration, String pistId, float price, float discount,
-            int nParticipants) {
+            int nParticipants, int BonoId) {
         this.Id = Id;
         this.userId = userId;
         this.date = date;
@@ -54,6 +55,7 @@ public class ReservaAdultosDTO {
         this.price = price;
         this.discount = discount;
         this.nParticipants = nParticipants;
+        this.BonoId = BonoId;
     }
     
     /**
@@ -214,6 +216,26 @@ public class ReservaAdultosDTO {
 
     public void setnParticipants(int nParticipants) {
         this.nParticipants = nParticipants;
+    }
+    
+    /**
+     * Método público para obtener el id del bono
+     * @param none
+     * @return discount
+     */
+
+    public int getBonoId() {
+        return BonoId;
+    }
+    
+    /**
+     * Método público para establecer el id del bono
+     * @param discount
+     * @return none
+     */
+
+    public void setBonoId(int BonoId) {
+        this.BonoId = BonoId;
     }
 
     /**

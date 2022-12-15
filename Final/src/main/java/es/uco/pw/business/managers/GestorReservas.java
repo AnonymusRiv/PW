@@ -122,7 +122,7 @@ public class GestorReservas {
     * Método público para modificar una reserva individual de adultos
     * @param reserva
     * @return none
-    */
+    
    
    public boolean modificarReservaIndividualAdultos(ReservaAdultosDTO reserva, int id){
        ReservasDAO reservasDAO = new ReservasDAO();
@@ -180,7 +180,7 @@ public class GestorReservas {
 	 * @param reserva
 	 * @param fecha
 	 * @return reservasfecha
-	 */
+	 
 	
 	public ArrayList<es.uco.pw.business.factory.Reserva> reservasDiaConcreto(ArrayList<es.uco.pw.business.factory.Reserva> reservas, Date fecha){
 		ArrayList <es.uco.pw.business.factory.Reserva> reservasfecha = new ArrayList<es.uco.pw.business.factory.Reserva>();
@@ -197,7 +197,7 @@ public class GestorReservas {
      * @param reservas
      * @param reserva
      * @return boolean
-     */
+     
 	
     public Boolean deleteReserva(ArrayList <Reserva> reservas, String iduser) {
         for(int i=0; i<reservas.size(); i++) {
@@ -216,7 +216,7 @@ public class GestorReservas {
      * @param pistas
      * @param reserva
      * @return boolean
-     */
+     
     
     public Boolean addReserva(ArrayList <Reserva> reservas, ArrayList <Usuario> usuarios, ArrayList <Pista> pistas, Reserva reserva) {
         for(int i=0; i<usuarios.size(); i++) {
@@ -236,9 +236,9 @@ public class GestorReservas {
      * Método público para ver obtener las reservas
      * @param none
      * @return reservas
-     */
+     
     
     public ArrayList<Reserva> getReservas() {
         return reservas;
-    }
+    }*/
 }

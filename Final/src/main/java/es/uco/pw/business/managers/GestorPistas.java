@@ -2,6 +2,7 @@ package es.uco.pw.business.managers;
 
 import es.uco.pw.business.DTO.KartDTO;
 import es.uco.pw.business.DTO.PistaDTO;
+import es.uco.pw.business.DTO.UsuarioDTO;
 import es.uco.pw.data.DAO.PistaDAO;
 
 import java.util.ArrayList;
@@ -238,5 +239,37 @@ public class GestorPistas {
             }
         }
         return false;
+    }
+    
+    /**
+     * Método público para buscar un kart
+     * @param mail
+     * @return true o false
+     */
+    
+    public KartDTO findKart(int id) {
+        ArrayList<KartDTO> karts = getKarts();
+        for(int i=0; i<karts.size(); i++) {
+            if(karts.get(i).getId() == id) {
+                return karts.get(i);
+            }
+        }
+		return null;
+    }
+    
+    /**
+     * Método público para buscar una pista
+     * @param mail
+     * @return true o false
+     */
+    
+    public PistaDTO findPista(String name) {
+        ArrayList<PistaDTO> pistas = getPistas();
+        for(int i=0; i<pistas.size(); i++) {
+            if(pistas.get(i).getName().equals(name)) {
+                return pistas.get(i);
+            }
+        }
+		return null;
     }
 }
