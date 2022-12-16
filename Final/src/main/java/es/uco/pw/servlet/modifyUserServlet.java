@@ -68,7 +68,7 @@ public class modifyUserServlet extends HttpServlet {
         dispatcher.include(request, response);
       }
 
-      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/listPistas.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/userProfile.jsp");
       dispatcher.include(request, response);
     }
   }
@@ -103,7 +103,7 @@ public class modifyUserServlet extends HttpServlet {
 
       session.setAttribute("customerBean", customerBean);
 
-      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/modifyPista.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/modifyUser.jsp");
       dispatcher.include(request, response);
     }
   }

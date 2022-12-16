@@ -83,7 +83,16 @@
 						<li class="hidden"><a href="#page-top"></a></li>
 						<li><a style="color: #DCF836" href="index.jsp">Inicio</a></li>
 						<li><a href="userProfile">Perfil</a></li>
-						<li><a href="searchSpectacle">Reservas</a></li>
+						<li class="dropdown first"><a
+							class="btn btn-default dropdown-toggle lv1"
+							data-toggle="dropdown"> Reservas <i
+								class="fa fa-angle-down" aria-hidden="true"></i>
+						</a>
+							<ul class="dropdown-menu level1">
+								<li><a href="addReserva">Crear reserva</a></li>
+								<li><a href="listReservas">Ver reservas</a></li>
+								<li><a href="deleteReserva">Cancelar reservas</a></li>
+							</ul></li>
 					</ul>
 					<form method="get" autocomplete="off" action="logout">
 						<ul class="nav navbar-nav flex-child-menu menu-right">

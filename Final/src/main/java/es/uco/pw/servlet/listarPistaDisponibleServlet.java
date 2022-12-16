@@ -1,7 +1,7 @@
 package es.uco.pw.servlet;
 
 import es.uco.pw.business.managers.GestorPistas;
-import es.uco.pw.business.DTO.KartDTO;
+import es.uco.pw.business.DTO.PistaDTO;
 import es.uco.pw.business.DTO.UsuarioDTO;
 import es.uco.pw.display.javabean.CustomerBean;
 import java.io.IOException;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Clase modifyKartServlet para modificar un kart del sistema
+ * Clase listarPistaDisponibleServlet para listar las pista del sistema
  * @author Moisés Moyano Cejudo
  * @author Alba Palomino Jiménez
  * @author Silvia Roldán Flores
@@ -25,14 +25,14 @@ import javax.servlet.http.HttpSession;
  * @version 1.0
  */
 
-@WebServlet(name = "modifyKart", urlPatterns = "/modifyKart")
-public class modifyKartServlet extends HttpServlet {
+@WebServlet(name = "listarPistaDisponible", urlPatterns = "/listarPistaDisponible")
+public class listarPistaDisponibleServlet extends HttpServlet {
 
   /** Serial ID */
-  private static final long serialVersionUID = -1L;
+  private static final long serialVersionUID = 1L;
 
   /**
-   * Modifica una sesión proveniente de un formulario
+   * Listar las pistas proveniente de un formulario
    * @param HttpServletRequest request
    * @param HttpServletResponse response
    * @return none
@@ -49,51 +49,25 @@ public class modifyKartServlet extends HttpServlet {
     CustomerBean customerBean = (CustomerBean) session.getAttribute("customerBean");
 
     if (customerBean == null || customerBean.getEmailUser().equals("")) {
-      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/userNotFound.html");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/mvc/view/userNotFound.html");
       dispatcher.include(request, response);
     } else if (customerBean.getTypeUser().equals(UsuarioDTO.type.cliente)) {
-      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/userHome.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/mvc/view/userHome.jsp");
       dispatcher.include(request, response);
     } else {
       GestorPistas gestorPistas = GestorPistas.getInstance();
 
-      int id = Integer.parseInt(request.getParameter("KartId"));
+      String name = request.getParameter("name");
+
+      gestorPistas.pistasLibres(name);
       
-      KartDTO kart = gestorPistas.findKart(id);
-
-      if (kart != null) {
-    	  
-    	  kart.setpistaId(request.getParameter("pista"));
-          String type = request.getParameter("type");
-          String status = request.getParameter("status");
-          if(type.equals("false")) {
-        	  kart.setType(false);
-          }
-          else {
-        	  kart.setType(true);
-          }
-          if(status.equals("mantenimiento")){
-        	  kart.setStat(KartDTO.status.mantenimiento);
-          }
-          else if(kart.getpistaId() != "") {
-        	  kart.setStat(KartDTO.status.reservado);
-          }
-          else {
-        	  kart.setStat(KartDTO.status.disponible);
-          }
-        gestorPistas.modificarKart(kart, id);
-      } else {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/errorAddingKart.html");
-        dispatcher.include(request, response);
-      }
-
-      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/listKarts.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/listPistas.jsp");
       dispatcher.include(request, response);
     }
   }
 
   /**
-   * Redirige al usuario a la vista para modificar una sesión
+   * Redirige al usuario a la vista para listar las pistas
    * @param HttpServletRequest request
    * @param HttpServletResponse response
    * @return none
@@ -116,13 +90,13 @@ public class modifyKartServlet extends HttpServlet {
       RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/userHome.jsp");
       dispatcher.include(request, response);
     } else {
-      String search = request.getParameter("KartId");
+      String search = request.getParameter("name");
 
       customerBean.setSearch(search);
 
       session.setAttribute("customerBean", customerBean);
 
-      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/modifyKart.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/modifyPista.jsp");
       dispatcher.include(request, response);
     }
   }

@@ -145,13 +145,12 @@
 					id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav flex-child-menu menu-left">
 						<li class="hidden"><a href="#page-top"></a></li>
-						<li><a href="index.jsp">Inicio</a></li>
+						<li><a style="color: #DCF836" href="index.jsp">Inicio</a></li>
 						<li><a href="userProfile">Perfil</a></li>
 						<li class="dropdown first"><a
 							class="btn btn-default dropdown-toggle lv1"
-							style="color: #DCF836" data-toggle="dropdown">
-								Pistas <i class="fa fa-angle-down"
-								aria-hidden="true"></i>
+							data-toggle="dropdown"> Pistas <i
+								class="fa fa-angle-down" aria-hidden="true"></i>
 						</a>
 							<ul class="dropdown-menu level1">
 								<li><a href="addPista">Añadir pista</a></li>
@@ -159,7 +158,7 @@
 							</ul></li>
 						<li class="dropdown first"><a
 							class="btn btn-default dropdown-toggle lv1"
-							data-toggle="dropdown"> Karts <i class="fa fa-angle-down"
+							data-toggle="dropdown"> karts <i class="fa fa-angle-down"
 								aria-hidden="true"></i>
 						</a>
 							<ul class="dropdown-menu level1">
@@ -191,10 +190,10 @@
 			</form>
 		</div>
 	</header>
+	<!-- END | Header -->
 	<%
 		}
 	%>
-	<!-- END | Header -->
 
 	<div class="hero user-hero">
 		<div class="container">
@@ -219,7 +218,7 @@
 				</div>
 				<div class="col-md-9 col-sm-12 col-xs-12">
 					<div class="form-style-1 user-pro">
-						<form method="post" action="modifyUsser" class="user">
+						<form method="post" action="modifyUser" class="user">
 							<div class="col-md-6 form-it">
 									<label>Nombre: </label> <input type="text" name="name"
 										required="required" />
@@ -356,10 +355,10 @@
 		</div>
 	</footer>
 	<!-- end of footer section-->
-	<script src="/JSPMVC/js/jquery.js"></script>
-	<script src="/JSPMVC/js/plugins.js"></script>
-	<script src="/JSPMVC/js/plugins2.js"></script>
-	<script src="/JSPMVC/js/custom.js"></script>
+	<script src="js/jquery.js"></script>
+	<script src="js/plugins.js"></script>
+	<script src="js/plugins2.js"></script>
+	<script src="js/custom.js"></script>
 	<%
 		}
 	%>

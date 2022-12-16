@@ -53,8 +53,8 @@ public class deletePistaServlet extends HttpServlet {
 		dispatcher.include(request, response);
 	} else {
       GestorPistas gestorPista = GestorPistas.getInstance();
-      gestorPista.deletePista(request.getParameter("pistaId"));
-      RequestDispatcher dispatcher = request.getRequestDispatcher("listarPistas");
+      gestorPista.deletePista(request.getParameter("PistaId"));
+      RequestDispatcher dispatcher = request.getRequestDispatcher("listPistas");
       dispatcher.include(request, response);
     }
   }

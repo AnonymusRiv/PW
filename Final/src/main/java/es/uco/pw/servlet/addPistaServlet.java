@@ -1,6 +1,7 @@
 package es.uco.pw.servlet;
 
 import es.uco.pw.business.managers.GestorPistas;
+import es.uco.pw.business.DTO.KartDTO;
 import es.uco.pw.business.DTO.PistaDTO;
 import es.uco.pw.business.DTO.UsuarioDTO;
 import es.uco.pw.display.javabean.CustomerBean;
@@ -59,13 +60,32 @@ public class addPistaServlet extends HttpServlet {
 
       String name = request.getParameter("name");
 
-      PistaDTO pista = gestorPistas.findPista(name);
+      PistaDTO pist = gestorPistas.findPista(name);
 
-      if (pista != null) {
-
+      if (pist == null) {
+    	PistaDTO pista = new PistaDTO();
+    	pista.setName(request.getParameter("name"));
+    	String status = request.getParameter("status");
+        if(status.equals("false")) {
+      	  pista.setStatus(false);
+        }
+        else {
+        	pista.setStatus(true);
+        }
+        String diff = request.getParameter("difficulty");
+        if(diff.equals("infantil")) {
+        	pista.setDificulty(PistaDTO.dificulty.infantil);
+        }
+        else if(diff.equals("familiar")) {
+        	pista.setDificulty(PistaDTO.dificulty.familiar);
+        }
+        else {
+        	pista.setDificulty(PistaDTO.dificulty.adultos);
+        }
+    	pista.setMax(Integer.parseInt(request.getParameter("max")));
         gestorPistas.registerPista(pista);
       } else {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/errorAdingPista.html");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/errorAddingPista.html");
         dispatcher.include(request, response);
       }
 

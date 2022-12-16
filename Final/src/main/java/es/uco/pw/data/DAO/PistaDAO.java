@@ -166,10 +166,10 @@ public class PistaDAO {
                     aux = "adultos";
                 }
                 ps = connection.prepareStatement(query);
-                ps.setString(1, pistaId);
-                ps.setBoolean(2, pista.isStatus());    
-                ps.setString(3, aux);
-                ps.setInt(4, pista.getMax());  
+                ps.setBoolean(1, pista.isStatus()); 
+                ps.setString(2, aux);
+                ps.setInt(3, pista.getMax());
+                ps.setString(4, pistaId);
                 
                 ps.executeUpdate();
                 if (stmt != null) {

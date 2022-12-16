@@ -1,25 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
 <jsp:useBean id="customerBean" scope="session"
 	class="es.uco.pw.display.javabean.CustomerBean"></jsp:useBean>
 <%@ page
-	import="java.text.SimpleDateFormat, es.uco.pw.business.managers.GestorPistas,es.uco.pw.business.DTO.KartDTO, es.uco.pw.business.DTO.PistaDTO,es.uco.pw.business.DTO.UsuarioDTO, es.uco.pw.business.managers.GestorUsuarios ,java.util.ArrayList"%>
+	import="java.text.SimpleDateFormat,es.uco.pw.business.DTO.PistaDTO,es.uco.pw.business.DTO.UsuarioDTO,es.uco.pw.business.managers.DBmanager,es.uco.pw.business.managers.GestorUsuarios,es.uco.pw.business.managers.GestorPistas,java.util.ArrayList"%>
 <html>
 <%
-	SimpleDateFormat formatter6 = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm");
+	SimpleDateFormat formatter6 = new SimpleDateFormat("dd-MM-yyyy");
 	request.setCharacterEncoding("UTF-8");
 	SimpleDateFormat formatter5 = new SimpleDateFormat(
-			"dd-MM-yyyy HH:mm");
+		"dd-MM-yyyy HH:mm");
 	GestorPistas gestorPistas = GestorPistas.getInstance();
-	ArrayList<KartDTO> karts = gestorPistas.getKarts();
-	ArrayList<PistaDTO> pistas = gestorPistas.getPistas();
-	GestorUsuarios gestorUsuarios = GestorUsuarios.getInstance();
 %>
 <!-- moviegridfw07:38-->
 <head>
 <!-- Basic need -->
-<title>UCOKarts</title>
+<title>UCOkarts</title>
 <meta charset="UTF-8">
 <meta name="description" content="">
 <meta name="keywords" content="">
@@ -49,11 +46,16 @@
 			<span></span> <span></span>
 		</div>
 		<%
-			String nextPage = "";
-			String mensajeNextPage = "";
-			if (customerBean != null) {
-				UsuarioDTO user = gestorUsuarios.findUser(customerBean.getEmailUser());
+		String nextPage = "";
+		String mensajeNextPage = "";
+		if (customerBean != null
+				&& customerBean.getTypeUser().equals(UsuarioDTO.type.administrador)) {
+			String search = customerBean.getSearch();
+			String filter = customerBean.getFilter();
+			PistaDTO pista = gestorPistas.findPista(search);
 		%>
+		<jsp:setProperty property="search" value="" name="customerBean" />
+		<jsp:setProperty property="filter" value="" name="customerBean" />
 	</div>
 	<!--end of preloading-->
 	<!-- BEGIN | Header -->
@@ -86,15 +88,15 @@
 					<ul class="nav navbar-nav flex-child-menu menu-left">
 						<li class="hidden"><a href="#page-top"></a></li>
 						<li><a href="index.jsp">Inicio</a></li>
-						<li><a href="userProfile">Perfil</a></li>
-						<li><a href="searchSpectacle">EspectÃ¡culos</a></li>
+						<li><a style="color: #DCF836" href="userProfile">Perfil</a></li>
+						<li><a href="searchSpectacle">Espectáculos</a></li>
 						<li><a href="listSesions">Sesiones</a></li>
-						<li><a href="userReviews">Mis crÃ­ticas</a></li>
+						<li><a href="userReviews">Mis críticas</a></li>
 					</ul>
 					<form method="get" autocomplete="off" action="logout">
 						<ul class="nav navbar-nav flex-child-menu menu-right">
 							<li><button class="redbtn" style="border: none"
-									type="submit">Cerrar sesiÃ³n</button></li>
+									type="submit">Cerrar sesión</button></li>
 						</ul>
 					</form>
 				</div>
@@ -114,6 +116,7 @@
 			</form>
 		</div>
 	</header>
+	<!-- END | Header -->
 	<%
 		} else {
 	%>
@@ -147,7 +150,7 @@
 								aria-hidden="true"></i>
 						</a>
 							<ul class="dropdown-menu level1">
-								<li><a href="addPista">AÃ±adir pista</a></li>
+								<li><a href="addPista">Añadir pista</a></li>
 								<li><a href="listPistas">Ver pistas</a></li>
 							</ul></li>
 						<li class="dropdown first"><a
@@ -156,15 +159,15 @@
 								aria-hidden="true"></i>
 						</a>
 							<ul class="dropdown-menu level1">
-								<li><a href="addKart">AÃ±adir kart</a></li>
+								<li><a href="addKart">Añadir kart</a></li>
 								<li><a href="listKarts">Ver karts</a></li>
 							</ul></li>
-						<li><a href="userReviews">Mis crÃ­ticas</a></li>
+						<li><a href="userReviews">Mis críticas</a></li>
 					</ul>
 					<form method="get" autocomplete="off" action="logout">
 						<ul class="nav navbar-nav flex-child-menu menu-right">
 							<li><button class="redbtn" style="border: none"
-									type="submit">Cerrar sesiÃ³n</button></li>
+									type="submit">Cerrar sesión</button></li>
 						</ul>
 					</form>
 				</div>
@@ -194,7 +197,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="hero-ct">
-						<h1>Crear una nueva pista</h1>
+						<h1>Modificar pista</h1>
 					</div>
 				</div>
 			</div>
@@ -204,60 +207,45 @@
 		<div class="container">
 			<div class="row ipad-width">
 				<div class="col-md-3 col-sm-12 col-xs-12">
-					<div class="user-information">
-						<div class="user-fav">
-							<ul>
-								<li><h1 style="color: white">Total</h1></li>
-							</ul>
-							<p>
-								Hay registradas:
-								<%=pistas.size()%></p>
-						</div>
-						<div class="user-img">
-							<a href="listPistas" class="redbtn">Ver pistas</a>
-						</div>
-					</div>
 				</div>
 				<div class="col-md-9 col-sm-12 col-xs-12">
 					<div class="form-style-1 user-pro">
-						<form method="post" action="addPista" class="user">
-							<h4>Datos de la pista</h4>
-							<div class="row">
+						<form method="post" action="modifyPista" class="user">
 								<div class="col-md-6 form-it">
-									<label>Nombre: </label> <input type="text" name="name"
-										required="required" />
-								</div>
-								<div class="col-md-6 form-it">
-								<label>Estado</label> <select name="status">
-										<option value="true">Disponible</option>
-										<option value="false">No disponible</option>
+									<label>Nombre</label> <select name="PistaId">
+										<option value=<%=pista.getName()%>><%=pista.getName()%></option>
 									</select>
 								</div>
-								<div class="row">
-								<div class="col-md-6 form-it">
+							<div class="col-md-6 form-it">
+									<label>Estado</label> <select name="status">
+										<option value="false">Disponible</option>
+										<option value="true">No disponible</option>
+									</select>
+								</div> 
+								
+							<div class="col-md-6 form-it">
 									<label>Dificultad</label> <select name="difficulty">
-										<option value="adultos">Adultos</option>
 										<option value="infantil">Infantil</option>
 										<option value="familiar">Familiar</option>
+										<option value="adulto">Adulto</option>
 									</select>
 								</div>
-								<div class="col-md-6 form-it">
-									<label>NÂº mÃ¡ximo de participantes</label>
+								
+							<div class="col-md-6 form-it">
+									<label>Nº de participantes</label>
 									<input type="number" name="max" min="1"
 										placeholder="1" />
 								</div>
-								</div>
-							</div>
+				
 							<div class="row">
 								<div class="col-md-6 form-it">
 									<hr>
 									<input class="submit" type="submit" value="Guardar" />
 								</div>
-							
 							</div>
 						</form>
 					</div>
-				</div>
+				</div>     
 			</div>
 		</div>
 	</div>
@@ -276,9 +264,10 @@
 						<li><a href="#">Foros</a></li>
 						<li><a href="#">Blog</a></li>
 						<li><a href="#">Centro de ayuda</a></li>
-					</ul>
+					</ul>     
 				</div>
-				<div class="flex-child-ft item3">
+				
+<div class="flex-child-ft item3">
 					<br></br>
 					<h4>Legal</h4>
 					<ul>

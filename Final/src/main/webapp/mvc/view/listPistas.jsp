@@ -3,23 +3,21 @@
 <jsp:useBean id="customerBean" scope="session"
 	class="es.uco.pw.display.javabean.CustomerBean"></jsp:useBean>
 <%@ page
-	import="java.text.SimpleDateFormat, es.uco.pw.business.managers.GestorPistas,es.uco.pw.business.DTO.KartDTO, es.uco.pw.business.DTO.PistaDTO,es.uco.pw.business.DTO.UsuarioDTO, es.uco.pw.business.managers.GestorUsuarios ,java.util.ArrayList"%>
+	import="java.text.SimpleDateFormat,es.uco.pw.business.DTO.UsuarioDTO,es.uco.pw.business.managers.DBmanager,es.uco.pw.business.managers.GestorUsuarios,es.uco.pw.business.managers.GestorPistas,es.uco.pw.business.DTO.PistaDTO,java.util.ArrayList"%>
 <html>
 <%
-	SimpleDateFormat formatter6 = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm");
+	SimpleDateFormat formatter6 = new SimpleDateFormat("dd-MM-yyyy");
 	request.setCharacterEncoding("UTF-8");
 	SimpleDateFormat formatter5 = new SimpleDateFormat(
 			"dd-MM-yyyy HH:mm");
-	GestorPistas gestorPistas = GestorPistas.getInstance();
-	ArrayList<KartDTO> karts = gestorPistas.getKarts();
-	ArrayList<PistaDTO> pistas = gestorPistas.getPistas();
 	GestorUsuarios gestorUsuarios = GestorUsuarios.getInstance();
+	GestorPistas gestorPistas = GestorPistas.getInstance();
+	ArrayList<PistaDTO> pistas = gestorPistas.getPistas();
 %>
 <!-- moviegridfw07:38-->
 <head>
 <!-- Basic need -->
-<title>UCOKarts</title>
+<title>UCOkarts</title>
 <meta charset="UTF-8">
 <meta name="description" content="">
 <meta name="keywords" content="">
@@ -52,72 +50,14 @@
 			String nextPage = "";
 			String mensajeNextPage = "";
 			if (customerBean != null) {
-				UsuarioDTO user = gestorUsuarios.findUser(customerBean.getEmailUser());
+				String search = customerBean.getSearch();
+				String filter = customerBean.getFilter();
 		%>
+		<jsp:setProperty property="search" value="" name="customerBean" />
+		<jsp:setProperty property="filter" value="" name="customerBean" />
 	</div>
 	<!--end of preloading-->
-	<!-- BEGIN | Header -->
-	<%
-		if (customerBean.getTypeUser().equals(UsuarioDTO.type.cliente)) {
-				nextPage = "mvc/view/userHome.jsp";
-	%>
-	<jsp:forward page="<%=nextPage%>">
-		<jsp:param value="<%=mensajeNextPage%>" name="message" />
-	</jsp:forward>
-	<!-- BEGIN | Header -->
-	<header class="ht-header">
-		<div class="container">
-			<nav class="navbar navbar-default navbar-custom">
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header logo">
-					<div class="navbar-toggle" data-toggle="collapse"
-						data-target="#bs-example-navbar-collapse-1">
-						<span class="sr-only">Toggle navigation</span>
-						<div id="nav-icon1">
-							<span></span> <span></span> <span></span>
-						</div>
-					</div>
-					<a href="index.jsp"><img class="logo" src="images/logo1.png"
-						alt="" width="119" height="58"></a>
-				</div>
-				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse navbar-collapse flex-parent"
-					id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav flex-child-menu menu-left">
-						<li class="hidden"><a href="#page-top"></a></li>
-						<li><a href="index.jsp">Inicio</a></li>
-						<li><a href="userProfile">Perfil</a></li>
-						<li><a href="searchSpectacle">Espectáculos</a></li>
-						<li><a href="listSesions">Sesiones</a></li>
-						<li><a href="userReviews">Mis críticas</a></li>
-					</ul>
-					<form method="get" autocomplete="off" action="logout">
-						<ul class="nav navbar-nav flex-child-menu menu-right">
-							<li><button class="redbtn" style="border: none"
-									type="submit">Cerrar sesión</button></li>
-						</ul>
-					</form>
-				</div>
-				<!-- /.navbar-collapse -->
-			</nav>
-
-			<!-- top search form -->
-			<form method="post" autocomplete="off" action="searchSpectacle">
-				<div class="top-search">
-					<select name="filter">
-						<option value="title">T&iacute;tulo</option>
-						<option value="category">Categor&iacute;a</option>
-					</select> <input type="text" name="search"
-						placeholder="Busque un espect&aacute;culo por t&iacute;tulo o por categor&iacute;a">
-					<input name="hidden" type="submit" style="display: none;">
-				</div>
-			</form>
-		</div>
-	</header>
-	<%
-		} else {
-	%>
-	<!-- BEGIN | Header -->
+		<!-- BEGIN | Header -->
 	<header class="ht-header">
 		<div class="container">
 			<nav class="navbar navbar-default navbar-custom">
@@ -138,13 +78,12 @@
 					id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav flex-child-menu menu-left">
 						<li class="hidden"><a href="#page-top"></a></li>
-						<li><a href="index.jsp">Inicio</a></li>
+						<li><a style="color: #DCF836" href="index.jsp">Inicio</a></li>
 						<li><a href="userProfile">Perfil</a></li>
 						<li class="dropdown first"><a
 							class="btn btn-default dropdown-toggle lv1"
-							style="color: #DCF836" data-toggle="dropdown">
-								Pistas <i class="fa fa-angle-down"
-								aria-hidden="true"></i>
+							data-toggle="dropdown"> Pistas <i
+								class="fa fa-angle-down" aria-hidden="true"></i>
 						</a>
 							<ul class="dropdown-menu level1">
 								<li><a href="addPista">Añadir pista</a></li>
@@ -152,7 +91,7 @@
 							</ul></li>
 						<li class="dropdown first"><a
 							class="btn btn-default dropdown-toggle lv1"
-							data-toggle="dropdown"> Karts <i class="fa fa-angle-down"
+							data-toggle="dropdown"> karts <i class="fa fa-angle-down"
 								aria-hidden="true"></i>
 						</a>
 							<ul class="dropdown-menu level1">
@@ -184,80 +123,83 @@
 			</form>
 		</div>
 	</header>
-	<%
-		}
-	%>
 	<!-- END | Header -->
 
-	<div class="hero user-hero">
+	<div class="hero common-hero">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
 					<div class="hero-ct">
-						<h1>Crear una nueva pista</h1>
+						<h1>
+							Bienvenido de nuevo:
+							<jsp:getProperty property="emailUser" name="customerBean" /></h1>
+						<ul class="breadcumb">
+							<li class="active"><a href="#">Hoy es: </a></li>
+							<li><%=formatter6.format(new java.util.Date())%></li>
+						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<!-- List section-->
 	<div class="page-single">
 		<div class="container">
-			<div class="row ipad-width">
-				<div class="col-md-3 col-sm-12 col-xs-12">
-					<div class="user-information">
-						<div class="user-fav">
-							<ul>
-								<li><h1 style="color: white">Total</h1></li>
-							</ul>
-							<p>
-								Hay registradas:
-								<%=pistas.size()%></p>
-						</div>
-						<div class="user-img">
-							<a href="listPistas" class="redbtn">Ver pistas</a>
-						</div>
-					</div>
-				</div>
+			<div class="row ipad-width2">
 				<div class="col-md-9 col-sm-12 col-xs-12">
-					<div class="form-style-1 user-pro">
-						<form method="post" action="addPista" class="user">
-							<h4>Datos de la pista</h4>
-							<div class="row">
-								<div class="col-md-6 form-it">
-									<label>Nombre: </label> <input type="text" name="name"
-										required="required" />
-								</div>
-								<div class="col-md-6 form-it">
-								<label>Estado</label> <select name="status">
-										<option value="true">Disponible</option>
-										<option value="false">No disponible</option>
-									</select>
-								</div>
-								<div class="row">
-								<div class="col-md-6 form-it">
-									<label>Dificultad</label> <select name="difficulty">
-										<option value="adultos">Adultos</option>
-										<option value="infantil">Infantil</option>
-										<option value="familiar">Familiar</option>
-									</select>
-								</div>
-								<div class="col-md-6 form-it">
-									<label>Nº máximo de participantes</label>
-									<input type="number" name="max" min="1"
-										placeholder="1" />
-								</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-6 form-it">
+					<h1 style="color: white">Pistas</h1>
+					<br></br>
+					<div class="row">
+						<%
+							for (int i = 0; i < pistas.size(); i++) {
+						%>
+						<div class="col-md-12">
+							<div class="ceb-item-style-2">
+								<div class="ceb-infor">
+									<h2>
+										<a
+											href=<%="listPistas?PistaId="
+								+ pistas.get(i).getName()%>></a>
+									</h2>
+									<p />
+								<p>
+								<p><%="Nombre = "
+								+ pistas.get(i).getName()%></p>
+								<p><% if(pistas.get(i).isStatus() == false){ %>
+								<%="Estado = No disponible"%>
+								<% }else{ %>
+								<%="Estado = Disponible"%>
+								<% } %>
+								</p>
+								<p><%="Dificultad = "
+								+ pistas.get(i).getDif()%></p>
+								<p><%="Máximo Personas = "
+								+ pistas.get(i).getMax()%></p>
+									<%
+										if (customerBean.getTypeUser().equals(UsuarioDTO.type.administrador)) {
+									%>
 									<hr>
-									<input class="submit" type="submit" value="Guardar" />
+									<a class="redbtn"
+										href=<%="modifyPista?PistaId="
+												+ pistas.get(i).getName()%>
+										style="border: none; background-color: orange" type="submit">Modificar</a>
+									&nbsp;
+									<a class="redbtn"
+										href=<%="deletePista?PistaId="
+												+ pistas.get(i).getName()%>
+										style="border: none" type="submit">Borrar</a> <br></br>
+									<%
+										}
+									%>
 								</div>
-							
 							</div>
-						</form>
+						</div>
+						<%
+							}
+						%>
 					</div>
 				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -305,7 +247,7 @@
 					</p>
 					<p>
 						Ll&aacute;manos: <a href="#">(+34) 957 218 000</a>
-					</p>
+					</p> 
 				</div>
 			</div>
 		</div>

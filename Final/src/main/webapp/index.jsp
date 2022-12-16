@@ -118,7 +118,7 @@
 					</label>
 				</div>
 				<div class="row">
-					<label for="dateOfBirth"> Fecha de nacimiento: <input type="dateOfBirth"
+					<label for="dateOfBirth"> Fecha de nacimiento: <input type="date"
 						name="dateOfBirth" required="required" />
 					</label>
 				</div>

@@ -57,22 +57,43 @@ public class modifyPistaServlet extends HttpServlet {
     } else {
       GestorPistas gestorPistas = GestorPistas.getInstance();
 
-      String name = request.getParameter("name");
-
+      String name = request.getParameter("PistaId");
+      
       PistaDTO pista = gestorPistas.findPista(name);
 
-      if (pista != null) {
-
+      if(pista != null) {
+    	  
+      	String status = request.getParameter("status");
+          if(status.equals("false")) {
+        	  pista.setStatus(false);
+          }
+          else {
+          	pista.setStatus(true);
+          }
+          String diff = request.getParameter("difficulty");
+          if(diff.equals("infantil")) {
+          	pista.setDificulty(PistaDTO.dificulty.infantil);
+          }
+          else if(diff.equals("familiar")) {
+          	pista.setDificulty(PistaDTO.dificulty.familiar);
+          }
+          else {
+          	pista.setDificulty(PistaDTO.dificulty.adultos);
+          }
+      
+      	pista.setMax(Integer.parseInt(request.getParameter("max")));
         gestorPistas.modificarPista(pista, name);
-      } else {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/errorAdingPista.html");
+      }
+      else {
+          RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/errorAddingPista.html");
+          dispatcher.include(request, response);
+        }
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/listPistas.jsp");
         dispatcher.include(request, response);
       }
-
-      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/listPistas.jsp");
-      dispatcher.include(request, response);
     }
-  }
+ 
 
   /**
    * Redirige al usuario a la vista para modificar una pista
@@ -98,7 +119,7 @@ public class modifyPistaServlet extends HttpServlet {
       RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/userHome.jsp");
       dispatcher.include(request, response);
     } else {
-      String search = request.getParameter("name");
+      String search = request.getParameter("PistaId");
 
       customerBean.setSearch(search);
 

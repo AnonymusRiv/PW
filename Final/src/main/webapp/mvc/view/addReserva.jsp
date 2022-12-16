@@ -11,9 +11,6 @@
 	request.setCharacterEncoding("UTF-8");
 	SimpleDateFormat formatter5 = new SimpleDateFormat(
 			"dd-MM-yyyy HH:mm");
-	GestorPistas gestorPistas = GestorPistas.getInstance();
-	ArrayList<KartDTO> karts = gestorPistas.getKarts();
-	ArrayList<PistaDTO> pistas = gestorPistas.getPistas();
 	GestorUsuarios gestorUsuarios = GestorUsuarios.getInstance();
 %>
 <!-- moviegridfw07:38-->
@@ -194,7 +191,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="hero-ct">
-						<h1>Crear una nueva pista</h1>
+						<h1>Crear una nueva reserva</h1>
 					</div>
 				</div>
 			</div>
@@ -203,46 +200,37 @@
 	<div class="page-single">
 		<div class="container">
 			<div class="row ipad-width">
-				<div class="col-md-3 col-sm-12 col-xs-12">
-					<div class="user-information">
-						<div class="user-fav">
-							<ul>
-								<li><h1 style="color: white">Total</h1></li>
-							</ul>
-							<p>
-								Hay registradas:
-								<%=pistas.size()%></p>
-						</div>
-						<div class="user-img">
-							<a href="listPistas" class="redbtn">Ver pistas</a>
-						</div>
-					</div>
-				</div>
 				<div class="col-md-9 col-sm-12 col-xs-12">
 					<div class="form-style-1 user-pro">
-						<form method="post" action="addPista" class="user">
-							<h4>Datos de la pista</h4>
+						<form method="post" action="addKart" class="user">
+							<h4>Datos de la reserva</h4>
 							<div class="row">
 								<div class="col-md-6 form-it">
-									<label>Nombre: </label> <input type="text" name="name"
+									<label>Nombre de usuario: </label> <input type="text" name="userId"
 										required="required" />
 								</div>
 								<div class="col-md-6 form-it">
-								<label>Estado</label> <select name="status">
-										<option value="true">Disponible</option>
-										<option value="false">No disponible</option>
-									</select>
+									<label>Fecha: </label> <input type="text" name="date"
+										required="required" />
+								</div>
+								<div class="col-md-6 form-it">
+									<label>Duración (en min): </label> <input type="text" name="duration"
+										required="required" />
 								</div>
 								<div class="row">
 								<div class="col-md-6 form-it">
-									<label>Dificultad</label> <select name="difficulty">
+									<label>Tipo de reserva:</label> <select name="type">
 										<option value="adultos">Adultos</option>
 										<option value="infantil">Infantil</option>
 										<option value="familiar">Familiar</option>
 									</select>
 								</div>
 								<div class="col-md-6 form-it">
-									<label>Nº máximo de participantes</label>
+									<label>Pista: </label> <input type="text" name="pistId"
+										required="required" />
+								</div>
+								<div class="col-md-6 form-it">
+									<label>Nº de participantes</label>
 									<input type="number" name="max" min="1"
 										placeholder="1" />
 								</div>

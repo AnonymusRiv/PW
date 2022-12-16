@@ -3,7 +3,7 @@
 <jsp:useBean id="customerBean" scope="session"
 	class="es.uco.pw.display.javabean.CustomerBean"></jsp:useBean>
 <%@ page
-	import="java.text.SimpleDateFormat,es.uco.pw.business.DTO.UsuarioDTO,es.uco.pw.business.managers.DBmanager,es.uco.pw.business.managers.GestorUsuarios,es.uco.pw.business.managers.GestorPistas,es.uco.pw.business.DTO.KartDTO,java.util.ArrayList"%>
+	import="java.text.SimpleDateFormat,es.uco.pw.business.DTO.ReservaInfantilDTO,es.uco.pw.business.DTO.ReservaFamiliarDTO,es.uco.pw.business.DTO.ReservaAdultosDTO,es.uco.pw.business.DTO.UsuarioDTO,es.uco.pw.business.managers.DBmanager,es.uco.pw.business.managers.GestorUsuarios,es.uco.pw.business.managers.GestorReservas,es.uco.pw.business.DTO.KartDTO,java.util.ArrayList"%>
 <html>
 <%
 	SimpleDateFormat formatter6 = new SimpleDateFormat("dd-MM-yyyy");
@@ -11,8 +11,10 @@
 	SimpleDateFormat formatter5 = new SimpleDateFormat(
 			"dd-MM-yyyy HH:mm");
 	GestorUsuarios gestorUsuarios = GestorUsuarios.getInstance();
-	GestorPistas gestorPistas = GestorPistas.getInstance();
-	ArrayList<KartDTO> karts = gestorPistas.getKarts();
+	GestorReservas gestorReservas = GestorReservas.getInstance();
+	ArrayList<ReservaAdultosDTO> reservasA = gestorReservas.getId();
+	ArrayList<ReservaFamiliarDTO> reservasF = gestorReservas.getId();
+	ArrayList<ReservaInfantilDTO> reservasI = gestorReservas.getId();
 %>
 <!-- moviegridfw07:38-->
 <head>
@@ -87,7 +89,7 @@
 						</a>
 							<ul class="dropdown-menu level1">
 								<li><a href="addPista">Añadir pista</a></li>
-								<li><a href="listPistas">Ver pistas</a></li>
+								<li><a href="searchSpectacle">Ver pistas</a></li>
 							</ul></li>
 						<li class="dropdown first"><a
 							class="btn btn-default dropdown-toggle lv1"
@@ -147,53 +149,146 @@
 		<div class="container">
 			<div class="row ipad-width2">
 				<div class="col-md-9 col-sm-12 col-xs-12">
-					<h1 style="color: white">Karts</h1>
+					<h1 style="color: white">Reservas de Adultos</h1>
 					<br></br>
 					<div class="row">
 						<%
-							for (int i = 0; i < karts.size(); i++) {
+							for (int i = 0; i < reservasA.size(); i++) {
 						%>
 						<div class="col-md-12">
 							<div class="ceb-item-style-2">
 								<div class="ceb-infor">
 									<h2>
 										<a
-											href=<%="listKarts?KartId="
-								+ karts.get(i).getId()%>></a>
+											href=<%="listReserva?ReservaId="
+								+ reservasA.get(i).getId()%>></a>
 									</h2>
 									<p />
 								<p>
-								<p><% if(karts.get(i).isType() == false){ %>
-								<%="Tipo = infantil"%>
-								<% }else{ %>
-								<%="Tipo = adulto"%>
-								<% } %>
-								</p>
-								<p><%="Estado = "
-								+ karts.get(i).getStat()%></p>
-								<p>
-								<p><%="Pista = "
-								+ karts.get(i).getpistaId() %></p>
-								<p>
-								<p>
+								<p><%="Bono = "
+								+ reservasA.get(i).getBonoId()%></p>
+								<p><%="Fecha = "
+								+ reservasA.get(i).getDate()%></p>
+								<p><%="Descuento = "
+								+ reservasA.get(i).getDiscount()%></p>
+								<p><%="Duración = "
+								+ reservasA.get(i).getDuration()%></p>
+								<p><%="Nº Participantes = "
+								+ reservasA.get(i).getnParticipants()%></p>
+								<p><%="Identificador de Pista = "
+								+ reservasA.get(i).getPistId()%></p>
+								<p><%="Precio = "
+								+ reservasA.get(i).getPrice()%></p>
+								<p><%="Identificador de Usuario = "
+								+ reservasA.get(i).getUserId()%></p>
 									<%
 										if (customerBean.getTypeUser().equals(UsuarioDTO.type.administrador)) {
 									%>
 									<hr>
 									<a class="redbtn"
-										href=<%="asociarKaP?KartId="
-												+ karts.get(i).getId()%>
-										style="border: none; background-color: green" type="submit">Asociar a PistaA</a>
-									&nbsp;
+										href=<%="deleteReserva?ReservaId="
+									+ reservasA.get(i).getId()%>
+										style="border: none" type="submit">Cancelar</a> <br></br>
+									<%
+										}
+									%>
+								</div>
+							</div>
+						</div>
+						<%
+							}
+						%>
+					</div>
+					<h1 style="color: white">Reservas Familiares</h1>
+					<br></br>
+					<div class="row">
+						<%
+							for (int i = 0; i < reservasF.size(); i++) {
+						%>
+						<div class="col-md-12">
+							<div class="ceb-item-style-2">
+								<div class="ceb-infor">
+									<h2>
+										<a
+											href=<%="listReserva?ReservaId="
+								+ reservasF.get(i).getId()%>></a>
+									</h2>
+									<p />
+								<p>
+								<p><%="Bono = "
+								+ reservasF.get(i).getBonoId()%></p>
+								<p><%="Fecha = "
+								+ reservasF.get(i).getDate()%></p>
+								<p><%="Descuento = "
+								+ reservasF.get(i).getDiscount()%></p>
+								<p><%="Duración = "
+								+ reservasF.get(i).getDuration()%></p>
+								<p><%="Nº Participantes = "
+								+ reservasF.get(i).getnParticipants()%></p>
+								<p><%="Identificador de Pista = "
+								+ reservasF.get(i).getPistId()%></p>
+								<p><%="Precio = "
+								+ reservasF.get(i).getPrice()%></p>
+								<p><%="Identificador de Usuario = "
+								+ reservasF.get(i).getUserId()%></p>
+									<%
+										if (customerBean.getTypeUser().equals(UsuarioDTO.type.administrador)) {
+									%>
+									<hr>
 									<a class="redbtn"
-										href=<%="modifyKart?KartId="
-												+ karts.get(i).getId()%>
-										style="border: none; background-color: orange" type="submit">Modificar</a>
-									&nbsp;
+										href=<%="deleteReserva?ReservaId="
+									+ reservasA.get(i).getId()%>
+										style="border: none" type="submit">Cancelar</a> <br></br>
+									<%
+										}
+									%>
+								</div>
+							</div>
+						</div>
+						<%
+							}
+						%>
+					</div>
+					<h1 style="color: white">Reservas Infantiles</h1>
+					<br></br>
+					<div class="row">
+						<%
+							for (int i = 0; i < reservasI.size(); i++) {
+						%>
+						<div class="col-md-12">
+							<div class="ceb-item-style-2">
+								<div class="ceb-infor">
+									<h2>
+										<a
+											href=<%="listReserva?ReservaId="
+								+ reservasI.get(i).getId()%>></a>
+									</h2>
+									<p />
+								<p>
+								<p><%="Bono = "
+								+ reservasI.get(i).getBonoId()%></p>
+								<p><%="Fecha = "
+								+ reservasI.get(i).getDate()%></p>
+								<p><%="Descuento = "
+								+ reservasI.get(i).getDiscount()%></p>
+								<p><%="Duración = "
+								+ reservasI.get(i).getDuration()%></p>
+								<p><%="Nº Participantes = "
+								+ reservasI.get(i).getnParticipants()%></p>
+								<p><%="Identificador de Pista = "
+								+ reservasI.get(i).getPistId()%></p>
+								<p><%="Precio = "
+								+ reservasI.get(i).getPrice()%></p>
+								<p><%="Identificador de Usuario = "
+								+ reservasI.get(i).getUserId()%></p>
+									<%
+										if (customerBean.getTypeUser().equals(UsuarioDTO.type.administrador)) {
+									%>
+									<hr>
 									<a class="redbtn"
-										href=<%="deleteKart?KartId="
-												+ karts.get(i).getId()%>
-										style="border: none" type="submit">Borrar</a> <br></br>
+										href=<%="deleteReserva?ReservaId="
+									+ reservasA.get(i).getId()%>
+										style="border: none" type="submit">Cancelar</a> <br></br>
 									<%
 										}
 									%>
@@ -253,7 +348,7 @@
 					</p>
 					<p>
 						Ll&aacute;manos: <a href="#">(+34) 957 218 000</a>
-					</p>
+					</p> 
 				</div>
 			</div>
 		</div>
@@ -269,4 +364,4 @@
 </body>
 
 <!-- userfavoritelist14:04-->
-</html>
+</html

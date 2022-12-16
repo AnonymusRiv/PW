@@ -57,13 +57,17 @@ protected void doPost(
       KartDTO kart = new KartDTO();
       kart.setpistaId(request.getParameter("pista"));
       String type = request.getParameter("type");
+      String status = request.getParameter("status");
       if(type.equals("false")) {
     	  kart.setType(false);
       }
       else {
     	  kart.setType(true);
       }
-      if(kart.getpistaId() != "") {
+      if(status.equals("mantenimiento")){
+    	  kart.setStat(KartDTO.status.mantenimiento);
+      }
+      else if(kart.getpistaId() != "") {
     	  kart.setStat(KartDTO.status.reservado);
       }
       else {

@@ -48,8 +48,7 @@
 		<%
 			String nextPage = "";
 			String mensajeNextPage = "";
-			if (customerBean != null
-					&& customerBean.getTypeUser().equals(UsuarioDTO.type.cliente)) {
+			if (customerBean != null) {
 		%>
 	</div>
 	<!--end of preloading-->
@@ -76,7 +75,6 @@
 						<li class="hidden"><a href="#page-top"></a></li>
 						<li><a style="color: #DCF836" href="index.jsp">Inicio</a></li>
 						<li><a href="userProfile">Perfil</a></li>
-						<li><a href="searchSpectacle">Reservas</a></li>
 					</ul>
 					<form method="get" autocomplete="off" action="modifyUser">
 						<ul class="nav navbar-nav flex-child-menu menu-right">
@@ -119,6 +117,7 @@
 								<div class="ceb-infor">
 									<p><%="Nombre: " + usuario.getName()%></p>
 									<p><%="Email: " + usuario.getEmail()%></p>
+									<p><%="Rol: " + usuario.getType() %>
 									<p><%="Fecha de nacimiento: " + usuario.getDateOfBirth()%></p>
 									<p><%="Fecha de registro: "
 							+ formatter5.format(usuario.getInscription())%></p>
@@ -195,15 +194,6 @@
 	<script src="js/plugins.js"></script>
 	<script src="js/plugins2.js"></script>
 	<script src="js/custom.js"></script>
-	<%
-		} else {
-			if (customerBean.getTypeUser().equals(UsuarioDTO.type.administrador)) {
-				nextPage = "mvc/view/adminHome.jsp";
-	%>
-	
-	<jsp:forward page="<%=nextPage%>">
-		<jsp:param value="<%=mensajeNextPage%>" name="message" />
-	</jsp:forward>
 	
 	<%
 		} else {
@@ -214,7 +204,7 @@
 	</jsp:forward>
 	<%
 		}
-		}
+
 	%>
 </body>
 

@@ -233,12 +233,18 @@
 								<div class="col-md-6 form-it">
 									<label>Pistas</label> <select name="pista">
 										<option value="">-</option>
-										<option value="cordoba">Córdoba</option>
-										<option value="concierto">Concierto</option>
-										<option value="monologo">Monólogo</option>
+									<% for(int i=0; i<pistas.size(); i++){ %>
+										<option value=<%=pistas.get(i).getName() %>><%= pistas.get(i).getName() %></option>
+										<%} %>
 									</select>
 								</div>
 							</div>
+							<div class="col-md-6 form-it">
+									<label>Estado</label> <select name="status">
+										<option value="">-</option>
+										<option value="mantenimiento">En mantenimiento</option>
+									</select>
+								</div>
 							<div class="row">
 								<div class="col-md-6 form-it">
 									<hr>
