@@ -1,3 +1,10 @@
+<%@page import="es.uco.pw.business.DTO.KartDTO"%>
+<%@page import="es.uco.pw.business.managers.GestorPistas"%>
+<%@page import="es.uco.pw.business.DTO.PistaDTO"%>
+<%@page import="es.uco.pw.business.DTO.ReservaAdultosDTO"%>
+<%@page import="es.uco.pw.business.DTO.ReservaInfantilDTO"%>
+<%@page import="es.uco.pw.business.DTO.ReservaFamiliarDTO"%>
+<%@page import="es.uco.pw.business.managers.GestorReservas"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <jsp:useBean id="customerBean" scope="session"
@@ -9,8 +16,11 @@
 	SimpleDateFormat formatter6 = new SimpleDateFormat("dd-MM-yyyy");
 	request.setCharacterEncoding("UTF-8");
 	SimpleDateFormat formatter5 = new SimpleDateFormat(
-			"dd-MM-yyyy HH:mm");
-	GestorUsuarios gestor = GestorUsuarios.getInstance();
+		"dd-MM-yyyy HH:mm");
+	GestorUsuarios gestorUsuarios = GestorUsuarios.getInstance();
+	GestorReservas gestorReservas = GestorReservas.getInstance();
+	GestorPistas gestorPistas = GestorPistas.getInstance();
+	ArrayList<PistaDTO> pistas = gestorPistas.getPistas();
 %>
 <!-- moviegridfw07:38-->
 <head>
@@ -48,7 +58,7 @@
 			String nextPage = "";
 			String mensajeNextPage = "";
 			if (customerBean != null
-					&& customerBean.getTypeUser().equals(UsuarioDTO.type.administrador)) {
+					&& customerBean.getTypeUser().equals(UsuarioDTO.type.cliente)) {
 		%>
 	</div>
 	<!--end of preloading-->
@@ -65,35 +75,35 @@
 							<span></span> <span></span> <span></span>
 						</div>
 					</div>
-					<a href="#"><img class="logo" src="images/logo1.png" alt=""
-						width="119" height="58"></a>
+					<a href="index.jsp"><img class="logo" src="images/logo1.png"
+						alt="" width="119" height="58"></a>
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse flex-parent"
 					id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav flex-child-menu menu-left">
 						<li class="hidden"><a href="#page-top"></a></li>
-						<li><a style="color: #DCF836" href="index.jsp">Inicio</a></li>
+						<li><a href="index.jsp">Inicio</a></li>
 						<li><a href="userProfile">Perfil</a></li>
 						<li class="dropdown first"><a
 							class="btn btn-default dropdown-toggle lv1"
-							data-toggle="dropdown"> Pistas <i
+							style="color: #DCF836"
+							data-toggle="dropdown"> Reservas <i
 								class="fa fa-angle-down" aria-hidden="true"></i>
 						</a>
 							<ul class="dropdown-menu level1">
-								<li><a href="addPista">Añadir pista</a></li>
-								<li><a href="listPistas">Ver pistas</a></li>
+								<li><a href="addReserva">Crear reserva</a></li>
+								<li><a href="listReservas">Ver reservas</a></li>
+								<li><a href="deleteReserva">Cancelar reservas</a></li>
 							</ul></li>
-						<li class="dropdown first"><a
-							class="btn btn-default dropdown-toggle lv1"
-							data-toggle="dropdown"> Karts <i class="fa fa-angle-down"
-								aria-hidden="true"></i>
+							<li class="dropdown first"><a
+							class="btn btn-default dropdown-toggle lv1""
+							data-toggle="dropdown"> Bono <i
+								class="fa fa-angle-down" aria-hidden="true"></i>
 						</a>
 							<ul class="dropdown-menu level1">
-								<li><a href="addKart">Añadir kart</a></li>
-								<li><a href="listKarts">Ver karts</a></li>
+								<li><a href="addBono">Adquirir Bono</a></li>
 							</ul></li>
-						<li><a href="listReservas">Reservas</a></li>
 					</ul>
 					<form method="get" autocomplete="off" action="logout">
 						<ul class="nav navbar-nav flex-child-menu menu-right">
@@ -104,94 +114,70 @@
 				</div>
 				<!-- /.navbar-collapse -->
 			</nav>
-
 		</div>
 	</header>
 	<!-- END | Header -->
-
+	<!-- Welcome mensaje -->
 	<div class="hero common-hero">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
 					<div class="hero-ct">
-						<h1>
-							Bienvenido de nuevo:
-							<jsp:getProperty property="emailUser" name="customerBean" /></h1>
-						<ul class="breadcumb">
-							<li class="active"><a href="#">Hoy es: </a></li>
-							<li><%=formatter6.format(new java.util.Date())%></li>
-						</ul>
+						<h1>Crear una reserva de adultos</h1>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- list section-->
 	<div class="page-single">
 		<div class="container">
-			<div class="row ipad-width2">
+			<div class="row ipad-width">
+				<div class="col-md-3 col-sm-12 col-xs-12">
+				</div>
 				<div class="col-md-9 col-sm-12 col-xs-12">
-					<h1 style="color: white">Usuarios del sistema</h1>
-					<br></br>
-					<%
-						ArrayList<UsuarioDTO> users = gestor.getUsuarios();
-					%>
-					<div class="row">
-						<%
-							for (int i = 0; i < users.size(); i++) {
-						%>
-						<div class="col-md-12">
-							<div class="ceb-item-style-2">
-								<div class="ceb-infor">
-									<p><%="Nombre: " + users.get(i).getName()%></p>
-									<p><%="Email: " + users.get(i).getEmail()%></p>
-									<p><%="Rol: " + users.get(i).getType()%></p>
-									<p><%="Fecha de registro: "
-							+ formatter5.format(users.get(i).getInscription())%></p>
+					<div class="form-style-1 user-pro">
+						<form method="post" action="addReservaAdulto" class="user">
+							<h4>Introduzca los datos de la reserva</h4>
+							<div class="row">
+							<div class="col-md-6 form-it">
+								<label>Tipo</label> <select name="type">
+										<option value="adultos">Adultos</option>
+									</select>
+								</div>
+							<div class="col-md-6 form-it">
+								<label for="dateOfBirth"> Fecha de la reserva: <input type="date"
+									name="date" required="required" />
+								</label>
+							</div>
+							<div class="col-md-6 form-it">
+								<label>Duración</label> <select name="duration">
+										<option value="60">60</option>
+										<option value="90">90</option>
+										<option value="120">120</option>
+									</select>
+								</div>
+								<div class="col-md-6 form-it">
+									<label>Pistas</label> <select name="pista">
+									<% for(int i=0; i<pistas.size(); i++){
+										if(pistas.get(i).getDif().equals(PistaDTO.dificulty.adultos)){
+										%>
+										<option value=<%=pistas.get(i).getName() %>><%= pistas.get(i).getName() %></option>
+										<%}	}%>
+									</select>
+								</div>
+								<div class="col-md-6 form-it">
+									<label>Nº de participantes</label>
+									<input type="number" name="nPart" min="1"
+										placeholder="1" />
 								</div>
 							</div>
-						</div>
-						<%
-							}
-						%>
-					</div>
-				</div>
-				<div class="col-md-3 col-xs-12 col-sm-12">
-					<div class="sidebar">
-						<div class="searh-form">
-							<h4 class="sb-title">Registrar usuario</h4>
-							<form class="form-style-1 celebrity-form" method="post"
-								autocomplete="off" action="register">
-								<div class="row">
-									<div class="col-md-12 form-it">
-										<label>Nombre</label> <input type="text" name="name"
-											required="required" />
-									</div>
-									<div class="col-md-12 form-it">
-										<label>Rol</label> <select name="type">
-										<option value="administrador">Administrador</option>
-										<option value="cliente">Cliente</option>
-									</select>
-									</div>
-									<div class="col-md-12 form-it">
-										<label>Email</label> <input type="text" name="email"
-											required="required" />
-									</div>
-									<div class="col-md-12 form-it">
-										<label>Contraseña</label> <input type="password"
-											name="password" required="required" />
-									</div>
-									<div class="col-md-12 form-it">
-										<label for="dateOfBirth"> Fecha de nacimiento: <input type="dateOfBirth"
-											name="dateOfBirth" required="required" />
-										</label>
-									</div>
-									<div class="col-md-12 ">
-										<input class="submit" type="submit" value="register">
-									</div>
+							<div class="row">
+								<div class="col-md-6 form-it">
+									<hr>
+									<input class="submit" type="submit" value="Guardar" />
 								</div>
-							</form>
-						</div>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -237,7 +223,7 @@
 					<br></br>
 					<h4>Contacto</h4>
 					<p>
-						Av. de Medina Azahara, 5,<br>14071 C&oacute;rdoba
+						Av. de Rabanales, s/n,<br>14014 C&oacute;rdoba
 					</p>
 					<p>
 						Ll&aacute;manos: <a href="#">(+34) 957 218 000</a>
@@ -253,8 +239,8 @@
 	<script src="js/custom.js"></script>
 	<%
 		} else {
-			if (customerBean.getTypeUser().equals(UsuarioDTO.type.cliente)) {
-				nextPage = "mvc/view/userHome.jsp";
+			if (customerBean.getTypeUser().equals(UsuarioDTO.type.administrador)) {
+				nextPage = "mvc/view/adminHome.jsp";
 	%>
 	<jsp:forward page="<%=nextPage%>">
 		<jsp:param value="<%=mensajeNextPage%>" name="message" />

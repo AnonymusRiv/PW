@@ -62,7 +62,7 @@ public class listKartsServlet extends HttpServlet {
 
         gestorPistas.registerKart(kart);
       } else {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/errorAdingKart.html");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/errorAddingKart.html");
         dispatcher.include(request, response);
       }
 

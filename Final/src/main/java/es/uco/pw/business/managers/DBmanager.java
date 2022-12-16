@@ -62,6 +62,7 @@ public class DBmanager {
     private String registrarKartsQuery;
     private String deleteKartQuery;
     private String modificarKartQuery;
+    private String asociarKaPQuery;
 
     protected Connection connection = null;
     
@@ -117,6 +118,7 @@ public class DBmanager {
         registrarKartsQuery=prop.getProperty("registrarKart");
         deleteKartQuery=prop.getProperty("deleteKart");
         modificarKartQuery=prop.getProperty("modificarKart");
+        asociarKaPQuery=prop.getProperty("asociarKaP");
         
       } catch (FileNotFoundException e) {
           e.printStackTrace();
@@ -791,6 +793,26 @@ public class DBmanager {
 
     public void setModificarKartQuery(String modificarKartQuery) {
         this.modificarKartQuery = modificarKartQuery;
+    }
+    
+    /**
+     * Método público para obtener una query
+     * @param none
+     * @return String Query buscada
+     */
+
+    public String getasociarKaPQuery() {
+        return asociarKaPQuery;
+    }
+    
+    /**
+     * Método público para modificar una query
+     * @param String Query a modificar
+     * @return none
+     */
+
+    public void setasociarKaPQuery(String asociarKaPQuery) {
+        this.asociarKaPQuery = asociarKaPQuery;
     }
     
     /**

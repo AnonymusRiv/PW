@@ -313,6 +313,45 @@ public class PistaDAO {
         }
         
         /**
+         * Asocia un kart a una pista
+         * @param email
+         * @return none
+         */
+        
+        public void asociarKaP(KartDTO kart, int id) {
+            try {
+                DBmanager DBm = DBmanager.getInstance();
+                Connection connection = DBm.getConnection();
+                PreparedStatement ps = null;
+            
+                Statement stmt = connection.createStatement();
+                String query= MessageFormat.format(DBm.getasociarKaPQuery(),"'",kart.getStat(),"'","'",kart.getpistaId(),"'","'",kart.getId(),"'");
+                String aux = null;
+                if(kart.getStat() == KartDTO.status.disponible) {
+                    aux = "disponible";
+                }
+                if(kart.getStat() == KartDTO.status.reservado) {
+                    aux = "reservado";
+                }
+                if(kart.getStat() == KartDTO.status.mantenimiento) {
+                    aux = "mantenimiento";
+                }
+                ps = connection.prepareStatement(query);
+                ps.setString(1, aux);
+                ps.setString(2, kart.getpistaId());
+                ps.setInt(3, id);
+                
+                ps.executeUpdate();
+                if (stmt != null) {
+                    stmt.close();
+                }
+              } catch (Exception e) {
+              System.err.println(e);
+              e.printStackTrace();
+            }
+        }
+        
+        /**
          * Borra un kart del sistema
          * @param email
          * @return none

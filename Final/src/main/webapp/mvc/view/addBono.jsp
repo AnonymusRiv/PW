@@ -1,22 +1,29 @@
+<%@page import="es.uco.pw.business.DTO.KartDTO"%>
+<%@page import="es.uco.pw.business.managers.GestorPistas"%>
+<%@page import="es.uco.pw.business.DTO.PistaDTO"%>
+<%@page import="es.uco.pw.business.DTO.ReservaAdultosDTO"%>
+<%@page import="es.uco.pw.business.DTO.ReservaInfantilDTO"%>
+<%@page import="es.uco.pw.business.DTO.ReservaFamiliarDTO"%>
+<%@page import="es.uco.pw.business.managers.GestorReservas"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <jsp:useBean id="customerBean" scope="session"
 	class="es.uco.pw.display.javabean.CustomerBean"></jsp:useBean>
 <%@ page
-	import="java.text.SimpleDateFormat, es.uco.pw.business.managers.GestorPistas,es.uco.pw.business.DTO.KartDTO, es.uco.pw.business.DTO.PistaDTO,es.uco.pw.business.DTO.UsuarioDTO, es.uco.pw.business.managers.GestorUsuarios ,java.util.ArrayList"%>
+	import="java.text.SimpleDateFormat,es.uco.pw.business.DTO.UsuarioDTO,es.uco.pw.business.managers.DBmanager,es.uco.pw.business.managers.GestorUsuarios,java.util.ArrayList"%>
 <html>
 <%
-	SimpleDateFormat formatter6 = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm");
+	SimpleDateFormat formatter6 = new SimpleDateFormat("dd-MM-yyyy");
 	request.setCharacterEncoding("UTF-8");
 	SimpleDateFormat formatter5 = new SimpleDateFormat(
-			"dd-MM-yyyy HH:mm");
+		"dd-MM-yyyy HH:mm");
 	GestorUsuarios gestorUsuarios = GestorUsuarios.getInstance();
+	GestorReservas gestorReservas = GestorReservas.getInstance();
 %>
 <!-- moviegridfw07:38-->
 <head>
 <!-- Basic need -->
-<title>UCOKarts</title>
+<title>UCOkarts</title>
 <meta charset="UTF-8">
 <meta name="description" content="">
 <meta name="keywords" content="">
@@ -48,19 +55,11 @@
 		<%
 			String nextPage = "";
 			String mensajeNextPage = "";
-			if (customerBean != null) {
-				UsuarioDTO user = gestorUsuarios.findUser(customerBean.getEmailUser());
+			if (customerBean != null
+					&& customerBean.getTypeUser().equals(UsuarioDTO.type.cliente)) {
 		%>
 	</div>
 	<!--end of preloading-->
-	<!-- BEGIN | Header -->
-	<%
-		if (customerBean.getTypeUser().equals(UsuarioDTO.type.cliente)) {
-				nextPage = "mvc/view/userHome.jsp";
-	%>
-	<jsp:forward page="<%=nextPage%>">
-		<jsp:param value="<%=mensajeNextPage%>" name="message" />
-	</jsp:forward>
 	<!-- BEGIN | Header -->
 	<header class="ht-header">
 		<div class="container">
@@ -84,9 +83,25 @@
 						<li class="hidden"><a href="#page-top"></a></li>
 						<li><a href="index.jsp">Inicio</a></li>
 						<li><a href="userProfile">Perfil</a></li>
-						<li><a href="searchSpectacle">Espectáculos</a></li>
-						<li><a href="listSesions">Sesiones</a></li>
-						<li><a href="userReviews">Mis críticas</a></li>
+						<li class="dropdown first"><a
+							class="btn btn-default dropdown-toggle lv1"
+							data-toggle="dropdown"> Reservas <i
+								class="fa fa-angle-down" aria-hidden="true"></i>
+						</a>
+							<ul class="dropdown-menu level1">
+								<li><a href="addReserva">Crear reserva</a></li>
+								<li><a href="listReservas">Ver reservas</a></li>
+								<li><a href="deleteReserva">Cancelar reservas</a></li>
+							</ul></li>
+							<li class="dropdown first"><a
+							class="btn btn-default dropdown-toggle lv1"
+							style="color: #DCF836"
+							data-toggle="dropdown"> Bono <i
+								class="fa fa-angle-down" aria-hidden="true"></i>
+						</a>
+							<ul class="dropdown-menu level1">
+								<li><a href="addBono">Adquirir Bono</a></li>
+							</ul></li>
 					</ul>
 					<form method="get" autocomplete="off" action="logout">
 						<ul class="nav navbar-nav flex-child-menu menu-right">
@@ -97,101 +112,17 @@
 				</div>
 				<!-- /.navbar-collapse -->
 			</nav>
-
-			<!-- top search form -->
-			<form method="post" autocomplete="off" action="searchSpectacle">
-				<div class="top-search">
-					<select name="filter">
-						<option value="title">T&iacute;tulo</option>
-						<option value="category">Categor&iacute;a</option>
-					</select> <input type="text" name="search"
-						placeholder="Busque un espect&aacute;culo por t&iacute;tulo o por categor&iacute;a">
-					<input name="hidden" type="submit" style="display: none;">
-				</div>
-			</form>
 		</div>
 	</header>
-	<%
-		} else {
-	%>
-	<!-- BEGIN | Header -->
-	<header class="ht-header">
-		<div class="container">
-			<nav class="navbar navbar-default navbar-custom">
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header logo">
-					<div class="navbar-toggle" data-toggle="collapse"
-						data-target="#bs-example-navbar-collapse-1">
-						<span class="sr-only">Toggle navigation</span>
-						<div id="nav-icon1">
-							<span></span> <span></span> <span></span>
-						</div>
-					</div>
-					<a href="#"><img class="logo" src="images/logo1.png" alt=""
-						width="119" height="58"></a>
-				</div>
-				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse navbar-collapse flex-parent"
-					id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav flex-child-menu menu-left">
-						<li class="hidden"><a href="#page-top"></a></li>
-						<li><a href="index.jsp">Inicio</a></li>
-						<li><a href="userProfile">Perfil</a></li>
-						<li class="dropdown first"><a
-							class="btn btn-default dropdown-toggle lv1"
-							style="color: #DCF836" data-toggle="dropdown">
-								Pistas <i class="fa fa-angle-down"
-								aria-hidden="true"></i>
-						</a>
-							<ul class="dropdown-menu level1">
-								<li><a href="addPista">Añadir pista</a></li>
-								<li><a href="listPistas">Ver pistas</a></li>
-							</ul></li>
-						<li class="dropdown first"><a
-							class="btn btn-default dropdown-toggle lv1"
-							data-toggle="dropdown"> Karts <i class="fa fa-angle-down"
-								aria-hidden="true"></i>
-						</a>
-							<ul class="dropdown-menu level1">
-								<li><a href="addKart">Añadir kart</a></li>
-								<li><a href="listKarts">Ver karts</a></li>
-							</ul></li>
-						<li><a href="userReviews">Mis críticas</a></li>
-					</ul>
-					<form method="get" autocomplete="off" action="logout">
-						<ul class="nav navbar-nav flex-child-menu menu-right">
-							<li><button class="redbtn" style="border: none"
-									type="submit">Cerrar sesión</button></li>
-						</ul>
-					</form>
-				</div>
-				<!-- /.navbar-collapse -->
-			</nav>
-
-			<!-- top search form -->
-			<form method="post" autocomplete="off" action="searchSpectacle">
-				<div class="top-search">
-					<select name="filter">
-						<option value="title">T&iacute;tulo</option>
-						<option value="category">Categor&iacute;a</option>
-					</select> <input type="text" name="search"
-						placeholder="Busque un espect&aacute;culo por t&iacute;tulo o por categor&iacute;a">
-					<input name="hidden" type="submit" style="display: none;">
-				</div>
-			</form>
-		</div>
-	</header>
-	<%
-		}
-	%>
 	<!-- END | Header -->
-
-	<div class="hero user-hero">
+	<!-- Welcome mensaje -->
+	<div class="hero common-hero">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
 					<div class="hero-ct">
-						<h1>Crear una nueva reserva</h1>
+						<h1>Adquirir un bono</h1>
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -200,40 +131,19 @@
 	<div class="page-single">
 		<div class="container">
 			<div class="row ipad-width">
+				<div class="col-md-3 col-sm-12 col-xs-12">
+				</div>
 				<div class="col-md-9 col-sm-12 col-xs-12">
 					<div class="form-style-1 user-pro">
-						<form method="post" action="addKart" class="user">
-							<h4>Datos de la reserva</h4>
+						<form method="post" action="addBono" class="user">
+							<h4>Introduzca el tipo de reserva del bono</h4>
 							<div class="row">
-								<div class="col-md-6 form-it">
-									<label>Nombre de usuario: </label> <input type="text" name="userId"
-										required="required" />
-								</div>
-								<div class="col-md-6 form-it">
-									<label>Fecha: </label> <input type="text" name="date"
-										required="required" />
-								</div>
-								<div class="col-md-6 form-it">
-									<label>Duración (en min): </label> <input type="text" name="duration"
-										required="required" />
-								</div>
-								<div class="row">
-								<div class="col-md-6 form-it">
-									<label>Tipo de reserva:</label> <select name="type">
-										<option value="adultos">Adultos</option>
+							<div class="col-md-6 form-it">
+								<label>Tipo</label> <select name="type">
 										<option value="infantil">Infantil</option>
 										<option value="familiar">Familiar</option>
+										<option value="adultos">Adultos</option>
 									</select>
-								</div>
-								<div class="col-md-6 form-it">
-									<label>Pista: </label> <input type="text" name="pistId"
-										required="required" />
-								</div>
-								<div class="col-md-6 form-it">
-									<label>Nº de participantes</label>
-									<input type="number" name="max" min="1"
-										placeholder="1" />
-								</div>
 								</div>
 							</div>
 							<div class="row">
@@ -241,7 +151,6 @@
 									<hr>
 									<input class="submit" type="submit" value="Guardar" />
 								</div>
-							
 							</div>
 						</form>
 					</div>
@@ -289,7 +198,7 @@
 					<br></br>
 					<h4>Contacto</h4>
 					<p>
-						Av. de Medina Azahara, 5,<br>14071 C&oacute;rdoba
+						Av. de Rabanales, s/n,<br>14014 C&oacute;rdoba
 					</p>
 					<p>
 						Ll&aacute;manos: <a href="#">(+34) 957 218 000</a>
@@ -304,6 +213,22 @@
 	<script src="js/plugins2.js"></script>
 	<script src="js/custom.js"></script>
 	<%
+		} else {
+			if (customerBean.getTypeUser().equals(UsuarioDTO.type.administrador)) {
+				nextPage = "mvc/view/adminHome.jsp";
+	%>
+	<jsp:forward page="<%=nextPage%>">
+		<jsp:param value="<%=mensajeNextPage%>" name="message" />
+	</jsp:forward>
+	<%
+		} else {
+				nextPage = "../../index.jsp";
+	%>
+	<jsp:forward page="<%=nextPage%>">
+		<jsp:param value="<%=mensajeNextPage%>" name="message" />
+	</jsp:forward>
+	<%
+		}
 		}
 	%>
 </body>

@@ -12,9 +12,9 @@
 			"dd-MM-yyyy HH:mm");
 	GestorUsuarios gestorUsuarios = GestorUsuarios.getInstance();
 	GestorReservas gestorReservas = GestorReservas.getInstance();
-	ArrayList<ReservaAdultosDTO> reservasA = gestorReservas.getId();
-	ArrayList<ReservaFamiliarDTO> reservasF = gestorReservas.getId();
-	ArrayList<ReservaInfantilDTO> reservasI = gestorReservas.getId();
+	ArrayList<ReservaAdultosDTO> resA = gestorReservas.reservasFuturasAdultos();
+	ArrayList<ReservaFamiliarDTO> resF = gestorReservas.reservasFuturasFamiliar();
+	ArrayList<ReservaInfantilDTO> resI = gestorReservas.reservasFuturasInfantil();
 %>
 <!-- moviegridfw07:38-->
 <head>
@@ -51,6 +51,7 @@
 		<%
 			String nextPage = "";
 			String mensajeNextPage = "";
+			String date="2022-12-19 12:00:00.0";
 			if (customerBean != null) {
 				String search = customerBean.getSearch();
 				String filter = customerBean.getFilter();
@@ -72,35 +73,35 @@
 							<span></span> <span></span> <span></span>
 						</div>
 					</div>
-					<a href="#"><img class="logo" src="images/logo1.png" alt=""
-						width="119" height="58"></a>
+					<a href="index.jsp"><img class="logo" src="images/logo1.png"
+						alt="" width="119" height="58"></a>
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse flex-parent"
 					id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav flex-child-menu menu-left">
 						<li class="hidden"><a href="#page-top"></a></li>
-						<li><a style="color: #DCF836" href="index.jsp">Inicio</a></li>
+						<li><a href="index.jsp">Inicio</a></li>
 						<li><a href="userProfile">Perfil</a></li>
 						<li class="dropdown first"><a
 							class="btn btn-default dropdown-toggle lv1"
-							data-toggle="dropdown"> Pistas <i
+							style="color: #DCF836"
+							data-toggle="dropdown"> Reservas <i
 								class="fa fa-angle-down" aria-hidden="true"></i>
 						</a>
 							<ul class="dropdown-menu level1">
-								<li><a href="addPista">Añadir pista</a></li>
-								<li><a href="searchSpectacle">Ver pistas</a></li>
+								<li><a href="addReserva">Crear reserva</a></li>
+								<li><a href="listReservas">Ver reservas</a></li>
+								<li><a href="deleteReserva">Cancelar reservas</a></li>
 							</ul></li>
-						<li class="dropdown first"><a
+							<li class="dropdown first"><a
 							class="btn btn-default dropdown-toggle lv1"
-							data-toggle="dropdown"> karts <i class="fa fa-angle-down"
-								aria-hidden="true"></i>
+							data-toggle="dropdown"> Bono <i
+								class="fa fa-angle-down" aria-hidden="true"></i>
 						</a>
 							<ul class="dropdown-menu level1">
-								<li><a href="addKart">Añadir kart</a></li>
-								<li><a href="listKarts">Ver karts</a></li>
+								<li><a href="addBono">Adquirir Bono</a></li>
 							</ul></li>
-						<li><a href="userReviews">Mis críticas</a></li>
 					</ul>
 					<form method="get" autocomplete="off" action="logout">
 						<ul class="nav navbar-nav flex-child-menu menu-right">
@@ -111,18 +112,6 @@
 				</div>
 				<!-- /.navbar-collapse -->
 			</nav>
-
-			<!-- top search form -->
-			<form method="post" autocomplete="off" action="searchSpectacle">
-				<div class="top-search">
-					<select name="filter">
-						<option value="title">T&iacute;tulo</option>
-						<option value="category">Categor&iacute;a</option>
-					</select> <input type="text" name="search"
-						placeholder="Busque un espect&aacute;culo por t&iacute;tulo o por categor&iacute;a">
-					<input name="hidden" type="submit" style="display: none;">
-				</div>
-			</form>
 		</div>
 	</header>
 	<!-- END | Header -->
@@ -149,161 +138,174 @@
 		<div class="container">
 			<div class="row ipad-width2">
 				<div class="col-md-9 col-sm-12 col-xs-12">
-					<h1 style="color: white">Reservas de Adultos</h1>
+					<h1 style="color: white">Reservas de Adultos:</h1>
 					<br></br>
 					<div class="row">
+					
 						<%
-							for (int i = 0; i < reservasA.size(); i++) {
+						for (int i = 0; i < resA.size(); i++) {
+							if(resA.get(i).getUserId().equals(customerBean.getEmailUser())){
+								if(resA.get(i).getDate().compareTo(date)>0){
 						%>
 						<div class="col-md-12">
 							<div class="ceb-item-style-2">
 								<div class="ceb-infor">
-									<h2>
-										<a
-											href=<%="listReserva?ReservaId="
-								+ reservasA.get(i).getId()%>></a>
-									</h2>
-									<p />
-								<p>
-								<p><%="Bono = "
-								+ reservasA.get(i).getBonoId()%></p>
-								<p><%="Fecha = "
-								+ reservasA.get(i).getDate()%></p>
-								<p><%="Descuento = "
-								+ reservasA.get(i).getDiscount()%></p>
-								<p><%="Duración = "
-								+ reservasA.get(i).getDuration()%></p>
-								<p><%="Nº Participantes = "
-								+ reservasA.get(i).getnParticipants()%></p>
-								<p><%="Identificador de Pista = "
-								+ reservasA.get(i).getPistId()%></p>
-								<p><%="Precio = "
-								+ reservasA.get(i).getPrice()%></p>
-								<p><%="Identificador de Usuario = "
-								+ reservasA.get(i).getUserId()%></p>
-									<%
-										if (customerBean.getTypeUser().equals(UsuarioDTO.type.administrador)) {
-									%>
-									<hr>
-									<a class="redbtn"
-										href=<%="deleteReserva?ReservaId="
-									+ reservasA.get(i).getId()%>
-										style="border: none" type="submit">Cancelar</a> <br></br>
-									<%
-										}
-									%>
+										<p><%="ID de la reserva: " + resA.get(i).getId()%></p>
+										<p><%="Bono: " + resA.get(i).getBonoId()%></p>
+										<p><%="Fecha: " + resA.get(i).getDate()%></p>
+										<p><%="Duración: " + resA.get(i).getDuration()%></p>
+										<p><%="Precio: " + resA.get(i).getPrice()%></p>
+										<p><%="Descuento: " + resA.get(i).getDiscount()%></p>
+										<p><%="ID de la pista: " + resA.get(i).getPistId()%></p>
+										<p><%="Nº de participantes: " + resA.get(i).getnParticipants()%></p>
+										<p><%="Estado: Por realizar"%></p>
+										<hr>
+										<a class="redbtn"
+											href=<%="deleteReserva?ReservaId="
+											+ resA.get(i).getId()%>
+											style="border: none" type="submit">Cancelar</a> <br></br>
 								</div>
 							</div>
 						</div>
 						<%
-							}
+								}
+								else{
 						%>
+						<div class="col-md-12">
+							<div class="ceb-item-style-2">
+								<div class="ceb-infor">
+										<p><%="ID de la reserva: " + resA.get(i).getId()%></p>
+										<p><%="Bono: " + resA.get(i).getBonoId()%></p>
+										<p><%="Fecha: " + resA.get(i).getDate()%></p>
+										<p><%="Duración: " + resA.get(i).getDuration()%></p>
+										<p><%="Precio: " + resA.get(i).getPrice()%></p>
+										<p><%="Descuento: " + resA.get(i).getDiscount()%></p>
+										<p><%="ID de la pista: " + resA.get(i).getPistId()%></p>
+										<p><%="Nº de participantes: " + resA.get(i).getnParticipants()%></p>
+										<p><%="Estado: Finalizada"%></p>
+								</div>
+							</div>
+						</div>
 					</div>
-					<h1 style="color: white">Reservas Familiares</h1>
+					<%
+								}
+							}
+						}
+					%>
+					
+					<h1 style="color: white">Reservas Familiares:</h1>
 					<br></br>
 					<div class="row">
 						<%
-							for (int i = 0; i < reservasF.size(); i++) {
+						for (int i = 0; i < resF.size(); i++) {
+							if(resF.get(i).getUserId().equals(customerBean.getEmailUser())){
+								if(resF.get(i).getDate().compareTo(date)>0){
 						%>
 						<div class="col-md-12">
 							<div class="ceb-item-style-2">
 								<div class="ceb-infor">
-									<h2>
-										<a
-											href=<%="listReserva?ReservaId="
-								+ reservasF.get(i).getId()%>></a>
-									</h2>
-									<p />
-								<p>
-								<p><%="Bono = "
-								+ reservasF.get(i).getBonoId()%></p>
-								<p><%="Fecha = "
-								+ reservasF.get(i).getDate()%></p>
-								<p><%="Descuento = "
-								+ reservasF.get(i).getDiscount()%></p>
-								<p><%="Duración = "
-								+ reservasF.get(i).getDuration()%></p>
-								<p><%="Nº Participantes = "
-								+ reservasF.get(i).getnParticipants()%></p>
-								<p><%="Identificador de Pista = "
-								+ reservasF.get(i).getPistId()%></p>
-								<p><%="Precio = "
-								+ reservasF.get(i).getPrice()%></p>
-								<p><%="Identificador de Usuario = "
-								+ reservasF.get(i).getUserId()%></p>
-									<%
-										if (customerBean.getTypeUser().equals(UsuarioDTO.type.administrador)) {
-									%>
-									<hr>
-									<a class="redbtn"
-										href=<%="deleteReserva?ReservaId="
-									+ reservasA.get(i).getId()%>
-										style="border: none" type="submit">Cancelar</a> <br></br>
-									<%
-										}
-									%>
+										<p><%="ID de la reserva: " + resF.get(i).getId()%></p>
+										<p><%="Bono: " + resF.get(i).getBonoId()%></p>
+										<p><%="Fecha: " + resF.get(i).getDate()%></p>
+										<p><%="Duración: " + resF.get(i).getDuration()%></p>
+										<p><%="Precio: " + resF.get(i).getPrice()%></p>
+										<p><%="Descuento: " + resF.get(i).getDiscount()%></p>
+										<p><%="ID de la pista: " + resF.get(i).getPistId()%></p>
+										<p><%="Nº de niñ@s: " + resF.get(i).getnChildren()%></p>
+										<p><%="Nº de adultos: " + resF.get(i).getnAdults()%></p>
+										<p><%="Estado: Por realizar"%></p>
+										<hr>
+										<a class="redbtn"
+											href=<%="deleteReserva?ReservaId="
+											+ resF.get(i).getId()%>
+											style="border: none" type="submit">Cancelar</a> <br></br>
 								</div>
 							</div>
 						</div>
 						<%
-							}
+								}
+								else{
 						%>
+						<div class="col-md-12">
+							<div class="ceb-item-style-2">
+								<div class="ceb-infor">
+										<p><%="ID de la reserva: " + resF.get(i).getId()%></p>
+										<p><%="Bono: " + resF.get(i).getBonoId()%></p>
+										<p><%="Fecha: " + resF.get(i).getDate()%></p>
+										<p><%="Duración: " + resF.get(i).getDuration()%></p>
+										<p><%="Precio: " + resF.get(i).getPrice()%></p>
+										<p><%="Descuento: " + resF.get(i).getDiscount()%></p>
+										<p><%="ID de la pista: " + resF.get(i).getPistId()%></p>
+										<p><%="Nº de niñ@s: " + resF.get(i).getnChildren()%></p>
+										<p><%="Nº de adultos: " + resF.get(i).getnAdults()%></p>
+										<p><%="Estado: Finalizada"%></p>
+								</div>
+							</div>
+						</div>
 					</div>
-					<h1 style="color: white">Reservas Infantiles</h1>
+					<%
+								}
+							}
+						}
+					%>
+					<h1 style="color: white">Reservas Infantiles:</h1>
 					<br></br>
 					<div class="row">
 						<%
-							for (int i = 0; i < reservasI.size(); i++) {
+						for (int i = 0; i < resI.size(); i++) {
+							if(resI.get(i).getUserId().equals(customerBean.getEmailUser())){
+								if(resI.get(i).getDate().compareTo(date)>0){
 						%>
 						<div class="col-md-12">
 							<div class="ceb-item-style-2">
 								<div class="ceb-infor">
-									<h2>
-										<a
-											href=<%="listReserva?ReservaId="
-								+ reservasI.get(i).getId()%>></a>
-									</h2>
-									<p />
-								<p>
-								<p><%="Bono = "
-								+ reservasI.get(i).getBonoId()%></p>
-								<p><%="Fecha = "
-								+ reservasI.get(i).getDate()%></p>
-								<p><%="Descuento = "
-								+ reservasI.get(i).getDiscount()%></p>
-								<p><%="Duración = "
-								+ reservasI.get(i).getDuration()%></p>
-								<p><%="Nº Participantes = "
-								+ reservasI.get(i).getnParticipants()%></p>
-								<p><%="Identificador de Pista = "
-								+ reservasI.get(i).getPistId()%></p>
-								<p><%="Precio = "
-								+ reservasI.get(i).getPrice()%></p>
-								<p><%="Identificador de Usuario = "
-								+ reservasI.get(i).getUserId()%></p>
-									<%
-										if (customerBean.getTypeUser().equals(UsuarioDTO.type.administrador)) {
-									%>
-									<hr>
-									<a class="redbtn"
-										href=<%="deleteReserva?ReservaId="
-									+ reservasA.get(i).getId()%>
-										style="border: none" type="submit">Cancelar</a> <br></br>
-									<%
-										}
-									%>
+										<p><%="ID de la reserva: " + resI.get(i).getId()%></p>
+										<p><%="Bono: " + resI.get(i).getBonoId()%></p>
+										<p><%="Fecha: " + resI.get(i).getDate()%></p>
+										<p><%="Duración: " + resI.get(i).getDuration()%></p>
+										<p><%="Precio: " + resI.get(i).getPrice()%></p>
+										<p><%="Descuento: " + resI.get(i).getDiscount()%></p>
+										<p><%="ID de la pista: " + resI.get(i).getPistId()%></p>
+										<p><%="Nº de participantes: " + resI.get(i).getnChildren()%></p>
+										<p><%="Estado: Por realizar"%></p>
+										<hr>
+										<a class="redbtn"
+											href=<%="deleteReserva?ReservaId="
+											+ resA.get(i).getId()%>
+											style="border: none" type="submit">Cancelar</a> <br></br>
 								</div>
 							</div>
 						</div>
 						<%
-							}
+								}
+								else{
 						%>
+						<div class="col-md-12">
+							<div class="ceb-item-style-2">
+								<div class="ceb-infor">
+										<p><%="ID de la reserva: " + resI.get(i).getId()%></p>
+										<p><%="Bono: " + resI.get(i).getBonoId()%></p>
+										<p><%="Fecha: " + resI.get(i).getDate()%></p>
+										<p><%="Duración: " + resI.get(i).getDuration()%></p>
+										<p><%="Precio: " + resI.get(i).getPrice()%></p>
+										<p><%="Descuento: " + resI.get(i).getDiscount()%></p>
+										<p><%="ID de la pista: " + resI.get(i).getPistId()%></p>
+										<p><%="Nº de participantes: " + resI.get(i).getnChildren()%></p>
+										<p><%="Estado: Finalizada"%></p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<%
+								}
+							}
+						}
+					%>
 					</div>
 				</div>
 				
 			</div>
 		</div>
-	</div>
 	<!-- end of list section-->
 	<!-- footer section-->
 	<footer class="ht-footer">
@@ -364,4 +366,4 @@
 </body>
 
 <!-- userfavoritelist14:04-->
-</html
+</html>

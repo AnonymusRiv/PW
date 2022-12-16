@@ -55,11 +55,6 @@ public class listarPistaDisponibleServlet extends HttpServlet {
       RequestDispatcher dispatcher = request.getRequestDispatcher("/mvc/view/userHome.jsp");
       dispatcher.include(request, response);
     } else {
-      GestorPistas gestorPistas = GestorPistas.getInstance();
-
-      String name = request.getParameter("name");
-
-      gestorPistas.pistasLibres(name);
       
       RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/listPistas.jsp");
       dispatcher.include(request, response);

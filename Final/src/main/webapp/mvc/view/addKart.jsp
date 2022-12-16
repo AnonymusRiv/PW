@@ -143,7 +143,7 @@
 						<li><a href="userProfile">Perfil</a></li>
 						<li class="dropdown first"><a
 							class="btn btn-default dropdown-toggle lv1"
-							style="color: #DCF836" data-toggle="dropdown">
+							data-toggle="dropdown">
 								Pistas <i class="fa fa-angle-down"
 								aria-hidden="true"></i>
 						</a>
@@ -153,6 +153,7 @@
 							</ul></li>
 						<li class="dropdown first"><a
 							class="btn btn-default dropdown-toggle lv1"
+							style="color: #DCF836"
 							data-toggle="dropdown"> Karts <i class="fa fa-angle-down"
 								aria-hidden="true"></i>
 						</a>
@@ -233,9 +234,17 @@
 								<div class="col-md-6 form-it">
 									<label>Pistas</label> <select name="pista">
 										<option value="">-</option>
-									<% for(int i=0; i<pistas.size(); i++){ %>
+									<% for(int i=0; i<pistas.size(); i++){
+										int aux = 0;
+										for(int j=0; j<karts.size(); j++){
+											if(karts.get(j).getpistaId().equals(pistas.get(i).getName())){
+												aux ++;
+											}
+										}
+										if(pistas.get(i).getMax() > aux){
+										%>
 										<option value=<%=pistas.get(i).getName() %>><%= pistas.get(i).getName() %></option>
-										<%} %>
+										<%}	}%>
 									</select>
 								</div>
 							</div>

@@ -13,6 +13,7 @@
 		"dd-MM-yyyy HH:mm");
 	GestorPistas gestorPistas = GestorPistas.getInstance();
 	ArrayList<PistaDTO> pistas = gestorPistas.getPistas();
+	ArrayList<KartDTO> karts = gestorPistas.getKarts();
 %>
 <!-- moviegridfw07:38-->
 <head>
@@ -198,7 +199,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="hero-ct">
-						<h1>Modificar kart</h1>
+						<h1>Asociar kart a pista</h1>
 					</div>
 				</div>
 			</div>
@@ -211,7 +212,7 @@
 				</div>
 				<div class="col-md-9 col-sm-12 col-xs-12">
 					<div class="form-style-1 user-pro">
-						<form method="post" action="modifyKart" class="user">
+						<form method="post" action="asociarKaP" class="user">
 							<h4>Datos del kart</h4>
 							<div class="row">
 							<div class="col-md-6 form-it">
@@ -219,24 +220,25 @@
 										<option value=<%=kart.getId()%>><%=kart.getId()%></option>
 									</select>
 								</div>
-							<div class="col-md-6 form-it">
-								<label>Tipo</label> <select name="type">
-										<option value="false">Infantil</option>
-										<option value="true">Adultos</option>
-									</select>
-								</div>
 								<div class="col-md-6 form-it">
 									<label>Pistas</label> <select name="pista">
 										<option value="">-</option>
-									<% for(int i=0; i<pistas.size(); i++){ %>
+									<% for(int i=0; i<pistas.size(); i++){
+										int aux = 0;
+										for(int j=0; j<karts.size(); j++){
+											if(karts.get(j).getpistaId().equals(pistas.get(i).getName())){
+												aux ++;
+											}
+										}
+										if(pistas.get(i).getMax() > aux){
+										if(kart.isType() == false && (pistas.get(i).getDif().equals(PistaDTO.dificulty.infantil) || pistas.get(i).getDif().equals(PistaDTO.dificulty.familiar))){
+											
+									%>
 										<option value=<%=pistas.get(i).getName() %>><%= pistas.get(i).getName() %></option>
-										<%} %>
-									</select>
-								</div>
-								<div class="col-md-6 form-it">
-									<label>Estado</label> <select name="status">
-										<option value="">-</option>
-										<option value="mantenimiento">En mantenimiento</option>
+									<%}else if(kart.isType() == true && (pistas.get(i).getDif().equals(PistaDTO.dificulty.adultos) || pistas.get(i).getDif().equals(PistaDTO.dificulty.familiar))){ %>
+									<option value=<%=pistas.get(i).getName() %>><%= pistas.get(i).getName() %></option>
+										<%}}
+										}%>
 									</select>
 								</div>
 							</div>

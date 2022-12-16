@@ -78,10 +78,11 @@
 					</ul>
 					<form method="get" autocomplete="off" action="modifyUser">
 						<ul class="nav navbar-nav flex-child-menu menu-right">
-							<li><button class="redbtn" style="border: none"
+							<li><button class="redbtn" style="border: none; background-color: orange"
 									type="submit">Modificar datos</button></li>
 						</ul>
 					</form>
+					&nbsp;
 					<form method="get" autocomplete="off" action="logout">
 						<ul class="nav navbar-nav flex-child-menu menu-right">
 							<li><button class="redbtn" style="border: none"

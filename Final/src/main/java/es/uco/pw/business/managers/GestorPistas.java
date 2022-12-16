@@ -131,24 +131,9 @@ public class GestorPistas {
 	 * @return none
 	 */
 	
-	public void asociarKartsAPista(ArrayList<KartDTO> karts, ArrayList<PistaDTO> pistas, KartDTO kart, PistaDTO pista) {
-		for(int i=0; i<karts.size(); i++){
-			if(karts.get(i).getId() == kart.getId()){
-				for(int j=0; j<pistas.size(); j++){
-					if(pistas.get(j).getName() == pista.getName()){
-						if((pista.getDif().equals(PistaDTO.dificulty.infantil)==true) && (kart.isType()==false) && (pista.isStatus()==true)) {
-							karts.add(kart);
-						}
-						if((pista.getDif().equals(PistaDTO.dificulty.familiar)==true) && (pista.isStatus()==true)) {
-							karts.add(kart);
-						}
-						if((pista.getDif().equals(PistaDTO.dificulty.adultos)==true) && (kart.isType()==true) && (pista.isStatus()==true)) {
-							karts.add(kart);
-						}
-					}
-				}
-			}
-		}
+	public void asociarKartsAPista(KartDTO kart, int id) {
+		PistaDAO kartdao = new PistaDAO();
+        kartdao.asociarKaP(kart, id);
 	}
 	
 	/**

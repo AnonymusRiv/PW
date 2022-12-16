@@ -5,6 +5,7 @@
 <%@page import="es.uco.pw.business.DTO.ReservaInfantilDTO"%>
 <%@page import="es.uco.pw.business.DTO.ReservaFamiliarDTO"%>
 <%@page import="es.uco.pw.business.managers.GestorReservas"%>
+<%@page import="java.util.Date" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <jsp:useBean id="customerBean" scope="session"
@@ -55,6 +56,7 @@
 		<%
 			String nextPage = "";
 			String mensajeNextPage = "";
+			String date="2022-12-19 12:00:00.0";
 			if (customerBean != null
 					&& customerBean.getTypeUser().equals(UsuarioDTO.type.cliente)) {
 		%>
@@ -92,6 +94,14 @@
 								<li><a href="addReserva">Crear reserva</a></li>
 								<li><a href="listReservas">Ver reservas</a></li>
 								<li><a href="deleteReserva">Cancelar reservas</a></li>
+							</ul></li>
+							<li class="dropdown first"><a
+							class="btn btn-default dropdown-toggle lv1"
+							data-toggle="dropdown"> Bono <i
+								class="fa fa-angle-down" aria-hidden="true"></i>
+						</a>
+							<ul class="dropdown-menu level1">
+								<li><a href="addBono">Adquirir Bono</a></li>
 							</ul></li>
 					</ul>
 					<form method="get" autocomplete="off" action="logout">
@@ -139,8 +149,11 @@
 					%>
 					<div class="row">
 						<%
+							Date fecha=new Date();
+							String fechaString=fecha.toString();
 							for (int i = 0; i < res1.size(); i++) {
 								if(res1.get(i).getUserId().equals(customerBean.getEmailUser())){
+									if(res1.get(i).getDate().compareTo(date)>0){
 						%>
 						<div class="col-md-12">
 							<div class="ceb-item-style-2">
@@ -153,7 +166,8 @@
 								</div>
 							</div>
 						</div>
-						<%
+						<%		
+									}
 								}
 							}
 						%>
@@ -161,6 +175,7 @@
 						<%
 							for (int i = 0; i < res2.size(); i++) {
 								if(res2.get(i).getUserId().equals(customerBean.getEmailUser())){
+									if(res2.get(i).getDate().compareTo(date)>0){
 						%>
 						<div class="col-md-12">
 							<div class="ceb-item-style-2">
@@ -174,6 +189,7 @@
 							</div>
 						</div>
 						<%
+									}
 								}
 							}
 						%>
@@ -181,6 +197,7 @@
 						<%
 							for (int i = 0; i < res3.size(); i++) {
 								if(res3.get(i).getUserId().equals(customerBean.getEmailUser())){
+									if(res3.get(i).getDate().compareTo(date)>0){
 						%>
 						<div class="col-md-12">
 							<div class="ceb-item-style-2">
@@ -194,6 +211,7 @@
 							</div>
 						</div>
 						<%
+									}
 								}
 							}
 						%>

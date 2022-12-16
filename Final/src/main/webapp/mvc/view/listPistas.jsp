@@ -78,10 +78,11 @@
 					id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav flex-child-menu menu-left">
 						<li class="hidden"><a href="#page-top"></a></li>
-						<li><a style="color: #DCF836" href="index.jsp">Inicio</a></li>
+						<li><a href="index.jsp">Inicio</a></li>
 						<li><a href="userProfile">Perfil</a></li>
 						<li class="dropdown first"><a
 							class="btn btn-default dropdown-toggle lv1"
+							style="color: #DCF836"
 							data-toggle="dropdown"> Pistas <i
 								class="fa fa-angle-down" aria-hidden="true"></i>
 						</a>

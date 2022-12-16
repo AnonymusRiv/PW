@@ -1,7 +1,9 @@
 package es.uco.pw.servlet;
 
 import es.uco.pw.business.managers.GestorPistas;
+import es.uco.pw.business.DTO.KartDTO;
 import es.uco.pw.business.DTO.PistaDTO;
+import es.uco.pw.business.DTO.UsuarioDTO;
 import es.uco.pw.display.javabean.CustomerBean;
 import java.io.IOException;
 import java.text.ParseException;
@@ -28,7 +30,7 @@ import javax.servlet.http.HttpSession;
 public class asociarKaPServlet extends HttpServlet {
 
   /** Serial ID */
-  private static final long serialVersionUID = -5782796844904182648L;
+  private static final long serialVersionUID = -1L;
 
   /**
    * Modifica una sesión proveniente de un formulario
@@ -48,30 +50,37 @@ public class asociarKaPServlet extends HttpServlet {
     CustomerBean customerBean = (CustomerBean) session.getAttribute("customerBean");
 
     if (customerBean == null || customerBean.getEmailUser().equals("")) {
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/mvc/view/userNotFound.html");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/userNotFound.html");
       dispatcher.include(request, response);
-    } else if (customerBean.getTypeUser().equals("Cliente")) {
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/mvc/view/userHome.jsp");
+    } else if (customerBean.getTypeUser().equals(UsuarioDTO.type.cliente)) {
+      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/userHome.jsp");
       dispatcher.include(request, response);
     } else {
-      GestorPistas gestorPistas = GestorPistas.getInstance();
+    	GestorPistas gestorPistas = GestorPistas.getInstance();
 
-      String name = request.getParameter("name");
+        int id = Integer.parseInt(request.getParameter("KartId"));
+        
+        KartDTO kart = gestorPistas.findKart(id);
 
-      /*PistaDTO pista = gestorPistas.findPista(name); --> habría que poner un find pista
+        if (kart != null) {
+      	  
+      	  kart.setpistaId(request.getParameter("pista"));
+            if(kart.getpistaId() != "") {
+          	  kart.setStat(KartDTO.status.reservado);
+            }
+            else {
+          	  kart.setStat(KartDTO.status.disponible);
+            }
+          gestorPistas.asociarKartsAPista(kart, id);
+        } else {
+          RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/errorAddingKart.html");
+          dispatcher.include(request, response);
+        }
 
-      if (gestorPistas.setName(name)) {
-
-        gestorPistas.asociarKartsaPista(pista);
-      } else {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/mvc/view/errorAdingPista.html");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/listKarts.jsp");
         dispatcher.include(request, response);
-      }*/
-
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/mvc/view/listPistas.jsp");
-      dispatcher.include(request, response);
+      }
     }
-  }
 
   /**
    * Redirige al usuario a la vista para modificar una sesión
@@ -91,19 +100,19 @@ public class asociarKaPServlet extends HttpServlet {
     CustomerBean customerBean = (CustomerBean) session.getAttribute("customerBean");
 
     if (customerBean == null || customerBean.getEmailUser().equals("")) {
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/mvc/view/userNotFound.html");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/userNotFound.html");
       dispatcher.include(request, response);
-    } else if (customerBean.getTypeUser().equals("Cliente")) {
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/mvc/view/userHome.jsp");
+    } else if (customerBean.getTypeUser().equals(UsuarioDTO.type.cliente)) {
+      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/userHome.jsp");
       dispatcher.include(request, response);
     } else {
-      String search = request.getParameter("name");
+    	 String search = request.getParameter("KartId");
 
       customerBean.setSearch(search);
 
       session.setAttribute("customerBean", customerBean);
 
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/mvc/view/modifyPista.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/asociarKaP.jsp");
       dispatcher.include(request, response);
     }
   }
