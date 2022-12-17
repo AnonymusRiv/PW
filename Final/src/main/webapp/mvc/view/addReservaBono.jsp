@@ -10,7 +10,7 @@
 <jsp:useBean id="customerBean" scope="session"
 	class="es.uco.pw.display.javabean.CustomerBean"></jsp:useBean>
 <%@ page
-	import="java.text.SimpleDateFormat,es.uco.pw.business.DTO.UsuarioDTO,es.uco.pw.business.managers.DBmanager,es.uco.pw.business.managers.GestorUsuarios,java.util.ArrayList"%>
+	import="java.text.SimpleDateFormat,es.uco.pw.business.DTO.BonoDTO,es.uco.pw.business.DTO.UsuarioDTO,es.uco.pw.business.managers.DBmanager,es.uco.pw.business.managers.GestorUsuarios,java.util.ArrayList"%>
 <html>
 <%
 	SimpleDateFormat formatter6 = new SimpleDateFormat("dd-MM-yyyy");
@@ -21,6 +21,9 @@
 	GestorReservas gestorReservas = GestorReservas.getInstance();
 	GestorPistas gestorPistas = GestorPistas.getInstance();
 	ArrayList<PistaDTO> pistas = gestorPistas.getPistas();
+	String search = customerBean.getSearch();
+	String filter = customerBean.getFilter();
+	BonoDTO bono = gestorReservas.findBono(Integer.parseInt(search));
 %>
 <!-- moviegridfw07:38-->
 <head>
@@ -104,7 +107,7 @@
 							<ul class="dropdown-menu level1">
 								<li><a href="addBono">Adquirir Bono</a></li>
 								<li><a href="listBono">Ver Bonos</a></li>
-								<li><a href="listBono">Hacer reserva en bono</a></li>
+								<li><a href="listaddReservaBono">Hacer reserva en bono</a></li>
 							</ul></li>
 							<li><a href="listarPistaDisponible">Pistas</a></li>
 					</ul>
@@ -126,7 +129,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="hero-ct">
-						<h1>Crear una reserva familiar</h1>
+						<h1>Crear una reserva en un bono</h1>
 					</div>
 				</div>
 			</div>
@@ -139,12 +142,12 @@
 				</div>
 				<div class="col-md-9 col-sm-12 col-xs-12">
 					<div class="form-style-1 user-pro">
-						<form method="post" action="addReservaFamiliar" class="user">
+						<form method="post" action="addReservaBono" class="user">
 							<h4>Introduzca los datos de la reserva</h4>
 							<div class="row">
 							<div class="col-md-6 form-it">
-								<label>Tipo</label> <select name="type">
-										<option value="familiar">Familiar</option>
+								<label>Id del bono</label> <select name="BonoId">
+										<option value=<%=bono.getId() %> ><%=bono.getId() %></option>
 									</select>
 								</div>
 							<div class="col-md-6 form-it">
@@ -153,21 +156,50 @@
 								</label>
 							</div>
 							<div class="col-md-6 form-it">
+								<label>Tipo</label> <select name="type">
+										<option value=<%=bono.getTypeRes() %> ><%=bono.getTypeRes() %></option>
+									</select>
+								</div>
+								<div class="col-md-6 form-it">
+									<label>Pistas</label> <select name="pista">
+									<% for(int i=0; i<pistas.size(); i++){
+										if(pistas.get(i).getDif().equals(PistaDTO.dificulty.adultos) && bono.getTypeRes().equals(BonoDTO.type.adultos)){
+										%>
+										<option value=<%=pistas.get(i).getName() %>><%= pistas.get(i).getName() %></option>
+										<%}
+										else if(pistas.get(i).getDif().equals(PistaDTO.dificulty.familiar) && bono.getTypeRes().equals(BonoDTO.type.familiar)){
+											%>
+											<option value=<%=pistas.get(i).getName() %>><%= pistas.get(i).getName() %></option>
+											<%
+										}
+										else if(pistas.get(i).getDif().equals(PistaDTO.dificulty.infantil) && bono.getTypeRes().equals(BonoDTO.type.infantil)){
+											%>
+											<option value=<%=pistas.get(i).getName() %>><%= pistas.get(i).getName() %></option>
+											<%
+										}
+										}%>
+									</select>
+								</div>
+								<div class="col-md-6 form-it">
 								<label>Duración</label> <select name="duration">
 										<option value="60">60</option>
 										<option value="90">90</option>
 										<option value="120">120</option>
 									</select>
 								</div>
+								<%if(bono.getTypeRes().equals(BonoDTO.type.infantil)){ %>
 								<div class="col-md-6 form-it">
-									<label>Pistas</label> <select name="pista">
-									<% for(int i=0; i<pistas.size(); i++){
-										if(pistas.get(i).getDif().equals(PistaDTO.dificulty.familiar)){
-										%>
-										<option value=<%=pistas.get(i).getName() %>><%= pistas.get(i).getName() %></option>
-										<%}	}%>
-									</select>
+									<label>Nº de participantes</label>
+									<input type="number" name="nPart" min="1"
+										placeholder="1" />
 								</div>
+								<%}else if(bono.getTypeRes().equals(BonoDTO.type.adultos)){ %>
+								<div class="col-md-6 form-it">
+									<label>Nº de participantes</label>
+									<input type="number" name="nAdult" min="1"
+										placeholder="1" />
+								</div>
+								<%}else{ %>
 								<div class="col-md-6 form-it">
 									<label>Nº de adultos</label>
 									<input type="number" name="nAdults" min="1"
@@ -178,6 +210,7 @@
 									<input type="number" name="nChilds" min="1"
 										placeholder="1" />
 								</div>
+								<%} %>
 							</div>
 							<div class="row">
 								<div class="col-md-6 form-it">

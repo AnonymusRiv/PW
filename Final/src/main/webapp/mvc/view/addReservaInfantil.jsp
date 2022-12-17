@@ -62,7 +62,7 @@
 		%>
 	</div>
 	<!--end of preloading-->
-	<!-- BEGIN | Header -->
+		<!-- BEGIN | Header -->
 	<header class="ht-header">
 		<div class="container">
 			<nav class="navbar navbar-default navbar-custom">
@@ -103,7 +103,10 @@
 						</a>
 							<ul class="dropdown-menu level1">
 								<li><a href="addBono">Adquirir Bono</a></li>
+								<li><a href="listBono">Ver Bonos</a></li>
+								<li><a href="listBono">Hacer reserva en bono</a></li>
 							</ul></li>
+							<li><a href="listarPistaDisponible">Pistas</a></li>
 					</ul>
 					<form method="get" autocomplete="off" action="logout">
 						<ul class="nav navbar-nav flex-child-menu menu-right">

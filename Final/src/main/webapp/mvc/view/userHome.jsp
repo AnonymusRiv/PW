@@ -18,6 +18,7 @@
 	request.setCharacterEncoding("UTF-8");
 	SimpleDateFormat formatter5 = new SimpleDateFormat(
 		"dd-MM-yyyy HH:mm");
+	SimpleDateFormat formatter4 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	GestorUsuarios gestorUsuarios = GestorUsuarios.getInstance();
 	GestorReservas gestorReservas = GestorReservas.getInstance();
 %>
@@ -56,13 +57,12 @@
 		<%
 			String nextPage = "";
 			String mensajeNextPage = "";
-			String date="2022-12-19 12:00:00.0";
 			if (customerBean != null
 					&& customerBean.getTypeUser().equals(UsuarioDTO.type.cliente)) {
 		%>
 	</div>
 	<!--end of preloading-->
-	<!-- BEGIN | Header -->
+		<!-- BEGIN | Header -->
 	<header class="ht-header">
 		<div class="container">
 			<nav class="navbar navbar-default navbar-custom">
@@ -93,7 +93,7 @@
 							<ul class="dropdown-menu level1">
 								<li><a href="addReserva">Crear reserva</a></li>
 								<li><a href="listReservas">Ver reservas</a></li>
-								<li><a href="deleteReserva">Cancelar reservas</a></li>
+								<li><a href="listdeleteReserva">Cancelar reservas</a></li>
 							</ul></li>
 							<li class="dropdown first"><a
 							class="btn btn-default dropdown-toggle lv1"
@@ -102,7 +102,10 @@
 						</a>
 							<ul class="dropdown-menu level1">
 								<li><a href="addBono">Adquirir Bono</a></li>
+								<li><a href="listBono">Ver Bonos</a></li>
+								<li><a href="listaddReservaBono">Hacer reserva en bono</a></li>
 							</ul></li>
+							<li><a href="listarPistaDisponible">Pistas</a></li>
 					</ul>
 					<form method="get" autocomplete="off" action="logout">
 						<ul class="nav navbar-nav flex-child-menu menu-right">
@@ -149,11 +152,10 @@
 					%>
 					<div class="row">
 						<%
-							Date fecha=new Date();
-							String fechaString=fecha.toString();
+							String fecha=formatter4.format(new java.util.Date());
 							for (int i = 0; i < res1.size(); i++) {
 								if(res1.get(i).getUserId().equals(customerBean.getEmailUser())){
-									if(res1.get(i).getDate().compareTo(date)>0){
+									if(res1.get(i).getDate().compareTo(fecha)>0){
 						%>
 						<div class="col-md-12">
 							<div class="ceb-item-style-2">
@@ -175,7 +177,7 @@
 						<%
 							for (int i = 0; i < res2.size(); i++) {
 								if(res2.get(i).getUserId().equals(customerBean.getEmailUser())){
-									if(res2.get(i).getDate().compareTo(date)>0){
+									if(res2.get(i).getDate().compareTo(fecha)>0){
 						%>
 						<div class="col-md-12">
 							<div class="ceb-item-style-2">
@@ -197,7 +199,7 @@
 						<%
 							for (int i = 0; i < res3.size(); i++) {
 								if(res3.get(i).getUserId().equals(customerBean.getEmailUser())){
-									if(res3.get(i).getDate().compareTo(date)>0){
+									if(res3.get(i).getDate().compareTo(fecha)>0){
 						%>
 						<div class="col-md-12">
 							<div class="ceb-item-style-2">

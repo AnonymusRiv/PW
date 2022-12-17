@@ -1,9 +1,6 @@
 package es.uco.pw.business.managers;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -51,6 +48,10 @@ public class DBmanager {
     private String registrarReservaBonoAdultosQuery;
     private String registrarReservaBonoFamiliarQuery;
     private String registrarReservaBonoInfantilQuery;
+    
+    private String getBonoQuery;
+    private String registrarBonoQuery;
+    private String modificarBonoQuery;
     
     private String getPistaQuery;
     private String registrarPistaQuery;
@@ -107,6 +108,10 @@ public class DBmanager {
         registrarReservaBonoAdultosQuery=prop.getProperty("registrarReservaBonoAdultos");
         registrarReservaBonoFamiliarQuery=prop.getProperty("registrarReservaBonoFamiliar");
         registrarReservaBonoInfantilQuery=prop.getProperty("registrarReservaBonoInfantil");
+        
+        getBonoQuery=prop.getProperty("getBono");
+        registrarBonoQuery=prop.getProperty("registrarBono");
+        modificarBonoQuery=prop.getProperty("modificarBono");
         
         getPistaQuery=prop.getProperty("getPista");
         registrarPistaQuery=prop.getProperty("registrarPista");
@@ -612,6 +617,66 @@ public class DBmanager {
 
     public void setRegistrarReservaBonoInfantilQuery(String registrarReservaBonoInfantilQuery) {
         this.registrarReservaBonoInfantilQuery = registrarReservaBonoInfantilQuery;
+    }
+    
+    /**
+     * Método público para obtener una query
+     * @param none
+     * @return String Query buscada
+     */
+
+    public String getBonoQuery() {
+        return getBonoQuery;
+    }
+
+    /**
+     * Método público para modificar una query
+     * @param String Query a modificar
+     * @return none
+     */
+
+    public void setBonoQuery(String getBonoQuery) {
+        this.getBonoQuery = getBonoQuery;
+    }
+    
+    /**
+     * Método público para obtener una query
+     * @param none
+     * @return String Query buscada
+     */
+
+    public String getregistrarBonoQuery() {
+        return registrarBonoQuery;
+    }
+    
+    /**
+     * Método público para modificar una query
+     * @param String Query a modificar
+     * @return none
+     */
+
+    public void setregistrarBonoQuery(String registrarBonoQuery) {
+        this.registrarBonoQuery = registrarBonoQuery;
+    }
+    
+    /**
+     * Método público para obtener una query
+     * @param none
+     * @return String Query buscada
+     */
+
+    public String getmodificarBonoQuery() {
+        return modificarBonoQuery;
+    }
+
+    /**
+     * Método público para modificar una query
+     * @param String Query a modificar
+     * @return none
+     */
+
+    public void setmodificarBonoQuery(String modificarBonoQuery) {
+        this.modificarBonoQuery = modificarBonoQuery;
     }
     
     /**

@@ -81,8 +81,8 @@ public class listarPistaDisponibleServlet extends HttpServlet {
     if (customerBean == null || customerBean.getEmailUser().equals("")) {
       RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/userNotFound.html");
       dispatcher.include(request, response);
-    } else if (customerBean.getTypeUser().equals(UsuarioDTO.type.cliente)) {
-      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/userHome.jsp");
+    } else if (customerBean.getTypeUser().equals(UsuarioDTO.type.administrador)) {
+      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/adminHome.jsp");
       dispatcher.include(request, response);
     } else {
       String search = request.getParameter("name");
@@ -91,7 +91,7 @@ public class listarPistaDisponibleServlet extends HttpServlet {
 
       session.setAttribute("customerBean", customerBean);
 
-      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/modifyPista.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/listPistasDisponibles.jsp");
       dispatcher.include(request, response);
     }
   }

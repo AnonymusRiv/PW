@@ -1,5 +1,6 @@
 package es.uco.pw.servlet;
 
+import es.uco.pw.business.DTO.UsuarioDTO;
 import es.uco.pw.business.managers.GestorReservas;
 import es.uco.pw.display.javabean.CustomerBean;
 import java.io.IOException;
@@ -20,12 +21,14 @@ import javax.servlet.http.HttpSession;
  * @version 1.0
  */
 
-@WebServlet(name = "deleteReserva", urlPatterns = "/deleteReserva")
-public class deleteReservasServlet extends HttpServlet {
+@WebServlet(name = "listdeleteReserva", urlPatterns = "/listdeleteReserva")
+public class listdeleteReservasServlet extends HttpServlet {
 
   /** Serial ID */
-  private static final long serialVersionUID = -5782796844904182648L;
+  private static final long serialVersionUID = -1L;
 
+  
+  
   /**
    * Borra una sesión del sistema
    * @param HttpServletRequest request
@@ -44,16 +47,15 @@ public class deleteReservasServlet extends HttpServlet {
     CustomerBean customerBean = (CustomerBean) session.getAttribute("customerBean");
 
     if (customerBean == null || customerBean.getEmailUser().equals("")) {
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/mvc/view/userNotFound.html");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/userNotFound.html");
       dispatcher.include(request, response);
-	} else if (customerBean.getTypeUser().equals("Cliente")) {
+	} else if (customerBean.getTypeUser().equals(UsuarioDTO.type.administrador)) {
 		RequestDispatcher dispatcher = request
-				.getRequestDispatcher("/mvc/view/userHome.jsp");
+				.getRequestDispatcher("/mvc/view/adminHome.jsp");
 		dispatcher.include(request, response);
 	} else {
       GestorReservas gestorReservas = GestorReservas.getInstance();
-      //gestorReservas.deleteReserva(--> falta poner parametro reservas,Integer.parseInt(request.getParameter("userId")));
-      RequestDispatcher dispatcher = request.getRequestDispatcher("listReservas");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/deleteReserva.jsp");
       dispatcher.include(request, response);
     }
   }

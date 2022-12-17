@@ -3,7 +3,7 @@
 <jsp:useBean id="customerBean" scope="session"
 	class="es.uco.pw.display.javabean.CustomerBean"></jsp:useBean>
 <%@ page
-	import="java.text.SimpleDateFormat,es.uco.pw.business.DTO.ReservaInfantilDTO,es.uco.pw.business.DTO.ReservaFamiliarDTO,es.uco.pw.business.DTO.ReservaAdultosDTO,es.uco.pw.business.DTO.UsuarioDTO,es.uco.pw.business.managers.DBmanager,es.uco.pw.business.managers.GestorUsuarios,es.uco.pw.business.managers.GestorReservas,es.uco.pw.business.DTO.KartDTO,java.util.ArrayList"%>
+	import="java.text.SimpleDateFormat,es.uco.pw.business.DTO.BonoDTO,es.uco.pw.business.DTO.ReservaInfantilDTO,es.uco.pw.business.DTO.ReservaFamiliarDTO,es.uco.pw.business.DTO.ReservaAdultosDTO,es.uco.pw.business.DTO.UsuarioDTO,es.uco.pw.business.managers.DBmanager,es.uco.pw.business.managers.GestorUsuarios,es.uco.pw.business.managers.GestorReservas,es.uco.pw.business.DTO.KartDTO,java.util.ArrayList"%>
 <html>
 <%
 	SimpleDateFormat formatter6 = new SimpleDateFormat("dd-MM-yyyy");
@@ -13,9 +13,7 @@
 	SimpleDateFormat formatter4 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	GestorUsuarios gestorUsuarios = GestorUsuarios.getInstance();
 	GestorReservas gestorReservas = GestorReservas.getInstance();
-	ArrayList<ReservaAdultosDTO> resA = gestorReservas.reservasFuturasAdultos();
-	ArrayList<ReservaFamiliarDTO> resF = gestorReservas.reservasFuturasFamiliar();
-	ArrayList<ReservaInfantilDTO> resI = gestorReservas.reservasFuturasInfantil();
+	ArrayList<BonoDTO> bonos = gestorReservas.getBonos();
 %>
 <!-- moviegridfw07:38-->
 <head>
@@ -102,7 +100,7 @@
 							<ul class="dropdown-menu level1">
 								<li><a href="addBono">Adquirir Bono</a></li>
 								<li><a href="listBono">Ver Bonos</a></li>
-								<li><a href="listBono">Hacer reserva en bono</a></li>
+								<li><a href="addReservaBono">Hacer reserva en bono</a></li>
 							</ul></li>
 							<li><a href="listarPistaDisponible">Pistas</a></li>
 					</ul>
@@ -141,155 +139,36 @@
 		<div class="container">
 			<div class="row ipad-width2">
 				<div class="col-md-9 col-sm-12 col-xs-12">
-					<h1 style="color: white">Reservas de Adultos:</h1>
+					<h1 style="color: white">Bonos:</h1>
 					<br></br>
 					<div class="row">
 					
 						<%
-							String fecha=formatter4.format(new java.util.Date());
-							for (int i = 0; i < resA.size(); i++) {
-								if(resA.get(i).getUserId().equals(customerBean.getEmailUser())){
-									if(resA.get(i).getDate().compareTo(fecha)>0){
+							for (int i = 0; i < bonos.size(); i++) {
+								if(bonos.get(i).getUserID().equals(customerBean.getEmailUser())){
+									if(bonos.get(i).getSession() > 0){
 						%>
 						<div class="col-md-12">
 							<div class="ceb-item-style-2">
 								<div class="ceb-infor">
-										<p><%="ID de la reserva: " + resA.get(i).getId()%></p>
-										<p><%="Bono: " + resA.get(i).getBonoId()%></p>
-										<p><%="Fecha: " + resA.get(i).getDate()%></p>
-										<p><%="Duración: " + resA.get(i).getDuration()%></p>
-										<p><%="Precio: " + resA.get(i).getPrice()%></p>
-										<p><%="Descuento: " + resA.get(i).getDiscount()%></p>
-										<p><%="ID de la pista: " + resA.get(i).getPistId()%></p>
-										<p><%="Nº de participantes: " + resA.get(i).getnParticipants()%></p>
-										<p><%="Estado: Por realizar"%></p>
+										<p><%="ID del bono: " + bonos.get(i).getId()%></p>
+										<p><%="Caducidad: " + bonos.get(i).getCaducity()%></p>
+										<p><%="Tipo: " + bonos.get(i).getTypeRes() %></p>
+										<p><%="Sesiones restantes: " + bonos.get(i).getSession()%></p>
+										<hr>
+										<a class="redbtn"
+											href=<%="addReservaBono?BonoId="
+											+ bonos.get(i).getId()%>
+											style="border: none" type="submit">Añadir reserva</a> <br></br>
 								</div>
 							</div>
 						</div>
 						<%
 									}
-									else{
-						%>
-						<div class="col-md-12">
-							<div class="ceb-item-style-2">
-								<div class="ceb-infor">
-										<p><%="ID de la reserva: " + resA.get(i).getId()%></p>
-										<p><%="Bono: " + resA.get(i).getBonoId()%></p>
-										<p><%="Fecha: " + resA.get(i).getDate()%></p>
-										<p><%="Duración: " + resA.get(i).getDuration()%></p>
-										<p><%="Precio: " + resA.get(i).getPrice()%></p>
-										<p><%="Descuento: " + resA.get(i).getDiscount()%></p>
-										<p><%="ID de la pista: " + resA.get(i).getPistId()%></p>
-										<p><%="Nº de participantes: " + resA.get(i).getnParticipants()%></p>
-										<p><%="Estado: Finalizada"%></p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<%
-									}
 								}
 							}
 					%>
-					
-					<h1 style="color: white">Reservas Familiares:</h1>
-					<br></br>
-					<div class="row">
-						<%
-						for (int i = 0; i < resF.size(); i++) {
-							if(resF.get(i).getUserId().equals(customerBean.getEmailUser())){
-								if(resF.get(i).getDate().compareTo(fecha)>0){
-						%>
-						<div class="col-md-12">
-							<div class="ceb-item-style-2">
-								<div class="ceb-infor">
-										<p><%="ID de la reserva: " + resF.get(i).getId()%></p>
-										<p><%="Bono: " + resF.get(i).getBonoId()%></p>
-										<p><%="Fecha: " + resF.get(i).getDate()%></p>
-										<p><%="Duración: " + resF.get(i).getDuration()%></p>
-										<p><%="Precio: " + resF.get(i).getPrice()%></p>
-										<p><%="Descuento: " + resF.get(i).getDiscount()%></p>
-										<p><%="ID de la pista: " + resF.get(i).getPistId()%></p>
-										<p><%="Nº de niñ@s: " + resF.get(i).getnChildren()%></p>
-										<p><%="Nº de adultos: " + resF.get(i).getnAdults()%></p>
-										<p><%="Estado: Por realizar"%></p>
-								</div>
-							</div>
-						</div>
-						<%
-								}
-								else{
-						%>
-						<div class="col-md-12">
-							<div class="ceb-item-style-2">
-								<div class="ceb-infor">
-										<p><%="ID de la reserva: " + resF.get(i).getId()%></p>
-										<p><%="Bono: " + resF.get(i).getBonoId()%></p>
-										<p><%="Fecha: " + resF.get(i).getDate()%></p>
-										<p><%="Duración: " + resF.get(i).getDuration()%></p>
-										<p><%="Precio: " + resF.get(i).getPrice()%></p>
-										<p><%="Descuento: " + resF.get(i).getDiscount()%></p>
-										<p><%="ID de la pista: " + resF.get(i).getPistId()%></p>
-										<p><%="Nº de niñ@s: " + resF.get(i).getnChildren()%></p>
-										<p><%="Nº de adultos: " + resF.get(i).getnAdults()%></p>
-										<p><%="Estado: Finalizada"%></p>
-								</div>
-							</div>
-						</div>
 					</div>
-					<%
-								}
-							}
-						}
-					%>
-					<h1 style="color: white">Reservas Infantiles:</h1>
-					<br></br>
-					<div class="row">
-						<%
-						for (int i = 0; i < resI.size(); i++) {
-							if(resI.get(i).getUserId().equals(customerBean.getEmailUser())){
-								if(resI.get(i).getDate().compareTo(fecha)>0){
-						%>
-						<div class="col-md-12">
-							<div class="ceb-item-style-2">
-								<div class="ceb-infor">
-										<p><%="ID de la reserva: " + resI.get(i).getId()%></p>
-										<p><%="Bono: " + resI.get(i).getBonoId()%></p>
-										<p><%="Fecha: " + resI.get(i).getDate()%></p>
-										<p><%="Duración: " + resI.get(i).getDuration()%></p>
-										<p><%="Precio: " + resI.get(i).getPrice()%></p>
-										<p><%="Descuento: " + resI.get(i).getDiscount()%></p>
-										<p><%="ID de la pista: " + resI.get(i).getPistId()%></p>
-										<p><%="Nº de participantes: " + resI.get(i).getnChildren()%></p>
-										<p><%="Estado: Por realizar"%></p>
-								</div>
-							</div>
-						</div>
-						<%
-								}
-								else{
-						%>
-						<div class="col-md-12">
-							<div class="ceb-item-style-2">
-								<div class="ceb-infor">
-										<p><%="ID de la reserva: " + resI.get(i).getId()%></p>
-										<p><%="Bono: " + resI.get(i).getBonoId()%></p>
-										<p><%="Fecha: " + resI.get(i).getDate()%></p>
-										<p><%="Duración: " + resI.get(i).getDuration()%></p>
-										<p><%="Precio: " + resI.get(i).getPrice()%></p>
-										<p><%="Descuento: " + resI.get(i).getDiscount()%></p>
-										<p><%="ID de la pista: " + resI.get(i).getPistId()%></p>
-										<p><%="Nº de participantes: " + resI.get(i).getnChildren()%></p>
-										<p><%="Estado: Finalizada"%></p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<%
-								}
-							}
-						}
-					%>
 					</div>
 				</div>
 				

@@ -1,24 +1,16 @@
-<%@page import="es.uco.pw.business.DTO.KartDTO"%>
-<%@page import="es.uco.pw.business.managers.GestorPistas"%>
-<%@page import="es.uco.pw.business.DTO.PistaDTO"%>
-<%@page import="es.uco.pw.business.DTO.ReservaAdultosDTO"%>
-<%@page import="es.uco.pw.business.DTO.ReservaInfantilDTO"%>
-<%@page import="es.uco.pw.business.DTO.ReservaFamiliarDTO"%>
-<%@page import="es.uco.pw.business.managers.GestorReservas"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <jsp:useBean id="customerBean" scope="session"
 	class="es.uco.pw.display.javabean.CustomerBean"></jsp:useBean>
 <%@ page
-	import="java.text.SimpleDateFormat,es.uco.pw.business.DTO.UsuarioDTO,es.uco.pw.business.managers.DBmanager,es.uco.pw.business.managers.GestorUsuarios,java.util.ArrayList"%>
+	import="java.text.SimpleDateFormat,es.uco.pw.business.DTO.PistaDTO,es.uco.pw.business.DTO.UsuarioDTO,es.uco.pw.business.managers.DBmanager,es.uco.pw.business.managers.GestorUsuarios,es.uco.pw.business.managers.GestorPistas,es.uco.pw.business.DTO.KartDTO,java.util.ArrayList"%>
 <html>
 <%
 	SimpleDateFormat formatter6 = new SimpleDateFormat("dd-MM-yyyy");
 	request.setCharacterEncoding("UTF-8");
 	SimpleDateFormat formatter5 = new SimpleDateFormat(
-		"dd-MM-yyyy HH:mm");
+			"dd-MM-yyyy HH:mm");
 	GestorUsuarios gestorUsuarios = GestorUsuarios.getInstance();
-	GestorReservas gestorReservas = GestorReservas.getInstance();
 	GestorPistas gestorPistas = GestorPistas.getInstance();
 	ArrayList<PistaDTO> pistas = gestorPistas.getPistas();
 %>
@@ -57,12 +49,15 @@
 		<%
 			String nextPage = "";
 			String mensajeNextPage = "";
-			if (customerBean != null
-					&& customerBean.getTypeUser().equals(UsuarioDTO.type.cliente)) {
+			if (customerBean != null) {
+				String search = customerBean.getSearch();
+				String filter = customerBean.getFilter();
 		%>
+		<jsp:setProperty property="search" value="" name="customerBean" />
+		<jsp:setProperty property="filter" value="" name="customerBean" />
 	</div>
 	<!--end of preloading-->
-		<!-- BEGIN | Header -->
+	<!-- BEGIN | Header -->
 	<header class="ht-header">
 		<div class="container">
 			<nav class="navbar navbar-default navbar-custom">
@@ -87,7 +82,6 @@
 						<li><a href="userProfile">Perfil</a></li>
 						<li class="dropdown first"><a
 							class="btn btn-default dropdown-toggle lv1"
-							style="color: #DCF836"
 							data-toggle="dropdown"> Reservas <i
 								class="fa fa-angle-down" aria-hidden="true"></i>
 						</a>
@@ -106,7 +100,7 @@
 								<li><a href="listBono">Ver Bonos</a></li>
 								<li><a href="listBono">Hacer reserva en bono</a></li>
 							</ul></li>
-							<li><a href="listarPistaDisponible">Pistas</a></li>
+							<li><a style="color: #DCF836" href="listarPistaDisponible">Pistas</a></li>
 					</ul>
 					<form method="get" autocomplete="off" action="logout">
 						<ul class="nav navbar-nav flex-child-menu menu-right">
@@ -120,74 +114,62 @@
 		</div>
 	</header>
 	<!-- END | Header -->
-	<!-- Welcome mensaje -->
+
 	<div class="hero common-hero">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
 					<div class="hero-ct">
-						<h1>Crear una reserva familiar</h1>
+						<h1>
+							Lista de pistas disponibles</h1>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<!-- List section-->
 	<div class="page-single">
 		<div class="container">
-			<div class="row ipad-width">
-				<div class="col-md-3 col-sm-12 col-xs-12">
-				</div>
+			<div class="row ipad-width2">
 				<div class="col-md-9 col-sm-12 col-xs-12">
-					<div class="form-style-1 user-pro">
-						<form method="post" action="addReservaFamiliar" class="user">
-							<h4>Introduzca los datos de la reserva</h4>
-							<div class="row">
-							<div class="col-md-6 form-it">
-								<label>Tipo</label> <select name="type">
-										<option value="familiar">Familiar</option>
-									</select>
-								</div>
-							<div class="col-md-6 form-it">
-								<label for="dateOfBirth"> Fecha de la reserva: <input type="date"
-									name="date" required="required" />
-								</label>
-							</div>
-							<div class="col-md-6 form-it">
-								<label>Duración</label> <select name="duration">
-										<option value="60">60</option>
-										<option value="90">90</option>
-										<option value="120">120</option>
-									</select>
-								</div>
-								<div class="col-md-6 form-it">
-									<label>Pistas</label> <select name="pista">
-									<% for(int i=0; i<pistas.size(); i++){
-										if(pistas.get(i).getDif().equals(PistaDTO.dificulty.familiar)){
-										%>
-										<option value=<%=pistas.get(i).getName() %>><%= pistas.get(i).getName() %></option>
-										<%}	}%>
-									</select>
-								</div>
-								<div class="col-md-6 form-it">
-									<label>Nº de adultos</label>
-									<input type="number" name="nAdults" min="1"
-										placeholder="1" />
-								</div>
-								<div class="col-md-6 form-it">
-									<label>Nº de niños</label>
-									<input type="number" name="nChilds" min="1"
-										placeholder="1" />
+					<h1 style="color: white">Pistas</h1>
+					<br></br>
+					<div class="row">
+						<%
+							for (int i = 0; i < pistas.size(); i++) {
+						%>
+						<div class="col-md-12">
+						<div class="ceb-item-style-2">
+							
+								<%
+								if(pistas.get(i).isStatus() == true){
+									%>
+									
+								<div class="ceb-infor">
+									<h2>
+										<a
+											href=<%="listPistas?PistaId="
+								+ pistas.get(i).getName()%>></a>
+									</h2>
+								<p>
+								<p> <%="Nombre = " + pistas.get(i).getName() %> </p>
+								<p> <%= "Dificultad = "
+										+ pistas.get(i).getDif() %> </p>
+								<p> <%= "Máximo Personas = "
+										+ pistas.get(i).getMax() %> </p><br></br>
+									<%
+										}
+									%>
+								
 								</div>
 							</div>
-							<div class="row">
-								<div class="col-md-6 form-it">
-									<hr>
-									<input class="submit" type="submit" value="Guardar" />
-								</div>
-							</div>
-						</form>
+						</div>
+						<%
+							}
+						%>
 					</div>
 				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -231,11 +213,11 @@
 					<br></br>
 					<h4>Contacto</h4>
 					<p>
-						Av. de Rabanales, s/n,<br>14014 C&oacute;rdoba
+						Av. de Medina Azahara, 5,<br>14071 C&oacute;rdoba
 					</p>
 					<p>
 						Ll&aacute;manos: <a href="#">(+34) 957 218 000</a>
-					</p>
+					</p> 
 				</div>
 			</div>
 		</div>
@@ -246,22 +228,6 @@
 	<script src="js/plugins2.js"></script>
 	<script src="js/custom.js"></script>
 	<%
-		} else {
-			if (customerBean.getTypeUser().equals(UsuarioDTO.type.administrador)) {
-				nextPage = "mvc/view/adminHome.jsp";
-	%>
-	<jsp:forward page="<%=nextPage%>">
-		<jsp:param value="<%=mensajeNextPage%>" name="message" />
-	</jsp:forward>
-	<%
-		} else {
-				nextPage = "../../index.jsp";
-	%>
-	<jsp:forward page="<%=nextPage%>">
-		<jsp:param value="<%=mensajeNextPage%>" name="message" />
-	</jsp:forward>
-	<%
-		}
 		}
 	%>
 </body>

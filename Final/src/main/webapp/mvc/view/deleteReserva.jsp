@@ -3,7 +3,7 @@
 <jsp:useBean id="customerBean" scope="session"
 	class="es.uco.pw.display.javabean.CustomerBean"></jsp:useBean>
 <%@ page
-	import="java.text.SimpleDateFormat,es.uco.pw.business.DTO.ReservaInfantilDTO,es.uco.pw.business.DTO.ReservaFamiliarDTO,es.uco.pw.business.DTO.ReservaAdultosDTO,es.uco.pw.business.DTO.UsuarioDTO,es.uco.pw.business.managers.DBmanager,es.uco.pw.business.managers.GestorUsuarios,es.uco.pw.business.managers.GestorReservas,es.uco.pw.business.DTO.KartDTO,java.util.ArrayList"%>
+	import="java.util.Date,java.text.SimpleDateFormat,es.uco.pw.business.DTO.ReservaInfantilDTO,es.uco.pw.business.DTO.ReservaFamiliarDTO,es.uco.pw.business.DTO.ReservaAdultosDTO,es.uco.pw.business.DTO.UsuarioDTO,es.uco.pw.business.managers.DBmanager,es.uco.pw.business.managers.GestorUsuarios,es.uco.pw.business.managers.GestorReservas,es.uco.pw.business.DTO.KartDTO,java.util.ArrayList"%>
 <html>
 <%
 	SimpleDateFormat formatter6 = new SimpleDateFormat("dd-MM-yyyy");
@@ -146,7 +146,8 @@
 					<div class="row">
 					
 						<%
-							String fecha=formatter4.format(new java.util.Date());
+							Date hoy= new Date();
+							String fecha=formatter4.format(new java.util.Date(hoy.getTime()+8640000));
 							for (int i = 0; i < resA.size(); i++) {
 								if(resA.get(i).getUserId().equals(customerBean.getEmailUser())){
 									if(resA.get(i).getDate().compareTo(fecha)>0){
@@ -163,25 +164,11 @@
 										<p><%="ID de la pista: " + resA.get(i).getPistId()%></p>
 										<p><%="Nº de participantes: " + resA.get(i).getnParticipants()%></p>
 										<p><%="Estado: Por realizar"%></p>
-								</div>
-							</div>
-						</div>
-						<%
-									}
-									else{
-						%>
-						<div class="col-md-12">
-							<div class="ceb-item-style-2">
-								<div class="ceb-infor">
-										<p><%="ID de la reserva: " + resA.get(i).getId()%></p>
-										<p><%="Bono: " + resA.get(i).getBonoId()%></p>
-										<p><%="Fecha: " + resA.get(i).getDate()%></p>
-										<p><%="Duración: " + resA.get(i).getDuration()%></p>
-										<p><%="Precio: " + resA.get(i).getPrice()%></p>
-										<p><%="Descuento: " + resA.get(i).getDiscount()%></p>
-										<p><%="ID de la pista: " + resA.get(i).getPistId()%></p>
-										<p><%="Nº de participantes: " + resA.get(i).getnParticipants()%></p>
-										<p><%="Estado: Finalizada"%></p>
+										<hr>
+										<a class="redbtn"
+											href=<%="deleteReserva?ReservaId="
+											+ resA.get(i).getId()%>
+											style="border: none" type="submit">Cancelar</a> <br></br>
 								</div>
 							</div>
 						</div>
@@ -213,26 +200,11 @@
 										<p><%="Nº de niñ@s: " + resF.get(i).getnChildren()%></p>
 										<p><%="Nº de adultos: " + resF.get(i).getnAdults()%></p>
 										<p><%="Estado: Por realizar"%></p>
-								</div>
-							</div>
-						</div>
-						<%
-								}
-								else{
-						%>
-						<div class="col-md-12">
-							<div class="ceb-item-style-2">
-								<div class="ceb-infor">
-										<p><%="ID de la reserva: " + resF.get(i).getId()%></p>
-										<p><%="Bono: " + resF.get(i).getBonoId()%></p>
-										<p><%="Fecha: " + resF.get(i).getDate()%></p>
-										<p><%="Duración: " + resF.get(i).getDuration()%></p>
-										<p><%="Precio: " + resF.get(i).getPrice()%></p>
-										<p><%="Descuento: " + resF.get(i).getDiscount()%></p>
-										<p><%="ID de la pista: " + resF.get(i).getPistId()%></p>
-										<p><%="Nº de niñ@s: " + resF.get(i).getnChildren()%></p>
-										<p><%="Nº de adultos: " + resF.get(i).getnAdults()%></p>
-										<p><%="Estado: Finalizada"%></p>
+										<hr>
+										<a class="redbtn"
+											href=<%="deleteReserva?ReservaId="
+											+ resF.get(i).getId()%>
+											style="border: none" type="submit">Cancelar</a> <br></br>
 								</div>
 							</div>
 						</div>
@@ -262,25 +234,11 @@
 										<p><%="ID de la pista: " + resI.get(i).getPistId()%></p>
 										<p><%="Nº de participantes: " + resI.get(i).getnChildren()%></p>
 										<p><%="Estado: Por realizar"%></p>
-								</div>
-							</div>
-						</div>
-						<%
-								}
-								else{
-						%>
-						<div class="col-md-12">
-							<div class="ceb-item-style-2">
-								<div class="ceb-infor">
-										<p><%="ID de la reserva: " + resI.get(i).getId()%></p>
-										<p><%="Bono: " + resI.get(i).getBonoId()%></p>
-										<p><%="Fecha: " + resI.get(i).getDate()%></p>
-										<p><%="Duración: " + resI.get(i).getDuration()%></p>
-										<p><%="Precio: " + resI.get(i).getPrice()%></p>
-										<p><%="Descuento: " + resI.get(i).getDiscount()%></p>
-										<p><%="ID de la pista: " + resI.get(i).getPistId()%></p>
-										<p><%="Nº de participantes: " + resI.get(i).getnChildren()%></p>
-										<p><%="Estado: Finalizada"%></p>
+										<hr>
+										<a class="redbtn"
+											href=<%="deleteReserva?ReservaId="
+											+ resI.get(i).getId()%>
+											style="border: none" type="submit">Cancelar</a> <br></br>
 								</div>
 							</div>
 						</div>
