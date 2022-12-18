@@ -92,14 +92,22 @@
 							</ul></li>
 						<li class="dropdown first"><a
 							class="btn btn-default dropdown-toggle lv1"
-							data-toggle="dropdown"> karts <i class="fa fa-angle-down"
+							data-toggle="dropdown"> Karts <i class="fa fa-angle-down"
 								aria-hidden="true"></i>
 						</a>
 							<ul class="dropdown-menu level1">
 								<li><a href="addKart">Añadir kart</a></li>
 								<li><a href="listKarts">Ver karts</a></li>
 							</ul></li>
-						<li><a href="userReviews">Mis críticas</a></li>
+							<li class="dropdown first"><a
+							class="btn btn-default dropdown-toggle lv1"
+							data-toggle="dropdown"> Reservas <i class="fa fa-angle-down"
+								aria-hidden="true"></i>
+						</a>
+							<ul class="dropdown-menu level1">
+								<li><a href="listReservas">Ver todas las reservas</a></li>
+								<li><a href=listdeleteReserva>Eliminar reservas</a></li>
+							</ul></li>
 					</ul>
 					<form method="get" autocomplete="off" action="logout">
 						<ul class="nav navbar-nav flex-child-menu menu-right">
@@ -111,17 +119,6 @@
 				<!-- /.navbar-collapse -->
 			</nav>
 
-			<!-- top search form -->
-			<form method="post" autocomplete="off" action="searchSpectacle">
-				<div class="top-search">
-					<select name="filter">
-						<option value="title">T&iacute;tulo</option>
-						<option value="category">Categor&iacute;a</option>
-					</select> <input type="text" name="search"
-						placeholder="Busque un espect&aacute;culo por t&iacute;tulo o por categor&iacute;a">
-					<input name="hidden" type="submit" style="display: none;">
-				</div>
-			</form>
 		</div>
 	</header>
 	<!-- END | Header -->

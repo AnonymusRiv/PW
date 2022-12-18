@@ -27,8 +27,8 @@ import javax.servlet.http.HttpSession;
  * @version 1.0
  */
 
-@WebServlet(name = "deleteReserva", urlPatterns = "/deleteReserva")
-public class deleteReservaServlet extends HttpServlet {
+@WebServlet(name = "deleteReservaAdmin", urlPatterns = "/deleteReservaAdmin")
+public class deleteReservaAdminServlet extends HttpServlet {
 
   /** Serial ID */
   private static final long serialVersionUID = 1L;
@@ -53,6 +53,10 @@ public class deleteReservaServlet extends HttpServlet {
     if (customerBean == null || customerBean.getEmailUser().equals("")) {
       RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/userNotFound.html");
       dispatcher.include(request, response);
+	} else if (customerBean.getTypeUser().equals(UsuarioDTO.type.cliente)) {
+		RequestDispatcher dispatcher = request
+				.getRequestDispatcher("/mvc/view/userHome.jsp");
+		dispatcher.include(request, response);
 	} else {
       GestorReservas gestor = GestorReservas.getInstance();
       int id = Integer.parseInt(request.getParameter("ReservaId"));
@@ -117,15 +121,9 @@ public class deleteReservaServlet extends HttpServlet {
     		  }
     	  }
       }
-      if (customerBean.getTypeUser().equals(UsuarioDTO.type.administrador)){
-    	  RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/listReservasAdmin.jsp");
-          dispatcher.include(request, response);
-      }
-      else {
-    	  RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/listReservas.jsp");
-          dispatcher.include(request, response);
-      }
       
+      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/listReservasAdmin.jsp");
+      dispatcher.include(request, response);
     }
   }
 }

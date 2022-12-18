@@ -50,11 +50,9 @@ public class listdeleteReservasServlet extends HttpServlet {
       RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/userNotFound.html");
       dispatcher.include(request, response);
 	} else if (customerBean.getTypeUser().equals(UsuarioDTO.type.administrador)) {
-		RequestDispatcher dispatcher = request
-				.getRequestDispatcher("/mvc/view/adminHome.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/deleteReservasAdmin.jsp");
 		dispatcher.include(request, response);
 	} else {
-      GestorReservas gestorReservas = GestorReservas.getInstance();
       RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/deleteReserva.jsp");
       dispatcher.include(request, response);
     }

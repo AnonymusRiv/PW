@@ -20,9 +20,33 @@
 		"dd-MM-yyyy HH:mm");
 	GestorUsuarios gestorUsuarios = GestorUsuarios.getInstance();
 	GestorReservas gestorReservas = GestorReservas.getInstance();
+	GestorPistas gestorPistas = GestorPistas.getInstance();
+	ArrayList<PistaDTO> pistas = gestorPistas.getPistas();
 	ArrayList<ReservaAdultosDTO> reservasA = gestorReservas.reservasFuturasAdultos();
 	ArrayList<ReservaFamiliarDTO> reservasF = gestorReservas.reservasFuturasFamiliar();
 	ArrayList<ReservaInfantilDTO> reservasI = gestorReservas.reservasFuturasInfantil();
+	String search = customerBean.getSearch();
+	String filter = customerBean.getFilter();
+	
+	ReservaAdultosDTO reservaA = null;
+	ReservaFamiliarDTO reservaF = null;
+	ReservaInfantilDTO reservaI = null;
+	
+	for(int i=0; i<reservasA.size(); i++) {
+  	  if(reservasA.get(i).getId() == Integer.parseInt(search)) {
+  		 reservaA = reservasA.get(i);
+  	  }
+    }
+	for(int i=0; i<reservasF.size(); i++) {
+	  	  if(reservasF.get(i).getId() == Integer.parseInt(search)) {
+	  		 reservaF = reservasF.get(i);
+	  	  }
+	    }
+	for(int i=0; i<reservasI.size(); i++) {
+	  	  if(reservasI.get(i).getId() == Integer.parseInt(search)) {
+	  		 reservaI = reservasI.get(i);
+	  	  }
+	    }
 %>
 <!-- moviegridfw07:38-->
 <head>
@@ -56,24 +80,18 @@
 		<div id="status">
 			<span></span> <span></span>
 		</div>
+		</div>
+		<!--end of preloading-->
+		
 		<%
 		String nextPage = "";
 		String mensajeNextPage = "";
 		if (customerBean != null
 				&& customerBean.getTypeUser().equals(UsuarioDTO.type.cliente)) {
 		%>
-		<jsp:setProperty property="search" value="" name="customerBean" />
-		<jsp:setProperty property="filter" value="" name="customerBean" />
-	</div>
-	<!--end of preloading-->
-	<!-- BEGIN | Header -->
-	<%
-		if (customerBean.getTypeUser().equals(UsuarioDTO.type.cliente)) {
-				nextPage = "mvc/view/userHome.jsp";
-	%>
-	<jsp:forward page="<%=nextPage%>">
-		<jsp:param value="<%=mensajeNextPage%>" name="message" />
-	</jsp:forward>
+		
+	
+	
 	<!-- BEGIN | Header -->
 	<header class="ht-header">
 		<div class="container">
@@ -96,81 +114,29 @@
 					<ul class="nav navbar-nav flex-child-menu menu-left">
 						<li class="hidden"><a href="#page-top"></a></li>
 						<li><a href="index.jsp">Inicio</a></li>
-						<li><a style="color: #DCF836" href="userProfile">Perfil</a></li>
-						<li><a href="searchSpectacle">Espectáculos</a></li>
-						<li><a href="listSesions">Sesiones</a></li>
-						<li><a href="userReviews">Mis críticas</a></li>
-					</ul>
-					<form method="get" autocomplete="off" action="logout">
-						<ul class="nav navbar-nav flex-child-menu menu-right">
-							<li><button class="redbtn" style="border: none"
-									type="submit">Cerrar sesión</button></li>
-						</ul>
-					</form>
-				</div>
-				<!-- /.navbar-collapse -->
-			</nav>
-
-			<!-- top search form -->
-			<form method="post" autocomplete="off" action="searchSpectacle">
-				<div class="top-search">
-					<select name="filter">
-						<option value="title">T&iacute;tulo</option>
-						<option value="category">Categor&iacute;a</option>
-					</select> <input type="text" name="search"
-						placeholder="Busque un espect&aacute;culo por t&iacute;tulo o por categor&iacute;a">
-					<input name="hidden" type="submit" style="display: none;">
-				</div>
-			</form>
-		</div>
-	</header>
-	<!-- END | Header -->
-	<%
-		} else {
-	%>
-	<!-- BEGIN | Header -->
-	<header class="ht-header">
-		<div class="container">
-			<nav class="navbar navbar-default navbar-custom">
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header logo">
-					<div class="navbar-toggle" data-toggle="collapse"
-						data-target="#bs-example-navbar-collapse-1">
-						<span class="sr-only">Toggle navigation</span>
-						<div id="nav-icon1">
-							<span></span> <span></span> <span></span>
-						</div>
-					</div>
-					<a href="#"><img class="logo" src="images/logo1.png" alt=""
-						width="119" height="58"></a>
-				</div>
-				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse navbar-collapse flex-parent"
-					id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav flex-child-menu menu-left">
-						<li class="hidden"><a href="#page-top"></a></li>
-						<li><a href="index.jsp">Inicio</a></li>
 						<li><a href="userProfile">Perfil</a></li>
 						<li class="dropdown first"><a
 							class="btn btn-default dropdown-toggle lv1"
-							style="color: #DCF836" data-toggle="dropdown">
-								Pistas <i class="fa fa-angle-down"
-								aria-hidden="true"></i>
+							style="color: #DCF836"
+							data-toggle="dropdown"> Reservas <i
+								class="fa fa-angle-down" aria-hidden="true"></i>
 						</a>
 							<ul class="dropdown-menu level1">
-								<li><a href="addPista">Añadir pista</a></li>
-								<li><a href="listPistas">Ver pistas</a></li>
+								<li><a href="addReserva">Crear reserva</a></li>
+								<li><a href="listReservas">Ver reservas</a></li>
+								<li><a href="listdeleteReserva">Cancelar/Modificar reservas</a></li>
 							</ul></li>
-						<li class="dropdown first"><a
+							<li class="dropdown first"><a
 							class="btn btn-default dropdown-toggle lv1"
-							data-toggle="dropdown"> Karts <i class="fa fa-angle-down"
-								aria-hidden="true"></i>
+							data-toggle="dropdown"> Bonos <i
+								class="fa fa-angle-down" aria-hidden="true"></i>
 						</a>
 							<ul class="dropdown-menu level1">
-								<li><a href="addKart">Añadir kart</a></li>
-								<li><a href="listKarts">Ver karts</a></li>
+								<li><a href="addBono">Adquirir Bono</a></li>
+								<li><a href="listBono">Ver Bonos</a></li>
+								<li><a href="listaddReservaBono">Hacer reserva en bono</a></li>
 							</ul></li>
-						<li><a href="userReviews">Mis críticas</a></li>
+							<li><a href="listarPistaDisponible">Pistas</a></li>
 					</ul>
 					<form method="get" autocomplete="off" action="logout">
 						<ul class="nav navbar-nav flex-child-menu menu-right">
@@ -181,23 +147,8 @@
 				</div>
 				<!-- /.navbar-collapse -->
 			</nav>
-
-			<!-- top search form -->
-			<form method="post" autocomplete="off" action="searchSpectacle">
-				<div class="top-search">
-					<select name="filter">
-						<option value="title">T&iacute;tulo</option>
-						<option value="category">Categor&iacute;a</option>
-					</select> <input type="text" name="search"
-						placeholder="Busque un espect&aacute;culo por t&iacute;tulo o por categor&iacute;a">
-					<input name="hidden" type="submit" style="display: none;">
-				</div>
-			</form>
 		</div>
 	</header>
-	<%
-		}
-	%>
 	<!-- END | Header -->
 
 	<div class="hero user-hero">
@@ -215,37 +166,129 @@
 		<div class="container">
 			<div class="row ipad-width">
 				<div class="col-md-3 col-sm-12 col-xs-12">
-					if(CONDICIÓN){
-						<div class="user-information">
-							<%
-								ArrayList<ReservaAdultosDTO> reservasA = gestorReservas.getId();
-							%>
-						</div>
 					</div>
 					<div class="col-md-9 col-sm-12 col-xs-12">
 						<div class="form-style-1 user-pro">
-							<form method="post" action="modifyUsser" class="user">
-								<div class="col-md-6 form-it">
-										<label>Fecha: </label> <input type="text" name="date"
-											required="required" />
-									</div>
+							
+									<% if(reservaA != null){ %>
+									<form method="post" action="modifyReservaAdulto" class="user">
+										<div class="col-md-6 form-it">
+											<label>Id</label> <select name="ReservaId">
+												<option value=<%=reservaA.getId()%>><%=reservaA.getId()%></option>
+											</select>
+										</div>
+										<div class="col-md-6 form-it">
+											<label for="dateOfBirth"> Fecha de la reserva: <input type="date"
+												name="date" required="required" />
+											</label>
+										</div>
+										<div class="col-md-6 form-it">
+											<label>Duración</label> <select name="duration">
+												<option value="60">60</option>
+												<option value="90">90</option>
+												<option value="120">120</option>
+											</select>
+										</div>
+										<div class="col-md-6 form-it">
+											<label>Pistas</label> <select name="pista">
+											<% for(int i=0; i<pistas.size(); i++){
+												if(pistas.get(i).getDif().equals(PistaDTO.dificulty.adultos)){
+												%>
+												<option value=<%=pistas.get(i).getName() %>><%= pistas.get(i).getName() %></option>
+												<%}	}%>
+											</select>
+										</div>
+										<div class="col-md-6 form-it">
+											<label>Nº de participantes</label>
+												<input type="number" name="nPart" min="1"
+													placeholder="1" />
+										</div>
+										<div class="row">
+											<div class="col-md-6 form-it">
+												<hr>
+												<input class="submit" type="submit" value="Guardar" />
+											</div>
+										</div>
+										</form>
 									
+									<%}else if(reservaI != null){ %>
+									<form method="post" action="modifyReservaInfantil" class="user">
+									<div class="col-md-6 form-it">
+											<label>Id</label> <select name="ReservaId">
+												<option value=<%=reservaI.getId()%>><%=reservaI.getId()%></option>
+											</select>
+										</div>
+										<div class="col-md-6 form-it">
+											<label for="dateOfBirth"> Fecha de la reserva: <input type="date"
+												name="date" required="required" />
+											</label>
+										</div>
+										<div class="col-md-6 form-it">
+										<label>Duración</label> <select name="duration">
+											<option value="60">60</option>
+											<option value="90">90</option>
+											<option value="120">120</option>
+											</select>
+										</div>
+										<div class="col-md-6 form-it">
+										<label>Pistas</label> <select name="pista">
+											<% for(int i=0; i<pistas.size(); i++){
+											if(pistas.get(i).getDif().equals(PistaDTO.dificulty.infantil)){
+												%>
+											<option value=<%=pistas.get(i).getName() %>><%= pistas.get(i).getName() %></option>
+											<%}	}%>
+										</select>
+										</div>
+										<div class="col-md-6 form-it">
+											<label>Nº de niños</label>
+											<input type="number" name="nPart" min="1"
+												placeholder="1" />
+										</div>
+										<div class="row">
+										<div class="col-md-6 form-it">
+											<hr>
+											<input class="submit" type="submit" value="Guardar" />
+										</div>
+										</div>
+									</form>
+									<% }else{ %>
+									<form method="post" action="modifyReservaFamiliar" class="user">
+									<div class="col-md-6 form-it">
+											<label>Id</label> <select name="ReservaId">
+												<option value=<%=reservaF.getId()%>><%=reservaF.getId()%></option>
+											</select>
+										</div>
 								<div class="col-md-6 form-it">
-										<label>Duración</label> <input type="number" name="duration"
-										required="required" />
-									</div> 
-									
+								<label for="dateOfBirth"> Fecha de la reserva: <input type="date"
+									name="date" required="required" />
+								</label>
+							</div>
+							<div class="col-md-6 form-it">
+								<label>Duración</label> <select name="duration">
+										<option value="60">60</option>
+										<option value="90">90</option>
+										<option value="120">120</option>
+									</select>
+								</div>
+									<div class="col-md-6 form-it">
+									<label>Pistas</label> <select name="pista">
+									<% for(int i=0; i<pistas.size(); i++){
+										if(pistas.get(i).getDif().equals(PistaDTO.dificulty.familiar)){
+										%>
+										<option value=<%=pistas.get(i).getName() %>><%= pistas.get(i).getName() %></option>
+										<%}	}%>
+									</select>
+								</div>
 								<div class="col-md-6 form-it">
-										<label>Nº de participantes</label>
-										<input type="number" name="max" min="1"
-											placeholder="1" />
-									</div>
-									
+									<label>Nº de adultos</label>
+									<input type="number" name="nAdults" min="1"
+										placeholder="1" />
+								</div>
 								<div class="col-md-6 form-it">
-										<label>Pista</label> <input type="number" name="pistaId"
-										required="required" />
-									</div> 
-					
+									<label>Nº de niños</label>
+									<input type="number" name="nChilds" min="1"
+										placeholder="1" />
+								</div>
 								<div class="row">
 									<div class="col-md-6 form-it">
 										<hr>
@@ -253,99 +296,21 @@
 									</div>
 								</div>
 							</form>
+									<%} %>
+					
+								</div>
 						</div>
 					</div>   
-				}else if(CONDICIÓN){
-					<div class="user-information">
-						<%
-							ArrayList<ReservaFamiliarDTO> reservasF = gestorReservas.getId();
-						%>
-					</div>
-				</div>
-				<div class="col-md-9 col-sm-12 col-xs-12">
-					<div class="form-style-1 user-pro">
-						<form method="post" action="modifyUsser" class="user">
-							<div class="col-md-6 form-it">
-									<label>Fecha: </label> <input type="text" name="date"
-										required="required" />
-								</div>
-								
-							<div class="col-md-6 form-it">
-									<label>Duración</label> <input type="number" name="duration"
-									required="required" />
-								</div> 
-								
-							<div class="col-md-6 form-it">
-									<label>Nº de participantes</label>
-									<input type="number" name="max" min="1"
-										placeholder="1" />
-								</div>
-								
-							<div class="col-md-6 form-it">
-									<label>Pista</label> <input type="number" name="pistaId"
-									required="required" />
-								</div> 
-				
-							<div class="row">
-								<div class="col-md-6 form-it">
-									<hr>
-									<input class="submit" type="submit" value="Guardar" />
-								</div>
-							</div>
-						</form>
-					</div>
 				</div>   
-				}else{
-					<div class="user-information">
-						<%
-							ArrayList<ReservaInfantilDTO> reservasI = gestorReservas.getId();
-						%>
-					</div>
-				</div>
-				<div class="col-md-9 col-sm-12 col-xs-12">
-					<div class="form-style-1 user-pro">
-						<form method="post" action="modifyUsser" class="user">
-							<div class="col-md-6 form-it">
-									<label>Fecha: </label> <input type="text" name="date"
-										required="required" />
-								</div>
-								
-							<div class="col-md-6 form-it">
-									<label>Duración</label> <input type="number" name="duration"
-									required="required" />
-								</div> 
-								
-							<div class="col-md-6 form-it">
-									<label>Nº de participantes</label>
-									<input type="number" name="max" min="1"
-										placeholder="1" />
-								</div>
-								
-							<div class="col-md-6 form-it">
-									<label>Pista</label> <input type="number" name="pistaId"
-									required="required" />
-								</div> 
-				
-							<div class="row">
-								<div class="col-md-6 form-it">
-									<hr>
-									<input class="submit" type="submit" value="Guardar" />
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>   
-				}
+			
 			</div>
-		</div>
-	</div>
 	<!-- end of list section-->
 	<!-- footer section-->
 	<footer class="ht-footer">
 		<br></br>
 		<div class="container">
 			<div class="flex-parent-ft">
-				<a><img class="logo" src="/JSPMVC/images/logo1.png" alt=""></a>
+				<a><img class="logo" src="images/logo1.png" alt=""></a>
 				<div class="flex-child-ft item2">
 					<br></br>
 					<h4>Recursos</h4>
@@ -390,10 +355,10 @@
 		</div>
 	</footer>
 	<!-- end of footer section-->
-	<script src="/JSPMVC/js/jquery.js"></script>
-	<script src="/JSPMVC/js/plugins.js"></script>
-	<script src="/JSPMVC/js/plugins2.js"></script>
-	<script src="/JSPMVC/js/custom.js"></script>
+	<script src="js/jquery.js"></script>
+	<script src="js/plugins.js"></script>
+	<script src="js/plugins2.js"></script>
+	<script src="js/custom.js"></script>
 	<%
 		}
 	%>

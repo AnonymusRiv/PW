@@ -59,68 +59,6 @@
 	</div>
 	<!--end of preloading-->
 	<!-- BEGIN | Header -->
-	<%
-		if (customerBean.getTypeUser().equals(UsuarioDTO.type.cliente)) {
-				nextPage = "mvc/view/userHome.jsp";
-	%>
-	<jsp:forward page="<%=nextPage%>">
-		<jsp:param value="<%=mensajeNextPage%>" name="message" />
-	</jsp:forward>
-	<!-- BEGIN | Header -->
-	<header class="ht-header">
-		<div class="container">
-			<nav class="navbar navbar-default navbar-custom">
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header logo">
-					<div class="navbar-toggle" data-toggle="collapse"
-						data-target="#bs-example-navbar-collapse-1">
-						<span class="sr-only">Toggle navigation</span>
-						<div id="nav-icon1">
-							<span></span> <span></span> <span></span>
-						</div>
-					</div>
-					<a href="index.jsp"><img class="logo" src="images/logo1.png"
-						alt="" width="119" height="58"></a>
-				</div>
-				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse navbar-collapse flex-parent"
-					id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav flex-child-menu menu-left">
-						<li class="hidden"><a href="#page-top"></a></li>
-						<li><a href="index.jsp">Inicio</a></li>
-						<li><a style="color: #DCF836" href="userProfile">Perfil</a></li>
-						<li><a href="searchSpectacle">Espectáculos</a></li>
-						<li><a href="listSesions">Sesiones</a></li>
-						<li><a href="userReviews">Mis críticas</a></li>
-					</ul>
-					<form method="get" autocomplete="off" action="logout">
-						<ul class="nav navbar-nav flex-child-menu menu-right">
-							<li><button class="redbtn" style="border: none"
-									type="submit">Cerrar sesión</button></li>
-						</ul>
-					</form>
-				</div>
-				<!-- /.navbar-collapse -->
-			</nav>
-
-			<!-- top search form -->
-			<form method="post" autocomplete="off" action="searchSpectacle">
-				<div class="top-search">
-					<select name="filter">
-						<option value="title">T&iacute;tulo</option>
-						<option value="category">Categor&iacute;a</option>
-					</select> <input type="text" name="search"
-						placeholder="Busque un espect&aacute;culo por t&iacute;tulo o por categor&iacute;a">
-					<input name="hidden" type="submit" style="display: none;">
-				</div>
-			</form>
-		</div>
-	</header>
-	<!-- END | Header -->
-	<%
-		} else {
-	%>
-	<!-- BEGIN | Header -->
 	<header class="ht-header">
 		<div class="container">
 			<nav class="navbar navbar-default navbar-custom">
@@ -145,9 +83,9 @@
 						<li><a href="userProfile">Perfil</a></li>
 						<li class="dropdown first"><a
 							class="btn btn-default dropdown-toggle lv1"
-							style="color: #DCF836" data-toggle="dropdown">
-								Pistas <i class="fa fa-angle-down"
-								aria-hidden="true"></i>
+							style="color: #DCF836"
+							data-toggle="dropdown"> Pistas <i
+								class="fa fa-angle-down" aria-hidden="true"></i>
 						</a>
 							<ul class="dropdown-menu level1">
 								<li><a href="addPista">Añadir pista</a></li>
@@ -162,7 +100,15 @@
 								<li><a href="addKart">Añadir kart</a></li>
 								<li><a href="listKarts">Ver karts</a></li>
 							</ul></li>
-						<li><a href="userReviews">Mis críticas</a></li>
+							<li class="dropdown first"><a
+							class="btn btn-default dropdown-toggle lv1"
+							data-toggle="dropdown"> Reservas <i class="fa fa-angle-down"
+								aria-hidden="true"></i>
+						</a>
+							<ul class="dropdown-menu level1">
+								<li><a href="listReservas">Ver todas las reservas</a></li>
+								<li><a href=listdeleteReserva>Eliminar reservas</a></li>
+							</ul></li>
 					</ul>
 					<form method="get" autocomplete="off" action="logout">
 						<ul class="nav navbar-nav flex-child-menu menu-right">
@@ -174,22 +120,8 @@
 				<!-- /.navbar-collapse -->
 			</nav>
 
-			<!-- top search form -->
-			<form method="post" autocomplete="off" action="searchSpectacle">
-				<div class="top-search">
-					<select name="filter">
-						<option value="title">T&iacute;tulo</option>
-						<option value="category">Categor&iacute;a</option>
-					</select> <input type="text" name="search"
-						placeholder="Busque un espect&aacute;culo por t&iacute;tulo o por categor&iacute;a">
-					<input name="hidden" type="submit" style="display: none;">
-				</div>
-			</form>
 		</div>
 	</header>
-	<%
-		}
-	%>
 	<!-- END | Header -->
 
 	<div class="hero user-hero">

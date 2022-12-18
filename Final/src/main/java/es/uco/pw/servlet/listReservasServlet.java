@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import es.uco.pw.business.DTO.UsuarioDTO;
 import es.uco.pw.display.javabean.CustomerBean;
 
 /**
@@ -31,8 +32,10 @@ public class listReservasServlet extends HttpServlet {
 		    if (customerBean == null || customerBean.getEmailUser().equals("")) {
 		      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/userNotFound.html");
 		      dispatcher.include(request, response);
-		    } 
-		    else {
+		    } else if(customerBean.getTypeUser().equals(UsuarioDTO.type.administrador)) {
+		    	RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/listReservasAdmin.jsp");
+			      dispatcher.include(request, response);
+		    }else {
 		      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/listReservas.jsp");
 		      dispatcher.include(request, response);
 		    }

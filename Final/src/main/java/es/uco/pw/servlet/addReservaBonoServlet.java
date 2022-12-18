@@ -69,6 +69,7 @@ public class addReservaBonoServlet extends HttpServlet {
     		  if(bono.getSession() == 5) {
     			  String dat = reserva.getDate();
     			  String año = dat.substring(0, 3);
+    			  año = año + 1;
     			  String mes = dat.substring(5, 6);
     			  String dia = dat.substring(8, 9);
     			  String fecha = año + "-" + mes + "-" + dia;

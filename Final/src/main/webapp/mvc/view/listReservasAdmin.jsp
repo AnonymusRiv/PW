@@ -3,7 +3,7 @@
 <jsp:useBean id="customerBean" scope="session"
 	class="es.uco.pw.display.javabean.CustomerBean"></jsp:useBean>
 <%@ page
-	import="java.util.Date,java.text.SimpleDateFormat,es.uco.pw.business.DTO.ReservaInfantilDTO,es.uco.pw.business.DTO.ReservaFamiliarDTO,es.uco.pw.business.DTO.ReservaAdultosDTO,es.uco.pw.business.DTO.UsuarioDTO,es.uco.pw.business.managers.DBmanager,es.uco.pw.business.managers.GestorUsuarios,es.uco.pw.business.managers.GestorReservas,es.uco.pw.business.DTO.KartDTO,java.util.ArrayList"%>
+	import="java.text.SimpleDateFormat,es.uco.pw.business.DTO.ReservaInfantilDTO,es.uco.pw.business.DTO.ReservaFamiliarDTO,es.uco.pw.business.DTO.ReservaAdultosDTO,es.uco.pw.business.DTO.UsuarioDTO,es.uco.pw.business.managers.DBmanager,es.uco.pw.business.managers.GestorUsuarios,es.uco.pw.business.managers.GestorReservas,es.uco.pw.business.DTO.KartDTO,java.util.ArrayList"%>
 <html>
 <%
 	SimpleDateFormat formatter6 = new SimpleDateFormat("dd-MM-yyyy");
@@ -49,8 +49,6 @@
 		<div id="status">
 			<span></span> <span></span>
 		</div>
-		</div>
-		<!--end of preloading-->
 		<%
 			String nextPage = "";
 			String mensajeNextPage = "";
@@ -60,8 +58,8 @@
 		%>
 		<jsp:setProperty property="search" value="" name="customerBean" />
 		<jsp:setProperty property="filter" value="" name="customerBean" />
-	
-	
+	</div>
+	<!--end of preloading-->
 		<!-- BEGIN | Header -->
 	<header class="ht-header">
 		<div class="container">
@@ -75,8 +73,8 @@
 							<span></span> <span></span> <span></span>
 						</div>
 					</div>
-					<a href="index.jsp"><img class="logo" src="images/logo1.png"
-						alt="" width="119" height="58"></a>
+					<a href="#"><img class="logo" src="images/logo1.png" alt=""
+						width="119" height="58"></a>
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse flex-parent"
@@ -87,26 +85,32 @@
 						<li><a href="userProfile">Perfil</a></li>
 						<li class="dropdown first"><a
 							class="btn btn-default dropdown-toggle lv1"
-							style="color: #DCF836"
-							data-toggle="dropdown"> Reservas <i
+							data-toggle="dropdown"> Pistas <i
 								class="fa fa-angle-down" aria-hidden="true"></i>
 						</a>
 							<ul class="dropdown-menu level1">
-								<li><a href="addReserva">Crear reserva</a></li>
-								<li><a href="listReservas">Ver reservas</a></li>
-								<li><a href="listdeleteReserva">Cancelar/Modificar reservas</a></li>
+								<li><a href="addPista">Añadir pista</a></li>
+								<li><a href="listPistas">Ver pistas</a></li>
+							</ul></li>
+						<li class="dropdown first"><a
+							class="btn btn-default dropdown-toggle lv1"
+							data-toggle="dropdown"> Karts <i class="fa fa-angle-down"
+								aria-hidden="true"></i>
+						</a>
+							<ul class="dropdown-menu level1">
+								<li><a href="addKart">Añadir kart</a></li>
+								<li><a href="listKarts">Ver karts</a></li>
 							</ul></li>
 							<li class="dropdown first"><a
 							class="btn btn-default dropdown-toggle lv1"
-							data-toggle="dropdown"> Bonos <i
-								class="fa fa-angle-down" aria-hidden="true"></i>
+							style="color: #DCF836"
+							data-toggle="dropdown"> Reservas <i class="fa fa-angle-down"
+								aria-hidden="true"></i>
 						</a>
 							<ul class="dropdown-menu level1">
-								<li><a href="addBono">Adquirir Bono</a></li>
-								<li><a href="listBono">Ver Bonos</a></li>
-								<li><a href="listaddReservaBono">Hacer reserva en bono</a></li>
+								<li><a href="listReservas">Ver todas las reservas</a></li>
+								<li><a href=listdeleteReserva>Eliminar reservas</a></li>
 							</ul></li>
-							<li><a href="listarPistaDisponible">Pistas</a></li>
 					</ul>
 					<form method="get" autocomplete="off" action="logout">
 						<ul class="nav navbar-nav flex-child-menu menu-right">
@@ -117,6 +121,7 @@
 				</div>
 				<!-- /.navbar-collapse -->
 			</nav>
+
 		</div>
 	</header>
 	<!-- END | Header -->
@@ -148,16 +153,15 @@
 					<div class="row">
 					
 						<%
-							Date hoy= new Date();
-							String fecha=formatter4.format(new java.util.Date(hoy.getTime()+8640000));
+							String fecha=formatter4.format(new java.util.Date());
 							for (int i = 0; i < resA.size(); i++) {
-								if(resA.get(i).getUserId().equals(customerBean.getEmailUser())){
 									if(resA.get(i).getDate().compareTo(fecha)>0){
 						%>
 						<div class="col-md-12">
 							<div class="ceb-item-style-2">
 								<div class="ceb-infor">
 										<p><%="ID de la reserva: " + resA.get(i).getId()%></p>
+										<p><%="ID de la persona: " + resA.get(i).getUserId()%></p>
 										<p><%="Bono: " + resA.get(i).getBonoId()%></p>
 										<p><%="Fecha: " + resA.get(i).getDate()%></p>
 										<p><%="Duración: " + resA.get(i).getDuration()%></p>
@@ -166,23 +170,32 @@
 										<p><%="ID de la pista: " + resA.get(i).getPistId()%></p>
 										<p><%="Nº de participantes: " + resA.get(i).getnParticipants()%></p>
 										<p><%="Estado: Por realizar"%></p>
-										<hr>
-										<a class="redbtn"
-											href=<%="modifyReservaAdulto?ReservaId="
-											+ resA.get(i).getId()%>
-											style="border: none;  background-color: orange" type="submit">Modificar</a>
-											&nbsp;
-										<a class="redbtn"
-											href=<%="deleteReserva?ReservaId="
-											+ resA.get(i).getId()%>
-											style="border: none" type="submit">Cancelar</a> <br></br>
+								</div>
+							</div>
+						</div>
+						<%
+									}
+									else{
+						%>
+						<div class="col-md-12">
+							<div class="ceb-item-style-2">
+								<div class="ceb-infor">
+										<p><%="ID de la reserva: " + resA.get(i).getId()%></p>
+										<p><%="ID de la persona: " + resA.get(i).getUserId()%></p>
+										<p><%="Bono: " + resA.get(i).getBonoId()%></p>
+										<p><%="Fecha: " + resA.get(i).getDate()%></p>
+										<p><%="Duración: " + resA.get(i).getDuration()%></p>
+										<p><%="Precio: " + resA.get(i).getPrice()%></p>
+										<p><%="Descuento: " + resA.get(i).getDiscount()%></p>
+										<p><%="ID de la pista: " + resA.get(i).getPistId()%></p>
+										<p><%="Nº de participantes: " + resA.get(i).getnParticipants()%></p>
+										<p><%="Estado: Finalizada"%></p>
 								</div>
 							</div>
 						</div>
 					</div>
 					<%
 									}
-								}
 							}
 					%>
 					
@@ -191,13 +204,13 @@
 					<div class="row">
 						<%
 						for (int i = 0; i < resF.size(); i++) {
-							if(resF.get(i).getUserId().equals(customerBean.getEmailUser())){
 								if(resF.get(i).getDate().compareTo(fecha)>0){
 						%>
 						<div class="col-md-12">
 							<div class="ceb-item-style-2">
 								<div class="ceb-infor">
 										<p><%="ID de la reserva: " + resF.get(i).getId()%></p>
+										<p><%="ID de la persona: " + resF.get(i).getUserId()%></p>
 										<p><%="Bono: " + resF.get(i).getBonoId()%></p>
 										<p><%="Fecha: " + resF.get(i).getDate()%></p>
 										<p><%="Duración: " + resF.get(i).getDuration()%></p>
@@ -207,23 +220,33 @@
 										<p><%="Nº de niñ@s: " + resF.get(i).getnChildren()%></p>
 										<p><%="Nº de adultos: " + resF.get(i).getnAdults()%></p>
 										<p><%="Estado: Por realizar"%></p>
-										<hr>
-										<a class="redbtn"
-											href=<%="modifyReservaFamiliar?ReservaId="
-											+ resF.get(i).getId()%>
-											style="border: none;  background-color: orange" type="submit">Modificar</a>
-											&nbsp;
-										<a class="redbtn"
-											href=<%="deleteReserva?ReservaId="
-											+ resF.get(i).getId()%>
-											style="border: none" type="submit">Cancelar</a> <br></br>
+								</div>
+							</div>
+						</div>
+						<%
+								}
+								else{
+						%>
+						<div class="col-md-12">
+							<div class="ceb-item-style-2">
+								<div class="ceb-infor">
+										<p><%="ID de la reserva: " + resF.get(i).getId()%></p>
+										<p><%="ID de la persona: " + resA.get(i).getUserId()%></p>
+										<p><%="Bono: " + resF.get(i).getBonoId()%></p>
+										<p><%="Fecha: " + resF.get(i).getDate()%></p>
+										<p><%="Duración: " + resF.get(i).getDuration()%></p>
+										<p><%="Precio: " + resF.get(i).getPrice()%></p>
+										<p><%="Descuento: " + resF.get(i).getDiscount()%></p>
+										<p><%="ID de la pista: " + resF.get(i).getPistId()%></p>
+										<p><%="Nº de niñ@s: " + resF.get(i).getnChildren()%></p>
+										<p><%="Nº de adultos: " + resF.get(i).getnAdults()%></p>
+										<p><%="Estado: Finalizada"%></p>
 								</div>
 							</div>
 						</div>
 					</div>
 					<%
 								}
-							}
 						}
 					%>
 					<h1 style="color: white">Reservas Infantiles:</h1>
@@ -231,13 +254,13 @@
 					<div class="row">
 						<%
 						for (int i = 0; i < resI.size(); i++) {
-							if(resI.get(i).getUserId().equals(customerBean.getEmailUser())){
 								if(resI.get(i).getDate().compareTo(fecha)>0){
 						%>
 						<div class="col-md-12">
 							<div class="ceb-item-style-2">
 								<div class="ceb-infor">
 										<p><%="ID de la reserva: " + resI.get(i).getId()%></p>
+										<p><%="ID de la persona: " + resI.get(i).getUserId()%></p>
 										<p><%="Bono: " + resI.get(i).getBonoId()%></p>
 										<p><%="Fecha: " + resI.get(i).getDate()%></p>
 										<p><%="Duración: " + resI.get(i).getDuration()%></p>
@@ -246,23 +269,32 @@
 										<p><%="ID de la pista: " + resI.get(i).getPistId()%></p>
 										<p><%="Nº de participantes: " + resI.get(i).getnChildren()%></p>
 										<p><%="Estado: Por realizar"%></p>
-										<hr>
-										<a class="redbtn"
-											href=<%="modifyReservaInfantil?ReservaId="
-											+ resI.get(i).getId()%>
-											style="border: none;  background-color: orange" type="submit">Modificar</a>
-											&nbsp;
-										<a class="redbtn"
-											href=<%="deleteReserva?ReservaId="
-											+ resI.get(i).getId()%>
-											style="border: none" type="submit">Cancelar</a> <br></br>
+								</div>
+							</div>
+						</div>
+						<%
+								}
+								else{
+						%>
+						<div class="col-md-12">
+							<div class="ceb-item-style-2">
+								<div class="ceb-infor">
+										<p><%="ID de la reserva: " + resI.get(i).getId()%></p>
+										<p><%="ID de la persona: " + resI.get(i).getUserId()%></p>
+										<p><%="Bono: " + resI.get(i).getBonoId()%></p>
+										<p><%="Fecha: " + resI.get(i).getDate()%></p>
+										<p><%="Duración: " + resI.get(i).getDuration()%></p>
+										<p><%="Precio: " + resI.get(i).getPrice()%></p>
+										<p><%="Descuento: " + resI.get(i).getDiscount()%></p>
+										<p><%="ID de la pista: " + resI.get(i).getPistId()%></p>
+										<p><%="Nº de participantes: " + resI.get(i).getnChildren()%></p>
+										<p><%="Estado: Finalizada"%></p>
 								</div>
 							</div>
 						</div>
 					</div>
 					<%
 								}
-							}
 						}
 					%>
 					</div>

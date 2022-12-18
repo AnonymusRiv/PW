@@ -43,7 +43,7 @@ public class ReservaInfantilDTO {
 
     public ReservaInfantilDTO(int Id, String userId, String date, int duration, String pistId, float price, float discount,
             int nChildren, int BonoId) {
-        
+        this.Id = Id;
         this.userId = userId;
         this.date = date;
         this.duration = duration;

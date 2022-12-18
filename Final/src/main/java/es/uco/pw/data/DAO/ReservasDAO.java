@@ -140,8 +140,6 @@ public class ReservasDAO {
 
           Statement stmt = connection.createStatement();
           String query = MessageFormat.format(DBm.getModificarReservaAdultosQuery(),
-                  "'",reserva.getId(),"'",
-                  "'",reserva.getUserId(),"'",
                   "'",reserva.getDate(),"'",
                   "'",reserva.getDuration(),"'",
                   "'",reserva.getPistId(),"'",
@@ -312,14 +310,13 @@ public class ReservasDAO {
           PreparedStatement ps = null;
 
           Statement stmt = connection.createStatement();
-          String query = MessageFormat.format(DBm.getModificarReservaInfantilQuery(),
-                  "'",reserva.getId(),"'",
-                  "'",reserva.getUserId(),"'",
+          String query = MessageFormat.format(DBm.getModificarReservaFamiliarQuery(),
                   "'",reserva.getDate(),"'",
                   "'",reserva.getDuration(),"'",
                   "'",reserva.getPistId(),"'",
                   "'",reserva.getPrice(),"'",
                   "'",reserva.getDiscount(),"'",
+                  "'",reserva.getnAdults(),"'",
                   "'",reserva.getnChildren(),"'",
                   "'",reserva.getBonoId(),"'"
                   );
@@ -329,9 +326,10 @@ public class ReservasDAO {
           ps.setString(3, reserva.getPistId());
           ps.setFloat(4, reserva.getPrice());
           ps.setFloat(5, reserva.getDiscount());
-          ps.setInt(6, reserva.getnChildren());
-          ps.setInt(7, reserva.getBonoId());
-          ps.setInt(8, id);
+          ps.setInt(6, reserva.getnAdults());
+          ps.setInt(7, reserva.getnChildren());
+          ps.setInt(8, reserva.getBonoId());
+          ps.setInt(9, id);
           
           ps.executeUpdate();
           if (stmt != null) {

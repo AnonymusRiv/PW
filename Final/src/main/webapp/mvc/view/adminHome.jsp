@@ -93,7 +93,15 @@
 								<li><a href="addKart">Añadir kart</a></li>
 								<li><a href="listKarts">Ver karts</a></li>
 							</ul></li>
-						<li><a href="listReservas">Reservas</a></li>
+							<li class="dropdown first"><a
+							class="btn btn-default dropdown-toggle lv1"
+							data-toggle="dropdown"> Reservas <i class="fa fa-angle-down"
+								aria-hidden="true"></i>
+						</a>
+							<ul class="dropdown-menu level1">
+								<li><a href="listReservas">Ver todas las reservas</a></li>
+								<li><a href=listdeleteReserva>Eliminar reservas</a></li>
+							</ul></li>
 					</ul>
 					<form method="get" autocomplete="off" action="logout">
 						<ul class="nav navbar-nav flex-child-menu menu-right">

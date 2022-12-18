@@ -156,8 +156,8 @@ public class UsuarioDAO {
             String query= MessageFormat.format(DBm.getModificarUsuarioQuery(),"'",usuario.getName(),"'","'",usuario.getEmail(),"'","'",usuario.getDateOfBirth(),"'","'",usuario.getEmail(),"'");
             ps = connection.prepareStatement(query);
             ps.setString(1, usuario.getName());
-            ps.setString(2, usuario.getEmail());    
-            ps.setString(3, usuario.getDateOfBirth());
+            ps.setString(2, usuario.getDateOfBirth());
+            ps.setString(3, usuario.getPassword());  
             ps.setString(4, mail);  
             
             ps.executeUpdate();

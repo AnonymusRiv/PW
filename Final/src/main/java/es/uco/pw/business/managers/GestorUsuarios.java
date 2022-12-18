@@ -80,9 +80,6 @@ public class GestorUsuarios {
 	public Boolean modificarUsuario(UsuarioDTO user, String mail) {
 		UsuarioDAO usuario = new UsuarioDAO();
 		usuario.modificarUsuario(user, mail);
-		if(usuarioActivo.getEmail().equals(user.getEmail())) {
-		    setUsuarioActivo(user);
-		}
 		return true;
 	}
 	

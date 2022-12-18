@@ -93,11 +93,11 @@
 							<ul class="dropdown-menu level1">
 								<li><a href="addReserva">Crear reserva</a></li>
 								<li><a href="listReservas">Ver reservas</a></li>
-								<li><a href="listdeleteReserva">Cancelar reservas</a></li>
+								<li><a href="listdeleteReserva">Cancelar/Modificar reservas</a></li>
 							</ul></li>
 							<li class="dropdown first"><a
 							class="btn btn-default dropdown-toggle lv1"
-							data-toggle="dropdown"> Bono <i
+							data-toggle="dropdown"> Bonos <i
 								class="fa fa-angle-down" aria-hidden="true"></i>
 						</a>
 							<ul class="dropdown-menu level1">

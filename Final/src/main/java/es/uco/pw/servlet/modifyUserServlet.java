@@ -50,21 +50,23 @@ public class modifyUserServlet extends HttpServlet {
     if (customerBean == null || customerBean.getEmailUser().equals("")) {
       RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/userNotFound.html");
       dispatcher.include(request, response);
-    } else if (customerBean.getTypeUser().equals(UsuarioDTO.type.cliente)) {
-      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/userHome.jsp");
-      dispatcher.include(request, response);
     } else {
       GestorUsuarios gestorUsuario = GestorUsuarios.getInstance();
 
-      String mail = request.getParameter("mail");
-
+      String mail = customerBean.getEmailUser();
       UsuarioDTO usuario = gestorUsuario.findUser(mail); 
 
       if (usuario!=null) {
 
+    	  usuario.setName(request.getParameter("name"));
+    	  usuario.setPassword(request.getParameter("password"));
+    	  String año=request.getParameter("year");
+    	  String mes=request.getParameter("month");
+    	  String dia=request.getParameter("day");
+    	  usuario.setDateOfBirth(año + "-" + mes + "-" + dia);
         gestorUsuario.modificarUsuario(usuario, mail);
       } else {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/errorAdingPista.html");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/errorAddingPista.html");
         dispatcher.include(request, response);
       }
 
@@ -92,9 +94,6 @@ public class modifyUserServlet extends HttpServlet {
 
     if (customerBean == null || customerBean.getEmailUser().equals("")) {
       RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/userNotFound.html");
-      dispatcher.include(request, response);
-    } else if (customerBean.getTypeUser().equals(UsuarioDTO.type.cliente)) {
-      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/userHome.jsp");
       dispatcher.include(request, response);
     } else {
       String search = request.getParameter("name");
