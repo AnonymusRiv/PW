@@ -112,7 +112,7 @@ protected void doPost(
 
       session.setAttribute("customerBean", customerBean);
 
-      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/addKart.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/controllers/addKart.jsp");
       dispatcher.include(request, response);
     }
   }

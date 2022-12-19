@@ -125,7 +125,7 @@ public class modifyPistaServlet extends HttpServlet {
 
       session.setAttribute("customerBean", customerBean);
 
-      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/modifyPista.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/controllers/modifyPista.jsp");
       dispatcher.include(request, response);
     }
   }

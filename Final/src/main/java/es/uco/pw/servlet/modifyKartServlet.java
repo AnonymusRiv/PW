@@ -122,7 +122,7 @@ public class modifyKartServlet extends HttpServlet {
 
       session.setAttribute("customerBean", customerBean);
 
-      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/modifyKart.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/controllers/modifyKart.jsp");
       dispatcher.include(request, response);
     }
   }

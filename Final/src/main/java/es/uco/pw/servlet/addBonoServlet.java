@@ -79,7 +79,7 @@ public class addBonoServlet extends HttpServlet {
 		      dispatcher.include(request, response);
 		} 
 		else {
-		    RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/addBono.jsp");
+		    RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/controllers/addBono.jsp");
 		     	dispatcher.include(request, response);
 		}
 	}

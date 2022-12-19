@@ -102,7 +102,7 @@ public class modifyUserServlet extends HttpServlet {
 
       session.setAttribute("customerBean", customerBean);
 
-      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/modifyUser.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/controllers/modifyUser.jsp");
       dispatcher.include(request, response);
     }
   }

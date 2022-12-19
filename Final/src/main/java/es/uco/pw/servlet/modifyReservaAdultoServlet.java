@@ -104,7 +104,7 @@ public class modifyReservaAdultoServlet extends HttpServlet {
 
 		      session.setAttribute("customerBean", customerBean);
 
-		      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/modifyReserva.jsp");
+		      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/controllers/modifyReserva.jsp");
 		      dispatcher.include(request, response);
 		    }
 		  }

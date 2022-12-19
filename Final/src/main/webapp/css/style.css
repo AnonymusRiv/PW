@@ -5767,7 +5767,7 @@ ul {
   height: 598px;
 }
 .hero3 {
-  background: url("../images/karts.png") no-repeat;
+  background: url("../images/kartsdef.png") no-repeat;
   height: 538px;
 }
 .common-hero {
@@ -5779,7 +5779,7 @@ ul {
 }
 .user-hero {
   height: 385px;
-  background: url("../images/karts.png") no-repeat;
+  background: url("../images/kartsdef.png") no-repeat;
 }
 .user-hero .hero-ct {
   padding-top: 225px;
@@ -6788,7 +6788,7 @@ p.ceb-single {
   }
 }
 .page-single-2 {
-  background: url("../images/uploads/error-bg.jpg") no-repeat;
+  background: url("../images/karts.png") no-repeat;
   background-position: center;
   text-align: center;
   background-size: cover;

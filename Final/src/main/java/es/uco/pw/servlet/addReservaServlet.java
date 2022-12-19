@@ -43,15 +43,15 @@ public class addReservaServlet extends HttpServlet {
 		      String type = request.getParameter("type");
 		      
 		      if(type.equals("infantil")) {
-		    	  RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/addReservaInfantil.jsp");
+		    	  RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/controllers/addReservaInfantil.jsp");
 			      dispatcher.include(request, response);
 		      }
 		      else if(type.equals("familiar")) {
-		    	  RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/addReservaFamiliar.jsp");
+		    	  RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/controllers/addReservaFamiliar.jsp");
 			      dispatcher.include(request, response);
 		      }
 		      else {
-			      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/addReservaAdulto.jsp");
+			      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/controllers/addReservaAdulto.jsp");
 			      dispatcher.include(request, response);		    	  
 		      }
 
@@ -74,7 +74,7 @@ public class addReservaServlet extends HttpServlet {
 		      dispatcher.include(request, response);
 		} 
 		else {
-		    RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/addTipoReserva.jsp");
+		    RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/controllers/addTipoReserva.jsp");
 		     	dispatcher.include(request, response);
 		}
 	}

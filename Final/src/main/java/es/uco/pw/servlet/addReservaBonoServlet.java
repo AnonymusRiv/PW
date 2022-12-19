@@ -192,7 +192,7 @@ public class addReservaBonoServlet extends HttpServlet {
 
       session.setAttribute("customerBean", customerBean);
 
-      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/addReservaBono.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/controllers/addReservaBono.jsp");
       dispatcher.include(request, response);
     }
   }

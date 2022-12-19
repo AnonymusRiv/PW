@@ -112,7 +112,7 @@ public class asociarKaPServlet extends HttpServlet {
 
       session.setAttribute("customerBean", customerBean);
 
-      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/view/asociarKaP.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("mvc/controllers/asociarKaP.jsp");
       dispatcher.include(request, response);
     }
   }
